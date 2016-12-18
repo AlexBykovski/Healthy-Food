@@ -30,10 +30,10 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/assetic-bundle": "^2.8",
         "leafo/scssphp": "^0.6.6",
-        "doctrine/doctrine-migrations-bundle": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "sensio/generator-bundle": "^3.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^4.8"
     },
