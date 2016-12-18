@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\User as User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,7 +31,7 @@ class DietAdditionalInformation
      *      max = 6,
      *      minMessage = "Количество приёмов пищи не должно быть менее 3",
      *      maxMessage = "Количество приёмов пищи не должно быть более 6",
-     *      groups={"registration_step2"})
+     *      groups={"registration"})
      *
      * @ORM\Column(name="count_eating", type="integer", nullable=false, options={"default": 3})
      */
@@ -46,7 +45,7 @@ class DietAdditionalInformation
      *      max = 30,
      *      minMessage = "Количество тренировок в неделю не должно быть менее 0",
      *      maxMessage = "Количество тренировок в неделю не должно быть более 30",
-     *      groups={"registration_step2"})
+     *      groups={"registration"})
      *
      * @ORM\Column(name="count_training", type="integer", nullable=false, options={"default": 0})
      */
@@ -60,18 +59,20 @@ class DietAdditionalInformation
      *      max = 10,
      *      minMessage = "Сложность тренировок не должна быть менее 1",
      *      maxMessage = "Сложность тренировок не должна быть более 10",
-     *      groups={"registration_step2"})
+     *      groups={"registration"})
      *
      * @ORM\Column(name="training_difficulty", type="integer", nullable=false, options={"default": 1})
      */
     private $trainingDifficulty;
 
     /**
-     * One DietAdditionalInformation has One User.
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var string
+     *
+     * @Assert\NotBlank(message = "Не выбрана цель", groups={"registration"})
+     *
+     * @ORM\Column(name="training_difficulty", type="string", nullable=false, options={"default": "Сбросить вес"})
      */
-    private $user;
+    private $purpose;
 
     /**
      * @return int
@@ -135,5 +136,21 @@ class DietAdditionalInformation
     public function setTrainingDifficulty($trainingDifficulty)
     {
         $this->trainingDifficulty = $trainingDifficulty;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPurpose()
+    {
+        return $this->purpose;
+    }
+
+    /**
+     * @param string $purpose
+     */
+    public function setPurpose($purpose)
+    {
+        $this->purpose = $purpose;
     }
 }

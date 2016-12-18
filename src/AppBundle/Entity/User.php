@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\DietAdditionalInformation;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -94,25 +95,50 @@ class User implements UserInterface
     private $photo;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="height", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "Не введён рост", groups={"registration"})
+     *
+     * @Assert\Regex(
+     *     pattern="/^([3-9]\d)|([1-2]\d{2}(,\d)?)$/",
+     *     message="Рост должен быть целым или десятичным числом с одной цифрой после запятой (пр. 167 или 155,4)",
+     *     groups={"registration"}
+     * )
+     *
+     * @ORM\Column(name="height", type="float", length=255, nullable=false)
      */
     private $height;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="weight", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "Не введён вес")
+     *
+     * @Assert\Regex(
+     *     pattern="/^[1-9]\d\d?(,\d)?$/",
+     *     message="Вес должен быть целым или десятичным числом с одной цифрой после запятой (пр. 67 или 55,4)",
+     *     groups={"registration"}
+     * )
+     *
+     * @ORM\Column(name="weight", type="float", length=255, nullable=false)
      */
     private $weight;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="gender", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "Не выбран пол")
+     *
+     * @ORM\Column(name="gender", type="boolean", length=255, nullable=false)
      */
     private $gender;
+
+    /**
+     * One User has One DietAdditionalInformation.
+     * @ORM\OneToOne(targetEntity="DietAdditionalInformation")
+     * @ORM\JoinColumn(name="diet_additional_information_id", referencedColumnName="id")
+     */
+    private $dietAddtionalInformation;
 
     /**
      * User constructor.
@@ -252,7 +278,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return float
      */
     public function getHeight()
     {
@@ -260,7 +286,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $height
+     * @param float $height
      */
     public function setHeight($height)
     {
@@ -268,7 +294,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return float
      */
     public function getWeight()
     {
@@ -276,7 +302,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $weight
+     * @param float $weight
      */
     public function setWeight($weight)
     {
@@ -284,19 +310,35 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return boolean
      */
-    public function getGender()
+    public function isGender()
     {
         return $this->gender;
     }
 
     /**
-     * @param string $gender
+     * @param boolean $gender
      */
     public function setGender($gender)
     {
         $this->gender = $gender;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDietAddtionalInformation()
+    {
+        return $this->dietAddtionalInformation;
+    }
+
+    /**
+     * @param mixed $dietAddtionalInformation
+     */
+    public function setDietAddtionalInformation($dietAddtionalInformation)
+    {
+        $this->dietAddtionalInformation = $dietAddtionalInformation;
     }
 
     /**
