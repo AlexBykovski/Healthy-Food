@@ -23,15 +23,37 @@ class SecurityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPassword());
+
+            $user->setPassword($password);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("homepage");
         }
-        // replace this example code with whatever you need
+
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/login", name="login")
+     *
+     * @@todo need to check and complete validation
+     */
+    public function loginAction(Request $request)
+    {
+        if ($this->getUser() && $this->getUser()->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render(
+            'security/login.html.twig',
+            []
+        );
     }
 }
