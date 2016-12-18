@@ -1,0 +1,21 @@
+{
+  "name": "healthyFood",
+  "homepage": "https://github.com/AlexBykovski/Healthy-Food",
+  "authors": [
+    "AlexBykovski <bykovski.work@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
