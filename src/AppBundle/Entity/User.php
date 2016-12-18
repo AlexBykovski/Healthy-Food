@@ -135,7 +135,7 @@ class User implements UserInterface
 
     /**
      * One User has One DietAdditionalInformation.
-     * @ORM\OneToOne(targetEntity="DietAdditionalInformation")
+     * @ORM\OneToOne(targetEntity="DietAdditionalInformation", cascade={"persist"})
      * @ORM\JoinColumn(name="diet_additional_information_id", referencedColumnName="id")
      */
     private $dietAdditionalInformation;

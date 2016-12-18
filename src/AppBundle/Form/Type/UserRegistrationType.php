@@ -3,7 +3,7 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -45,12 +45,11 @@ class UserRegistrationType extends AbstractType
                 "label" => 'Вес',
                 "scale" => 1
             ])
-            ->add('gender', ChoiceType::class, [
+            ->add('gender', CheckboxType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Пол',
-                "expanded" => true,
-                "multiple" => true
+                "required" => false
             ])
             ->add('password', RepeatedType::class, [
                 'invalid_message' => 'Пароли должны совпадать',

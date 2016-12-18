@@ -15,13 +15,19 @@ class SecurityController extends Controller
      */
     public function registrationAction(Request $request)
     {
-        $company = new User();
-        $form = $this->createForm(UserRegistrationType::class, $company);
+        $user = new User();
+
+        $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
+        /*var_dump($form->isSubmitted() );
+        var_dump($form->isValid() );die;*/
         if ($form->isSubmitted() and $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->flush();
+
+            $this->redirectToRoute("homepage");
         }
         // replace this example code with whatever you need
         return $this->render('security/registration.html.twig', [
