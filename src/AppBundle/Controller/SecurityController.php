@@ -12,6 +12,8 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/registration", name="registration")
+     *
+     * @@todo need to check and complete validation
      */
     public function registrationAction(Request $request)
     {
@@ -20,8 +22,6 @@ class SecurityController extends Controller
         $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
-        /*var_dump($form->isSubmitted() );
-        var_dump($form->isValid() );die;*/
         if ($form->isSubmitted() and $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
