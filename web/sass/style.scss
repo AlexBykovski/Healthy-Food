@@ -916,3 +916,7 @@ a.btn.send-hide-contacts{
 .navbar-nav > li.unregistered > a.btn-success{
     color: white;
 }
+
+div.register-content input[type="text"], div.register-content input[type="email"]{
+    width: 100%;
+}
