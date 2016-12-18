@@ -52,7 +52,7 @@ class UserRegistrationType extends AbstractType
                 "expanded" => true,
                 "multiple" => true
             ])
-            ->add('gender', RepeatedType::class, [
+            ->add('password', RepeatedType::class, [
                 'invalid_message' => 'Пароли должны совпадать',
                 'type' => PasswordType::class,
                 'options' => array(
@@ -63,9 +63,9 @@ class UserRegistrationType extends AbstractType
                 'second_options' => array('label' => 'Подтверждение пароля'),
                 'required' => true,
             ])
-            ->add('dietAddtionalInformation', DietAdditionalInformationType::class)
+            ->add('dietAdditionalInformation', DietAdditionalInformationType::class)
             ->add('submit', SubmitType::class, [
-                "attr"  => ['class' => 'btn btn-success m-t-10'],
+                "attr"  => ['class' => 'btn btn-primary m-t-10'],
                 "label" => "Зарегистрироваться"
             ]);
     }

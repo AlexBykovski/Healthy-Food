@@ -70,7 +70,7 @@ class DietAdditionalInformation
      *
      * @Assert\NotBlank(message = "Не выбрана цель", groups={"registration"})
      *
-     * @ORM\Column(name="training_difficulty", type="string", nullable=false, options={"default": "Сбросить вес"})
+     * @ORM\Column(name="purpose", type="string", nullable=false, options={"default": "Сбросить вес"})
      */
     private $purpose;
 

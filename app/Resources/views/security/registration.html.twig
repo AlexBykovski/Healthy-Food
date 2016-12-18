@@ -26,46 +26,94 @@
             <div class="right-content">
                 <!-- begin register-header -->
                 <h1 class="register-header">
-                    Sign Up
+                    Регистрация
                 </h1>
                 <!-- end register-header -->
                 <!-- begin register-content -->
                 <div class="register-content">
                     <form action="index.html" method="POST" class="margin-bottom-0">
-                        <label class="control-label">Name <span class="text-danger">*</span></label>
+                        {{ form_label(form.firstName) }}
+                        <div class="row m-b-15 {{ form_errors(form.firstName)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.firstName) }}
+                            </div>
+                        </div>
+                        {{ form_label(form.lastName) }}
+                        <div class="row m-b-15 {{ form_errors(form.lastName)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.lastName) }}
+                            </div>
+                        </div>
+                        {{ form_label(form.email) }}
+                        <div class="row m-b-15 {{ form_errors(form.email)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.email) }}
+                            </div>
+                        </div>
                         <div class="row row-space-10">
-                            <div class="col-md-6 m-b-15">
-                                <input type="text" class="form-control" placeholder="First name" required="">
+                            <div class="col-md-4">
+                                {{ form_label(form.height) }}
                             </div>
-                            <div class="col-md-6 m-b-15">
-                                <input type="text" class="form-control" placeholder="Last name" required="">
+                            <div class="col-md-4">
+                                {{ form_label(form.weight) }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_label(form.gender) }}
                             </div>
                         </div>
-                        <label class="control-label">Email <span class="text-danger">*</span></label>
-                        <div class="row m-b-15">
+                        <div class="row row-space-10">
+                            <div class="col-md-4 m-b-15 {{ form_errors(form.height)| length ? 'has-error' }}">
+                                {{ form_widget(form.height) }}
+                            </div>
+                            <div class="col-md-4 m-b-15 {{ form_errors(form.weight)| length ? 'has-error' }}">
+                                {{ form_widget(form.weight) }}
+                            </div>
+                            <div class="col-md-4 m-b-15 {{ form_errors(form.gender)| length ? 'has-error' }}">
+                                {{ form_widget(form.gender) }}
+                            </div>
+                        </div>
+
+                        {{ form_label(form.password.first) }}
+                        <div class="row m-b-15 {{ form_errors(form.password.first)| length ? 'has-error' }}">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" placeholder="Email address" required="">
+                                {{ form_widget(form.password.first) }}
                             </div>
                         </div>
-                        <label class="control-label">Re-enter Email <span class="text-danger">*</span></label>
-                        <div class="row m-b-15">
+
+                        {{ form_label(form.password.second) }}
+                        <div class="row m-b-15 {{ form_errors(form.password.second)| length ? 'has-error' }}">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" placeholder="Re-enter email address" required="">
+                                {{ form_widget(form.password.second) }}
                             </div>
                         </div>
-                        <label class="control-label">Password <span class="text-danger">*</span></label>
-                        <div class="row m-b-15">
+
+                        {{ form_label(form.dietAdditionalInformation.countEating) }}
+                        <div class="row m-b-15 {{ form_errors(form.dietAdditionalInformation.countEating)| length ? 'has-error' }}">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" placeholder="Password" required="">
+                                {{ form_widget(form.dietAdditionalInformation.countEating) }}
                             </div>
                         </div>
-                        <div class="checkbox m-b-30">
-                            <label>
-                                <input type="checkbox" required=""> By clicking Sign Up, you agree to our <a href="/">Terms</a> and that you have read our <a href="/">Data Policy</a>, including our <a href="/">Cookie Use</a>.
-                            </label>
+                        {{ form_label(form.dietAdditionalInformation.countTraining) }}
+                        <div class="row m-b-15 {{ form_errors(form.dietAdditionalInformation.countTraining)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.dietAdditionalInformation.countTraining) }}
+                            </div>
+                        </div>
+                        {{ form_label(form.dietAdditionalInformation.trainingDifficulty) }}
+                        <div class="row m-b-15 {{ form_errors(form.dietAdditionalInformation.trainingDifficulty)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.dietAdditionalInformation.trainingDifficulty) }}
+                            </div>
+                        </div>
+                        {{ form_label(form.dietAdditionalInformation.purpose) }}
+                        <div class="row m-b-15 {{ form_errors(form.dietAdditionalInformation.purpose)| length ? 'has-error' }}">
+                            <div class="col-md-12">
+                                {{ form_widget(form.dietAdditionalInformation.purpose) }}
+                            </div>
                         </div>
                         <div class="register-buttons">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>
+                            {#<button type="submit" class="btn btn-primary btn-block btn-lg">Sign Up</button>#}
+                            {{ form_widget(form.submit) }}
                         </div>
                         <div class="m-t-20 m-b-40 p-b-40 text-inverse">
                             Already a member? Click <a href="login_v3.html">here</a> to login.

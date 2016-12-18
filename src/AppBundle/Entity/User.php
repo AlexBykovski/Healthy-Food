@@ -138,7 +138,7 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="DietAdditionalInformation")
      * @ORM\JoinColumn(name="diet_additional_information_id", referencedColumnName="id")
      */
-    private $dietAddtionalInformation;
+    private $dietAdditionalInformation;
 
     /**
      * User constructor.
@@ -328,17 +328,17 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getDietAddtionalInformation()
+    public function getDietAdditionalInformation()
     {
-        return $this->dietAddtionalInformation;
+        return $this->dietAdditionalInformation;
     }
 
     /**
-     * @param mixed $dietAddtionalInformation
+     * @param mixed $dietAdditionalInformation
      */
-    public function setDietAddtionalInformation($dietAddtionalInformation)
+    public function setDietAdditionalInformation($dietAdditionalInformation)
     {
-        $this->dietAddtionalInformation = $dietAddtionalInformation;
+        $this->dietAdditionalInformation = $dietAdditionalInformation;
     }
 
     /**
