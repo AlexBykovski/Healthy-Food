@@ -2,17 +2,17 @@
 
 namespace Tests\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Test\Functional\ControllerTestCase;
+use Symfony\Component\Yaml\Yaml;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends ControllerTestCase
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = $this->createNewClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $this->requestRoute("homepage");
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
     }
 }

@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade in hide"><span class="spinner"></span></div>
+    <!-- end #page-loader -->
+
+    <!-- begin #page-container -->
+    <div id="page-container" class="fade in">
+        <!-- begin register -->
+        <div class="register register-with-news-feed">
+            <!-- begin news-feed -->
+            <div class="news-feed">
+                <div class="news-image">
+                    <img src="http://seantheme.com/color-admin-v2.1/admin/html/assets/img/login-bg/bg-8.jpg" alt="">
+                </div>
+            </div>
+            <!-- end news-feed -->
+            <!-- begin right-content -->
+            <div class="right-content">
+                <!-- begin register-header -->
+                <h1 class="register-header">
+                    Авторизация
+                </h1>
+                <!-- end register-header -->
+                <!-- begin register-content -->
+                <div class="register-content">
+                    <form action="{{ path("login") }}" method="POST" class="margin-bottom-0">
+
+                        {#{% if error %}
+                            <div class="col-md-12 text-center form-validation error-validation">Не удаётся войти. Пожалуйста, проверьте правильность введённых данных.</div>
+                        {% endif %}#}
+
+                        <div>
+                            <label class="control-label" for="username">Логин </label>
+                            <div class="row m-b-15">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" id="username" name="_username"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="control-label" for="password">Пароль </label>
+                            <div class="row m-b-15">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="password" id="password" name="_password" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            {#<a style="text-decoration: underline; padding-bottom: 15px; float: right;" href="{{ path('forgot_password') }}">Забыли пароль?</a>#}
+                        </div>
+                        <div class="register-buttons">
+                            <button class="btn btn-primary btn-block btn-lg" type="submit">Авторизоваться</button>
+                        </div>
+
+                        <div class="m-t-20 m-b-40 p-b-40 text-inverse">
+                            Already a member? Click <a href="{{ path("registration") }}">here</a> to reigstration.
+                        </div>
+                        <hr>
+                        <p class="text-center">
+                            © Healthy Food All Right Reserved 2017
+                        </p>
+                    </form>
+                </div>
+                <!-- end register-content -->
+            </div>
+            <!-- end right-content -->
+        </div>
+        <!-- end register -->
+    </div>
+    <!-- end page container -->
+{% endblock %}

@@ -3,9 +3,17 @@
 security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
     providers:
         in_memory:
             memory: ~
+        db_provider:
+            entity:
+                class: AppBundle\Entity\User
+                property: email
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +22,16 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            anonymous: true
+            pattern: ^/
+            provider: db_provider
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: /
+                failure_path: /login
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session:   false
