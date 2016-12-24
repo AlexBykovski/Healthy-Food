@@ -1,0 +1,19 @@
+<div class="post-left-info">
+    <div class="post-date">
+        <span class="day">{{ day | default('now' | date('d')) }}</span>
+        <span class="month">{{ month | default('now' | date('M') | upper) }}</span>
+    </div>
+</div>
+<div class="post-content">
+    <div class="post-image">
+        <a href="{{ link }}"><img src="{{ image }}" alt=""></a>
+    </div>
+    <div class="post-info">
+        <h4 class="post-title">
+            <a href="{{ link }}">{{ name }}</a>
+        </h4>
+        <div class="post-desc">
+            {{ description }}
+        </div>
+    </div>
+</div>

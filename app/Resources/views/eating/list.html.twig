@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content" class="content">
+        <div class="container">
+            <div class="row row-space-30">
+                <div class="col-md-9">
+                    <ul class="post-list">
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/breakfast.jpg', 'name': 'Завтрак',
+                            'description': 'Приём пищи с 06:00 до 10:00'} %}
+                        </li>
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/lunch.png', 'name': 'Второй завтрак',
+                            'description': 'Приём пищи с 10:00 до 12:00'} %}
+                        </li>
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/dinner.jpg', 'name': 'Обед',
+                            'description': 'Приём пищи с 12:00 до 16:00'} %}
+                        </li>
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
+                            'description': 'Приём пищи с 16:00 до 18:00'} %}
+                        </li>
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/supper.jpg', 'name': 'Ужин',
+                            'description': 'Приём пищи с 18:00 до 20:00'} %}
+                        </li>
+                        <li>
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
+                            'description': 'Приём пищи с 20:00 до 21:00'} %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <div class="section-container">
+                        <h4 class="section-title"><span>Приёмы пищи</span></h4>
+                        <ul class="sidebar-list">
+                            <li><a href="#">Закрытые</a></li>
+                            <li><a href="#">Текущий</a></li>
+                            <li><a href="#">В режиме ожидания</a></li>
+                        </ul>
+                    </div>
+                    <div class="section-container">
+                        <h4 class="section-title"><span>Follow Us</span></h4>
+                        <ul class="sidebar-social-list">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
