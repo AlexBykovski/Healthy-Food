@@ -60,21 +60,23 @@ class Recipe
 
     /**
      * One Recipe has Many RecipeSteps.
-     * @ORM\OneToMany(targetEntity="RecipeStep", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="RecipeStep", mappedBy="recipe", cascade={"persist"})
      */
     private $steps;
 
     /**
      * One Recipe has Many RecipeProducts.
-     * @ORM\OneToMany(targetEntity="RecipeProduct", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="RecipeProduct", mappedBy="recipe", cascade={"persist"})
      */
     private $products;
 
     /**
      * One Recipe has Many RecipeNutrients.
-     * @ORM\OneToMany(targetEntity="RecipeNutrient", mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity="RecipeNutrient", mappedBy="recipe", cascade={"persist"})
      */
     private $nutrients;
+
+    public static $eatingTypes = ["завтрак", "второй завтрак", "обед", "полдник", "ужин", "второй ужин"];
 
     /**
      * Recipe constructor.

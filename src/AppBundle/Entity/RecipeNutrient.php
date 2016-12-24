@@ -25,6 +25,8 @@ class RecipeNutrient
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Название не должно быть пустым", groups={"recipe_nutrient_create"})
+     *
      * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
@@ -42,6 +44,8 @@ class RecipeNutrient
      * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
     private $recipe;
+
+    public static $nutrientTypes = ["белки", "жиры", "углеводы", "калории"];
 
     /**
      * @return int

@@ -25,6 +25,8 @@ class RecipeProduct
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Название не должно быть пустым", groups={"recipe_product_create"})
+     *
      * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
@@ -42,6 +44,8 @@ class RecipeProduct
      * @ORM\Column(name="measure", type="string", nullable=true)
      */
     private $measure;
+
+    public static $measureTypes = ["кг", "гр", "шт", "мг", "щепотка", "ст. ложка", "ч. ложка", "л", "мл",];
 
     /**
      * Many RecipeProducts have One Recipe.

@@ -32,7 +32,9 @@ class RecipeStep
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", nullable=false)
+     * @Assert\NotBlank(message = "Описание не должно быть пустым", groups={"recipe_step_create"})
+     *
+     * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
 

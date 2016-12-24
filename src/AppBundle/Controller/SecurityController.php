@@ -25,8 +25,10 @@ class SecurityController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
+            $adminRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["name" => "ROLE_ADMIN"]);
 
             $user->setPassword($password);
+            $user->addUserRole($adminRole);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

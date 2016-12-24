@@ -1,0 +1,6 @@
+services:
+    app.admin.recipe:
+        class: AppBundle\Admin\RecipeAdmin
+        arguments: [~, AppBundle\Entity\Recipe, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Recipe Tab", label: "Recipe" }
