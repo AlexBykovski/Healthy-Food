@@ -148,6 +148,12 @@ class User implements UserInterface
     private $userRoles;
 
     /**
+     * One User has Many Eatings.
+     * @ORM\OneToMany(targetEntity="Eating", mappedBy="user", cascade={"persist"})
+     */
+    private $eatings;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -155,6 +161,7 @@ class User implements UserInterface
         $this->createdAt = new \DateTime();
         $this->salt = md5(uniqid(null, true));
         $this->userRoles = new ArrayCollection();
+        $this->eatings = new ArrayCollection();
     }
 
     /**
@@ -405,5 +412,21 @@ class User implements UserInterface
     public function getSalt()
     {
         return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEatings()
+    {
+        return $this->eatings;
+    }
+
+    /**
+     * @param mixed $eatings
+     */
+    public function setEatings($eatings)
+    {
+        $this->eatings = $eatings;
     }
 }

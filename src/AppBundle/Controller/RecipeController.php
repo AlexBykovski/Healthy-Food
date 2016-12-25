@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,13 +11,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class RecipeController extends Controller
 {
     /**
-     * @Route("/list-recipes/{type}", name="list_recipes")
+     * @Route("/list-recipes/{date}/{type}", name="list_recipes")
      * @Security("has_role('ROLE_SIMPLE_USER')")
      */
-    public function listDoctorsSpecificDirectionAction(Request $request, $type)
+    public function listDoctorsSpecificDirectionAction(Request $request, $date, $type)
     {
+        $allRecipes = $this->getDoctrine()->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $this->getEatingNameByType($type)]);
+        $chosenEating = $this->getDoctrine()->getRepository("AppBundle:Eating")
+            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
+
         return $this->render('recipe/list-recipes.html.twig', [
-            "recipes" => $this->getDoctrine()->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $this->getEatingNameByType($type)])
+            "recipes" => $allRecipes,
+            "chosenEating" => $chosenEating,
         ]);
     }
 
