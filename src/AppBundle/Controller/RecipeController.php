@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class RecipeController extends Controller
 {
     /**
      * @Route("/list-recipes/{type}", name="list_recipes")
+     * @Security("has_role('ROLE_SIMPLE_USER')")
      */
     public function listDoctorsSpecificDirectionAction(Request $request, $type)
     {

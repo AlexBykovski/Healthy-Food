@@ -25,18 +25,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        admin_area:
-            pattern: ^/admin|^/logout$
-            anonymous: true
-            provider: in_memory
-            form_login:
-                login_path: login
-                check_path: login
-                default_target_path: /admin
-            logout:
-                path:   /logout
-                target: /
-
         main:
             anonymous: true
             pattern: ^/
@@ -51,3 +39,6 @@ security:
                 path:   /logout
                 target: /
                 invalidate_session:   false
+
+    access_control:
+                - { path: ^/admin, roles: ROLE_ADMIN }
