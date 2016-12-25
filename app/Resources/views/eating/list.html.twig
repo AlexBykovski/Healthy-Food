@@ -1,6 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% set curHour = 'now' | date('H') %}
+    {% set isBreakfastPast = curHour > 10%}
+    {% set isBreakfastFuture = curHour < 6%}
+    {% set isSecBreakfastPast = curHour > 12%}
+    {% set isSecBreakfastFuture = curHour < 10%}
+    {% set isDinnerPast = curHour > 16%}
+    {% set isDinnerFuture = curHour < 12%}
+    {% set isAfternoonSnackPast = curHour > 18%}
+    {% set isAfternoonSnackFuture = curHour < 16%}
+    {% set isSupperPast = curHour > 20%}
+    {% set isSupperFuture = curHour < 18%}
+    {% set isSecSupperPast = curHour > 21%}
+    {% set isSecSupperFuture = curHour < 20%}
     <div id="content" class="content">
         <div class="container">
             <div class="row row-space-30">
@@ -9,32 +22,38 @@
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/breakfast.jpg', 'name': 'Завтрак',
-                            'description': 'Приём пищи с 06:00 до 10:00'} %}
+                            'description': 'Приём пищи с 06:00 до 10:00',
+                            'was' : isBreakfastPast, 'will' : isBreakfastFuture} %}
                         </li>
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/lunch.png', 'name': 'Второй завтрак',
-                            'description': 'Приём пищи с 10:00 до 12:00'} %}
+                            'description': 'Приём пищи с 10:00 до 12:00',
+                            'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
                         </li>
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/dinner.jpg', 'name': 'Обед',
-                            'description': 'Приём пищи с 12:00 до 16:00'} %}
+                            'description': 'Приём пищи с 12:00 до 16:00',
+                            'was' : isDinnerPast, 'will' : isDinnerFuture} %}
                         </li>
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
-                            'description': 'Приём пищи с 16:00 до 18:00'} %}
+                            'description': 'Приём пищи с 16:00 до 18:00',
+                            'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
                         </li>
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/supper.jpg', 'name': 'Ужин',
-                            'description': 'Приём пищи с 18:00 до 20:00'} %}
+                            'description': 'Приём пищи с 18:00 до 20:00',
+                            'was' : isSupperPast, 'will' : isSupperFuture} %}
                         </li>
                         <li>
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
                             'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
-                            'description': 'Приём пищи с 20:00 до 21:00'} %}
+                            'description': 'Приём пищи с 20:00 до 21:00',
+                            'was' : isSecSupperPast, 'will' : isSecSupperFuture} %}
                         </li>
                     </ul>
                 </div>
