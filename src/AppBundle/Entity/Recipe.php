@@ -76,6 +76,12 @@ class Recipe
      */
     private $nutrients;
 
+    /**
+     * One Recipe has Many Eatings.
+     * @ORM\OneToMany(targetEntity="Eating", mappedBy="recipe", cascade={"persist"})
+     */
+    private $eatings;
+
     public static $eatingTypes = ["завтрак", "второй завтрак", "обед", "полдник", "ужин", "второй ужин"];
 
     /**
@@ -86,6 +92,7 @@ class Recipe
         $this->steps = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->nutrients = new ArrayCollection();
+        $this->eatings = new ArrayCollection();
     }
 
     /**
@@ -230,5 +237,21 @@ class Recipe
     public function setPortions($portions)
     {
         $this->portions = $portions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEatings()
+    {
+        return $this->eatings;
+    }
+
+    /**
+     * @param mixed $eatings
+     */
+    public function setEatings($eatings)
+    {
+        $this->eatings = $eatings;
     }
 }
