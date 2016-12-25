@@ -31,7 +31,11 @@
         "symfony/assetic-bundle": "^2.8",
         "leafo/scssphp": "^0.6.6",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "sensio/generator-bundle": "^3.0"
+        "sensio/generator-bundle": "^3.0",
+        "sonata-project/admin-bundle": "^3.10",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "sonata-project/block-bundle": "^3.2",
+        "knplabs/knp-menu-bundle": "^2.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\DietAdditionalInformation;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -141,12 +142,19 @@ class User implements UserInterface
     private $dietAdditionalInformation;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="users_roles")
+     */
+    private $userRoles;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->salt = md5(uniqid(null, true));
+        $this->userRoles = new ArrayCollection();
     }
 
     /**
@@ -356,12 +364,39 @@ class User implements UserInterface
         return $this->email;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles()
     {
-        return [];
+        $roles = [];
+
+        foreach($this->userRoles as $role){
+            $roles[] = $role->getRole();
+        }
+
+        return $roles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRoles()
+    {
+        return $this->userRoles;
+    }
+
+    /**
+     * @param mixed $userRoles
+     */
+    public function setUserRoles($userRoles)
+    {
+        $this->userRoles = $userRoles;
+    }
+
+    /**
+     * @param Role $role
+     */
+    public function addUserRole(Role $role)
+    {
+        $this->userRoles->add($role);
     }
 
     /**

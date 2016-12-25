@@ -25,6 +25,11 @@
         {#<link href="css/main.css" rel="stylesheet" id="theme">#}
         <link href="css/eating-list-default.min.css" rel="stylesheet">
         <link href="css/eating-custom.css" rel="stylesheet">
+        {% if app.request.attributes.get('_route') == 'list_recipes' %}
+            <link href="css/recipes-list-default.min.css" rel="stylesheet">
+            <link href="css/recipe-list-default-responsive.css" rel="stylesheet">
+            <link href="css/recipes-list-theme-default.css" rel="stylesheet">
+        {% endif %}
         <!-- ================== END BASE CSS STYLE ================== -->
 
         <!-- ================== BEGIN BASE JS ================== -->
