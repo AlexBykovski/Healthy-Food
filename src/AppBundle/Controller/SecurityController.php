@@ -7,6 +7,7 @@ use AppBundle\Form\Type\UserRegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class SecurityController extends Controller
 {
@@ -25,16 +26,22 @@ class SecurityController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
-            $adminRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["name" => "ROLE_ADMIN"]);
+            $adminRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["role" => "ROLE_ADMIN"]);
+            $simpleUserRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["role" => "ROLE_SIMPLE_USER"]);
 
             $user->setPassword($password);
-            $user->addUserRole($adminRole);
+            //$user->addUserRole($adminRole);
+            $user->addUserRole($simpleUserRole);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute("homepage");
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
+
+            return $this->redirectToRoute("eating_list");
         }
 
         return $this->render('security/registration.html.twig', [
@@ -49,7 +56,7 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
-        if ($this->getUser() && $this->getUser()->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->getUser()) {
             return $this->redirectToRoute('homepage');
         }
 

@@ -11,6 +11,7 @@ class EatingController extends Controller
 {
     /**
      * @Route("/eating-list", name="eating_list")
+     * @Security("has_role('ROLE_SIMPLE_USER')")
      */
     public function eatingListAction(Request $request)
     {
