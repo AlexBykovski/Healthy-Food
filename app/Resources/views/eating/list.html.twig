@@ -20,37 +20,37 @@
                 <div class="col-md-9">
                     <ul class="post-list">
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "breakfast"}),
                             'image': 'images/breakfast.jpg', 'name': 'Завтрак',
                             'description': 'Приём пищи с 06:00 до 10:00',
                             'was' : isBreakfastPast, 'will' : isBreakfastFuture} %}
                         </li>
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "sec-breakfast"}),
                             'image': 'images/lunch.png', 'name': 'Второй завтрак',
                             'description': 'Приём пищи с 10:00 до 12:00',
                             'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
                         </li>
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "dinner"}),
                             'image': 'images/dinner.jpg', 'name': 'Обед',
                             'description': 'Приём пищи с 12:00 до 16:00',
                             'was' : isDinnerPast, 'will' : isDinnerFuture} %}
                         </li>
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "afternoon-snack"}),
                             'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
                             'description': 'Приём пищи с 16:00 до 18:00',
                             'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
                         </li>
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "supper"}),
                             'image': 'images/supper.jpg', 'name': 'Ужин',
                             'description': 'Приём пищи с 18:00 до 20:00',
                             'was' : isSupperPast, 'will' : isSupperFuture} %}
                         </li>
                         <li>
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': '#',
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {type: "sec-supper"}),
                             'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
                             'description': 'Приём пищи с 20:00 до 21:00',
                             'was' : isSecSupperPast, 'will' : isSecSupperFuture} %}
