@@ -94,7 +94,7 @@ class RecipeStep
     }
 
     /**
-     * @return mixed
+     * @return Recipe
      */
     public function getRecipe()
     {
@@ -102,7 +102,7 @@ class RecipeStep
     }
 
     /**
-     * @param mixed $recipe
+     * @param Recipe $recipe
      */
     public function setRecipe($recipe)
     {

@@ -82,10 +82,45 @@ class RecipeAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
-            ->add('time')
-            ->add('portions')
-            ->add('eatingType')
+            ->tab('General')
+                ->add('name')
+                ->add('time')
+                ->add('portions')
+                ->add('eatingType')
+                ->add('photo')
+                ->end()
+            ->end()
+            //->add('steps', 'collection')
+            //->add('products')
+            //->add('nutrients')
         ;
+    }
+
+    public function prePersist($recipe){
+        foreach($recipe->getSteps() as $step){
+            $step->setRecipe($recipe);
+        }
+
+        foreach($recipe->getProducts() as $product){
+            $product->setRecipe($recipe);
+        }
+
+        foreach($recipe->getNutrients() as $nutrient){
+            $nutrient->setRecipe($recipe);
+        }
+    }
+
+    public function preUpdate($recipe){
+        foreach($recipe->getSteps() as $step){
+            $step->setRecipe($recipe);
+        }
+
+        foreach($recipe->getProducts() as $product){
+            $product->setRecipe($recipe);
+        }
+
+        foreach($recipe->getNutrients() as $nutrient){
+            $nutrient->setRecipe($recipe);
+        }
     }
 }
