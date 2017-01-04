@@ -21,14 +21,20 @@
         <link href="color_parallax/css/style-responsive.min.css" rel="stylesheet">
         <link href="color_parallax/css/theme/default.css" rel="stylesheet" id="theme">
         <!-- only for Heroku deploy -->
-        <link href="bundles/app/css/main.css" rel="stylesheet" id="theme">
-        {#<link href="css/main.css" rel="stylesheet" id="theme">#}
+        {#<link href="bundles/app/css/main.css" rel="stylesheet" id="theme">#}
+        <link href="css/main.css" rel="stylesheet" id="theme">
         <link href="css/eating-list-default.min.css" rel="stylesheet">
         <link href="css/eating-custom.css" rel="stylesheet">
         {% if app.request.attributes.get('_route') == 'list_recipes' %}
             <link href="css/recipes-list-default.min.css" rel="stylesheet">
             <link href="css/recipe-list-default-responsive.css" rel="stylesheet">
             <link href="css/recipes-list-theme-default.css" rel="stylesheet">
+        {% endif %}
+
+        {% if app.request.attributes.get('_route') == 'about_us' %}
+            <link href="css/about-us-style.min.css" rel="stylesheet">
+            <link href="css/about-us-style-responsive.min.css" rel="stylesheet">
+            {#<link href="css/recipes-list-theme-default.css" rel="stylesheet">#}
         {% endif %}
         <!-- ================== END BASE CSS STYLE ================== -->
 
@@ -56,7 +62,7 @@
                             <li>
                                 <ul class="nav navbar-nav navbar-right ul-nav">
                                     <li><a href="{{ path("eating_list") }}" data-click="scroll-to-target">Приёмы пищи</a></li>
-                                    <li><a href="{{ path("homepage") }}" data-click="scroll-to-target">О нас</a></li>
+                                    <li><a href="{{ path("about_us") }}" data-click="scroll-to-target">О создателе</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown navbar-user m-l-40">
@@ -75,6 +81,7 @@
                             <li>
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a href="/" data-click="scroll-to-target">О Healthy Food</a></li>
+                                    <li><a href="{{ path("about_us") }}" data-click="scroll-to-target">О создателе</a></li>
                                 </ul>
                             </li>
                             <li class="unregistered">
