@@ -14,42 +14,42 @@
     {% set isSupperFuture = curHour < 18%}
     {% set isSecSupperPast = curHour > 21%}
     {% set isSecSupperFuture = curHour < 20%}
-    <div id="content" class="content">
+    <div id="content" class="content" ng-init="isShowPast = true; isShowPresent = true; isShowFuture = true;">
         <div class="container">
             <div class="row row-space-30">
                 <div class="col-md-9">
                     <ul class="post-list">
-                        <li>
+                        <li ng-show="{{ isBreakfastPast ? 'isShowPast' : isBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "breakfast"}),
                             'image': 'images/breakfast.jpg', 'name': 'Завтрак',
                             'description': 'Приём пищи с 06:00 до 10:00',
                             'was' : isBreakfastPast, 'will' : isBreakfastFuture} %}
                         </li>
-                        <li>
+                        <li ng-show="{{ isSecBreakfastPast ? 'isShowPast' : isSecBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-breakfast"}),
                             'image': 'images/lunch.png', 'name': 'Второй завтрак',
                             'description': 'Приём пищи с 10:00 до 12:00',
                             'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
                         </li>
-                        <li>
+                        <li ng-show="{{ isDinnerPast ? 'isShowPast' : isDinnerFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "dinner"}),
                             'image': 'images/dinner.jpg', 'name': 'Обед',
                             'description': 'Приём пищи с 12:00 до 16:00',
                             'was' : isDinnerPast, 'will' : isDinnerFuture} %}
                         </li>
-                        <li>
+                        <li ng-show="{{ isAfternoonSnackPast ? 'isShowPast' : isAfternoonSnackFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "afternoon-snack"}),
                             'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
                             'description': 'Приём пищи с 16:00 до 18:00',
                             'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
                         </li>
-                        <li>
+                        <li ng-show="{{ isSupperPast ? 'isShowPast' : isSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "supper"}),
                             'image': 'images/supper.jpg', 'name': 'Ужин',
                             'description': 'Приём пищи с 18:00 до 20:00',
                             'was' : isSupperPast, 'will' : isSupperFuture} %}
                         </li>
-                        <li>
+                        <li ng-show="{{ isSecSupperPast ? 'isShowPast' : isSecSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-supper"}),
                             'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
                             'description': 'Приём пищи с 20:00 до 21:00',
@@ -61,9 +61,10 @@
                     <div class="section-container">
                         <h4 class="section-title"><span>Приёмы пищи</span></h4>
                         <ul class="sidebar-list">
-                            <li><a href="#">Закрытые</a></li>
-                            <li><a href="#">Текущий</a></li>
-                            <li><a href="#">В режиме ожидания</a></li>
+                            <li><a ng-click="isShowPast = true; isShowPresent = false; isShowFuture = false;">Закрытые</a></li>
+                            <li ng-show="isShowPresent"><a ng-click="isShowPast = false; isShowPresent = true; isShowFuture = false;">Текущий</a></li>
+                            <li><a ng-click="isShowPast = false; isShowPresent = false; isShowFuture = true;">В режиме ожидания</a></li>
+                            <li><a ng-click="isShowPast = true; isShowPresent = true; isShowFuture = true;">Все</a></li>
                         </ul>
                     </div>
                     <div class="section-container">
