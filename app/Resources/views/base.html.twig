@@ -17,6 +17,7 @@
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="color_parallax/css/animate.min.css" rel="stylesheet">
+        <link href="bower_components/bootstrap-toggle/css/bootstrap2-toggle.min.css" rel="stylesheet">
         <link href="color_parallax/css/style.min.css" rel="stylesheet">
         <link href="color_parallax/css/style-responsive.min.css" rel="stylesheet">
         <link href="color_parallax/css/theme/default.css" rel="stylesheet" id="theme">
@@ -72,11 +73,11 @@
                         </ul>
                     {% else %}
                         <ul class="nav navbar-nav navbar-right">
-                            <li>
+                            {#<li>
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a href="/" data-click="scroll-to-target">О Healthy Food</a></li>
                                 </ul>
-                            </li>
+                            </li>#}
                             <li class="unregistered">
                                 <a href="{{ path('registration') }}" class="btn btn-success m-l-30 m-r-15 m-t-10">Зарегистрироваться</a>
                                 <a href="{{ path('login') }}" class="btn btn-white m-l-40 m-t-10 btn-login">Войти</a>
@@ -93,6 +94,7 @@
         <script src="color_parallax/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
         <script src="color_parallax/plugins/jquery-hashchange/jquery.hashchange.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>
         <!--[if lt IE 9]>
         <script src="color_parallax/crossbrowserjs/html5shiv.js"></script>
         <script src="color_parallax/crossbrowserjs/respond.min.js"></script>
