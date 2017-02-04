@@ -2,19 +2,20 @@
 
 {% block body %}
     {% set curHour = 'now' | date('H') %}
-    {% set isBreakfastPast = curHour > 10%}
+    {% set curMin = 'now' | date('i') | number_format %}
+    {% set isBreakfastPast = curHour > 10 or curHour == 10 and curMin > 0 %}
     {% set isBreakfastFuture = curHour < 6%}
-    {% set isSecBreakfastPast = curHour > 12%}
+    {% set isSecBreakfastPast = curHour > 12 or curHour == 12 and curMin > 0%}
     {% set isSecBreakfastFuture = curHour < 10%}
-    {% set isDinnerPast = curHour > 16%}
+    {% set isDinnerPast = curHour > 16 or curHour == 16 and curMin > 0%}
     {% set isDinnerFuture = curHour < 12%}
-    {% set isAfternoonSnackPast = curHour > 18%}
+    {% set isAfternoonSnackPast = curHour > 18 or curHour == 18 and curMin > 0%}
     {% set isAfternoonSnackFuture = curHour < 16%}
-    {% set isSupperPast = curHour > 20%}
+    {% set isSupperPast = curHour > 20 or curHour == 20 and curMin > 0%}
     {% set isSupperFuture = curHour < 18%}
-    {% set isSecSupperPast = curHour > 21%}
+    {% set isSecSupperPast = curHour > 21 or curHour == 21 and curMin > 0%}
     {% set isSecSupperFuture = curHour < 20%}
-    <div id="content" class="content" ng-init="isShowPast = true; isShowPresent = true; isShowFuture = true;">
+    <div id="content" class="content" ng-init="isShowPast = true; isShowPresent = true; isShowFuture = true;" {{ curMin }}>
         <div class="container">
             <div class="row row-space-30">
                 <div class="col-md-9">
@@ -62,7 +63,7 @@
                         <h4 class="section-title"><span>Приёмы пищи</span></h4>
                         <ul class="sidebar-list">
                             <li><a ng-click="isShowPast = true; isShowPresent = false; isShowFuture = false;">Закрытые</a></li>
-                            <li ng-show="isShowPresent"><a ng-click="isShowPast = false; isShowPresent = true; isShowFuture = false;">Текущий</a></li>
+                            <li><a ng-click="isShowPast = false; isShowPresent = true; isShowFuture = false;">Текущий</a></li>
                             <li><a ng-click="isShowPast = false; isShowPresent = false; isShowFuture = true;">В режиме ожидания</a></li>
                             <li><a ng-click="isShowPast = true; isShowPresent = true; isShowFuture = true;">Все</a></li>
                         </ul>
