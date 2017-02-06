@@ -18,7 +18,7 @@
             <!-- begin news-feed -->
             <div class="news-feed">
                 <div class="news-image">
-                    <img src="http://seantheme.com/color-admin-v2.1/admin/html/assets/img/login-bg/bg-8.jpg" alt="">
+                    <img src="http://xvatit.com/uploads/posts/2015-07/1437718687_1.jpg" alt="">
                 </div>
             </div>
             <!-- end news-feed -->
@@ -72,7 +72,9 @@
                                 {{ form_errors(form.weight) }}
                             </div>
                             <div class="col-md-4 m-b-15 {{ form_errors(form.gender)| length ? 'has-error' }}">
-                                {{ form_widget(form.gender) }}
+                                {{ form_widget(form.gender, {attr: {"data-toggle" : "toggle", "data-style" : "ios",
+                                    "data-height" : "34px", "data-width" : "50px", "data-on" : "Муж",
+                                    "data-off" : "Жен", "data-offstyle" : "info", "data-onstyle" : "primary"}}) }}
                                 {{ form_errors(form.gender) }}
                             </div>
                         </div>
