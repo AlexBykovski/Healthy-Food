@@ -9,23 +9,28 @@
             {% stylesheets output='bundles/app/css/main.css' filter='scssphp'
             'sass/core-import.scss'
             %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+            {% endstylesheets %}
+            {% stylesheets output='bundles/app/css/vendors.css' filter='cssrewrite'
+                'color_parallax/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css'
+                'bower_components/bootstrap/dist/css/bootstrap.min.css'
+                'bower_components/font-awesome/css/font-awesome.min.css'
+                'color_parallax/css/animate.min.css'
+                'bower_components/bootstrap-toggle/css/bootstrap2-toggle.min.css'
+                'color_parallax/css/style.min.css'
+                'color_parallax/css/style-responsive.min.css'
+                'color_parallax/css/theme/default.css'
+                'css/eating-list-default.min.css'
+                'css/eating-custom.css'
+            %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
         {% endblock %}
         <!-- ================== BEGIN BASE CSS STYLE ================== -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <link href="color_parallax/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
-        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="color_parallax/css/animate.min.css" rel="stylesheet">
-        <link href="bower_components/bootstrap-toggle/css/bootstrap2-toggle.min.css" rel="stylesheet">
-        <link href="color_parallax/css/style.min.css" rel="stylesheet">
-        <link href="color_parallax/css/style-responsive.min.css" rel="stylesheet">
-        <link href="color_parallax/css/theme/default.css" rel="stylesheet" id="theme">
         <!-- only for Heroku deploy -->
-        <link href="bundles/app/css/main.css" rel="stylesheet" id="theme">
+        {#<link href="bundles/app/css/main.css" rel="stylesheet" id="theme">#}
         {#<link href="css/main.css" rel="stylesheet" id="theme">#}
-        <link href="css/eating-list-default.min.css" rel="stylesheet">
-        <link href="css/eating-custom.css" rel="stylesheet">
         {% if app.request.attributes.get('_route') == 'list_recipes' %}
             <link href="css/recipes-list-default.min.css" rel="stylesheet">
             <link href="css/recipe-list-default-responsive.css" rel="stylesheet">
@@ -89,32 +94,38 @@
 
         {% block body %}{% endblock %}
         <!-- ================== BEGIN BASE JS ================== -->
-        <script src="color_parallax/plugins/jquery/jquery-1.9.1.min.js"></script>
-        <script src="color_parallax/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-        <script src="color_parallax/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-        <script src="color_parallax/plugins/jquery-hashchange/jquery.hashchange.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="bower_components/bootstrap-toggle/js/bootstrap2-toggle.min.js"></script>
+            {% block javascripts %}
+                {% javascripts output='bundles/app/js/vendors.js'
+                    'color_parallax/plugins/jquery/jquery-1.9.1.min.js'
+                    'color_parallax/plugins/jquery/jquery-migrate-1.1.0.min.js'
+                    'color_parallax/plugins/jquery-ui/ui/minified/jquery-ui.min.js'
+                    'color_parallax/plugins/jquery-hashchange/jquery.hashchange.min.js'
+                    'bower_components/angular/angular.min.js'
+                    'bower_components/bootstrap/dist/js/bootstrap.min.js'
+                    'bower_components/bootstrap-toggle/js/bootstrap2-toggle.min.js'
+                    'color_parallax/plugins/slimscroll/jquery.slimscroll.min.js'
+                    'color_parallax/plugins/jquery-cookie/jquery.cookie.js'
+                    'color_parallax/js/apps.min.js'
+                %}
+                <script src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+                {#{% javascripts output='bundles/app/js/main.js'
+                'js/app.js'
+                %}
+                <script src="{{ asset_url }}"></script>
+                {% endjavascripts %}#}
+            {% endblock %}
         <!--[if lt IE 9]>
         <script src="color_parallax/crossbrowserjs/html5shiv.js"></script>
         <script src="color_parallax/crossbrowserjs/respond.min.js"></script>
         <script src="color_parallax/crossbrowserjs/excanvas.min.js"></script>
         <![endif]-->
-        <script src="color_parallax/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="color_parallax/plugins/jquery-cookie/jquery.cookie.js"></script>
         <!-- ================== END BASE JS ================== -->
-
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="color_parallax/js/apps.min.js"></script>
-        <!-- ================== END PAGE LEVEL JS ================== -->
-
         <script>
             $(document).ready(function() {
                 App.init();
             });
         </script>
-        {#{% block javascripts %}{% endblock %}#}
         </div>
     </body>
 </html>
