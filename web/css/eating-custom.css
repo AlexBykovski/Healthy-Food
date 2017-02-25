@@ -1,3 +1,19 @@
 .post-date .month{
     font-size: 14px;
 }
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+
+.toggle.ios .toggle-handle { border-radius: 20px; }
+
+.ios span.toggle-handle{
+    display: none;
+}
+
+.ios .toggle-off.btn{
+    padding-left: 10px !important;
+}
+
+.ios .toggle-on.btn{
+    padding-left: 10px !important;
+}
