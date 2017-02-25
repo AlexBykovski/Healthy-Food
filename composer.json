@@ -75,17 +75,7 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml",
-            "env-map": {
-                "database_name": "SYMFONY__DATABASE_NAME",
-                "database_user": "SYMFONY__DATABASE_USER",
-                "database_host": "SYMFONY__DATABASE_HOST",
-                "database_password": "SYMFONY__DATABASE_PASSWORD",
-                "mailer_host": "SYMFONY__MAILER_HOST",
-                "mailer_user": "SENDGRID_USERNAME",
-                "mailer_password": "SENDGRID_PASSWORD",
-                "transport": "smtp.sendgrid.net"
-            }
+            "file": "app/config/parameters.yml"
         }
     }
 }
