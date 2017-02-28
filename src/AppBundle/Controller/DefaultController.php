@@ -25,16 +25,28 @@ class DefaultController extends Controller
      */
     public function testIndexAction(Request $request)
     {
-        $result = $this->container
-            ->get('bazinga_geocoder.geocoder')
-            ->using('google_maps')
-            ->geocode($request->server->get('REMOTE_ADDR'));
+        $error = null;
+        $trace = "";
 
-        var_dump($result->first());die;
+        try {
+            $result = $this->container
+                ->get('bazinga_geocoder.geocoder')
+                ->using('google_maps')
+                ->geocode($request->server->get('REMOTE_ADDR'));
+
+            var_dump($result->first());
+            die;
+        }
+        catch(\Exception $e){
+            $error = $e->getMessage();
+            $trace = $e->getTrace();
+        }
 
         // replace this example code with whatever you need
         return $this->render('default/test_geocoder.html.twig', [
-            'addr' => $request->server->get('REMOTE_ADDR')
+            'addr' => $request->server->get('REMOTE_ADDR'),
+            'err' => $error,
+            'trace' => $trace,
         ]);
     }
 }

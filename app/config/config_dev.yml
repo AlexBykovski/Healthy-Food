@@ -32,6 +32,3 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
-doctrine:
-    dbal:
-        url: "%env(CLEARDB_DATABASE_URL)%"
