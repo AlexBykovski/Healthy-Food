@@ -19,4 +19,22 @@ class DefaultController extends Controller
             'addr' => $request->server->get('REMOTE_ADDR')
         ]);
     }
+
+    /**
+     * @Route("/test-geocoder", name="test_geocoder")
+     */
+    public function testIndexAction(Request $request)
+    {
+        $result = $this->container
+            ->get('bazinga_geocoder.geocoder')
+            ->using('google_maps')
+            ->geocode($request->server->get('REMOTE_ADDR'));
+
+        var_dump($result->first());die;
+
+        // replace this example code with whatever you need
+        return $this->render('default/test_geocoder.html.twig', [
+            'addr' => $request->server->get('REMOTE_ADDR')
+        ]);
+    }
 }
