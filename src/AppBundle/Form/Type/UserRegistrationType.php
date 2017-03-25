@@ -37,13 +37,15 @@ class UserRegistrationType extends AbstractType
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Рост',
-                "scale" => 1
+                "scale" => 1,
+                "invalid_message" => "Некорректный рост",
             ])
             ->add('weight', NumberType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Вес',
-                "scale" => 1
+                "scale" => 1,
+                "invalid_message" => "Некорректный вес",
             ])
             ->add('gender', CheckboxType::class, [
                 "label_attr" => ['class' => 'control-label'],
