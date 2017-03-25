@@ -23,10 +23,12 @@ class DietAdditionalInformationType extends AbstractType
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Количество тренировок в неделю'
             ])
-            ->add('trainingDifficulty', IntegerType::class, [
+            ->add('trainingDifficulty', ChoiceType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
-                "label" => 'Сложность тренировок'
+                "label" => 'Сложность тренировок (по шкале от 1 до 10)',
+                "choices" => array_combine(range(1, 10), range(1, 10)),
+
             ])
             ->add('purpose', ChoiceType::class, [
                 "label_attr" => ['class' => 'control-label'],

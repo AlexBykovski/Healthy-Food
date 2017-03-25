@@ -41,9 +41,9 @@ class DietAdditionalInformation
      *
      * @Assert\Range(
      *      min = 0,
-     *      max = 30,
+     *      max = 21,
      *      minMessage = "Количество тренировок в неделю не должно быть менее 0",
-     *      maxMessage = "Количество тренировок в неделю не должно быть более 30",
+     *      maxMessage = "Количество тренировок в неделю не должно быть более 21",
      *      groups={"registration"})
      *
      * @ORM\Column(name="count_training", type="integer", nullable=false, options={"default": 0})

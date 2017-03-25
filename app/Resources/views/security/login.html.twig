@@ -54,14 +54,16 @@
                             </div>
                         </div>
                         <div>
-                            {#<a style="text-decoration: underline; padding-bottom: 15px; float: right;" href="{{ path('forgot_password') }}">Забыли пароль?</a>#}
+                            {% if error %}
+                                <div class="alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
                         </div>
                         <div class="register-buttons">
                             <button class="btn btn-primary btn-block btn-lg" type="submit">Авторизоваться</button>
                         </div>
 
                         <div class="m-t-20 m-b-40 p-b-40 text-inverse">
-                            Already a member? Click <a href="{{ path("registration") }}">here</a> to reigstration.
+                            Already a member? Click <a href="{{ path("registration") }}">here</a> to registration.
                         </div>
                         <hr>
                         <p class="text-center">

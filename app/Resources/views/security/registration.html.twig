@@ -37,18 +37,21 @@
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.firstName)| length ? 'has-error' }}">
                                 {{ form_widget(form.firstName) }}
+                                {{ form_errors(form.firstName) }}
                             </div>
                         </div>
                         {{ form_label(form.lastName) }}
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.lastName)| length ? 'has-error' }}">
                                 {{ form_widget(form.lastName) }}
+                                {{ form_errors(form.lastName) }}
                             </div>
                         </div>
                         {{ form_label(form.email) }}
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.email)| length ? 'has-error' }}">
                                 {{ form_widget(form.email) }}
+                                {{ form_errors(form.email) }}
                             </div>
                         </div>
                         <div class="row row-space-10">
@@ -83,6 +86,7 @@
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.password.first)| length ? 'has-error' }}">
                                 {{ form_widget(form.password.first) }}
+                                {{ form_errors(form.password.first) }}
                             </div>
                         </div>
 
@@ -90,6 +94,7 @@
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.password.second)| length ? 'has-error' }}">
                                 {{ form_widget(form.password.second) }}
+                                {{ form_errors(form.password.second) }}
                             </div>
                         </div>
 
@@ -118,6 +123,7 @@
                         <div class="row m-b-15">
                             <div class="col-md-12 {{ form_errors(form.dietAdditionalInformation.purpose)| length ? 'has-error' }}">
                                 {{ form_widget(form.dietAdditionalInformation.purpose) }}
+                                {{ form_errors(form.dietAdditionalInformation.purpose) }}
                             </div>
                         </div>
                         <div class="register-buttons">

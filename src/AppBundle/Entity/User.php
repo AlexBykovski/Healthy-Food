@@ -102,7 +102,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^([3-9]\d)|([1-2]\d{2}(,\d)?)$/",
-     *     message="Рост должен быть целым или десятичным числом с одной цифрой после запятой (пр. 167 или 155,4)",
+     *     message="Рост должен быть положительным целым или десятичным числом с одной цифрой после запятой (пр. 167 или 155,4)",
      *     groups={"registration"}
      * )
      *
@@ -117,7 +117,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^[1-9]\d\d?(,\d)?$/",
-     *     message="Вес должен быть целым или десятичным числом с одной цифрой после запятой (пр. 67 или 55,4)",
+     *     message="Вес должен быть положительным целым или десятичным числом с одной цифрой после запятой (пр. 67 или 55,4)",
      *     groups={"registration"}
      * )
      *
@@ -135,6 +135,8 @@ class User implements UserInterface
     private $gender;
 
     /**
+     * @Assert\Valid
+     *
      * One User has One DietAdditionalInformation.
      * @ORM\OneToOne(targetEntity="DietAdditionalInformation", cascade={"persist"})
      * @ORM\JoinColumn(name="diet_additional_information_id", referencedColumnName="id")
