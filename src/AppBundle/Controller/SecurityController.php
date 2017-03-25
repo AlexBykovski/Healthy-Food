@@ -62,7 +62,9 @@ class SecurityController extends Controller
 
         return $this->render(
             'security/login.html.twig',
-            []
+            [
+                "error" => $this->get('security.authentication_utils')->getLastAuthenticationError(),
+            ]
         );
     }
 }
