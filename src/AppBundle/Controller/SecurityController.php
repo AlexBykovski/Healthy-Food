@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\UserRegistrationType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,11 +29,14 @@ class SecurityController extends Controller
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPassword());
             $adminRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["role" => "ROLE_ADMIN"]);
+            /** @var Role $simpleUserRole */
             $simpleUserRole = $this->getDoctrine()->getRepository("AppBundle:Role")->findOneBy(["role" => "ROLE_SIMPLE_USER"]);
 
             $user->setPassword($password);
             //$user->addUserRole($adminRole);
             $user->addUserRole($simpleUserRole);
+            $user->setCreatedAt(new DateTime());
+            $user->refreshUpdated();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

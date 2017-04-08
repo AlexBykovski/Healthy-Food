@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="profile-container">
+        <!-- begin profile-section -->
+        <div class="profile-section row">
+            <form action="{{ path("edit_profile") }}" method="post" class="margin-bottom-0" enctype="multipart/form-data">
+                {{ form_widget(form._token) }}
+                <!-- begin profile-left -->
+                <div class="col-md-2">
+                    <!-- begin profile-image -->
+                    <div class="profile-image">
+                        <img src="{{ user.photo | default('images/no-photo.jpg') }}">
+                    </div>
+                    <!-- end profile-image -->
+                    <div class="m-b-10">
+                        {{ form_widget(form.filePhoto, {attr: {"style" : "width: 190px;"}}) }}
+                    </div>
+                </div>
+                <!-- end profile-left -->
+                <!-- begin profile-right -->
+                <div class="col-md-10">
+                    <!-- begin profile-info -->
+                    <div class="profile-info">
+                            <div class="row row-space-10">
+                                {{ form_label(form.firstName, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.lastName, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.email, null, {label_attr: {class: "col-md-3"}}) }}
+                            </div>
+                            <div class="row m-b-15 row-space-10">
+                                <div class="col-md-3 {{ form_errors(form.firstName)| length ? 'has-error' }}">
+                                    {{ form_widget(form.firstName) }}
+                                    {{ form_errors(form.firstName) }}
+                                </div>
+                                <div class="col-md-3 {{ form_errors(form.lastName)| length ? 'has-error' }}">
+                                    {{ form_widget(form.lastName) }}
+                                    {{ form_errors(form.lastName) }}
+                                </div>
+                                <div class="col-md-3 {{ form_errors(form.email)| length ? 'has-error' }}">
+                                    {{ form_widget(form.email) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                            </div>
+                            <div class="row row-space-10">
+                                {{ form_label(form.height, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.weight, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.gender, null, {label_attr: {class: "col-md-3"}}) }}
+                            </div>
+                            <div class="row row-space-10">
+                                <div class="col-md-3 m-b-15 {{ form_errors(form.height)| length ? 'has-error' }}">
+                                    {{ form_widget(form.height) }}
+                                    {{ form_errors(form.height) }}
+                                </div>
+                                <div class="col-md-3 m-b-15 {{ form_errors(form.weight)| length ? 'has-error' }}">
+                                    {{ form_widget(form.weight) }}
+                                    {{ form_errors(form.weight) }}
+                                </div>
+                                <div class="col-md-3 m-b-15 {{ form_errors(form.gender)| length ? 'has-error' }}">
+                                    {{ form_widget(form.gender, {attr: {"data-toggle" : "toggle", "data-style" : "ios",
+                                        "data-height" : "34px", "data-width" : "50px", "data-on" : "Муж",
+                                        "data-off" : "Жен", "data-offstyle" : "info", "data-onstyle" : "primary"}}) }}
+                                    {{ form_errors(form.gender) }}
+                                </div>
+                            </div>
+
+                            <div class="row row-space-10">
+                                {{ form_label(form.dietAdditionalInformation.countEating, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.dietAdditionalInformation.countTraining, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.dietAdditionalInformation.trainingDifficulty, null, {label_attr: {class: "col-md-4"}}) }}
+                            </div>
+                            <div class="row m-b-15 row-space-10">
+                                <div class="col-md-3 {{ form_errors(form.dietAdditionalInformation.countEating)| length ? 'has-error' }}">
+                                    {{ form_widget(form.dietAdditionalInformation.countEating) }}
+                                    {{ form_errors(form.dietAdditionalInformation.countEating) }}
+                                </div>
+                                <div class="col-md-3 {{ form_errors(form.dietAdditionalInformation.countTraining)| length ? 'has-error' }}">
+                                    {{ form_widget(form.dietAdditionalInformation.countTraining) }}
+                                    {{ form_errors(form.dietAdditionalInformation.countTraining) }}
+                                </div>
+                                <div class="col-md-4 {{ form_errors(form.dietAdditionalInformation.trainingDifficulty)| length ? 'has-error' }}">
+                                    {{ form_widget(form.dietAdditionalInformation.trainingDifficulty) }}
+                                    {{ form_errors(form.dietAdditionalInformation.trainingDifficulty) }}
+                                </div>
+                            </div>
+                            <div class="row row-space-10">
+                                {{ form_label(form.dietAdditionalInformation.purpose, null, {label_attr: {class: "col-md-3"}}) }}
+                            </div>
+                            <div class="row m-b-15">
+                                <div class="col-md-3 {{ form_errors(form.dietAdditionalInformation.purpose)| length ? 'has-error' }}">
+                                    {{ form_widget(form.dietAdditionalInformation.purpose) }}
+                                    {{ form_errors(form.dietAdditionalInformation.purpose) }}
+                                </div>
+                            </div>
+                            <div class="register-buttons">
+                                <button type="submit" class="btn btn-primary btn-block" style="width: 150px;">Сохранить</button>
+                            </div>
+                    </div>
+                    <!-- end profile-info -->
+                </div>
+                <!-- end profile-right -->
+            </form>
+        </div>
+        <!-- end profile-section -->
+    </div>
+{% endblock %}

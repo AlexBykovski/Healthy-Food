@@ -5,9 +5,11 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\DietAdditionalInformation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 /**
  * User
@@ -19,6 +21,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     "email",
  *     message="Этот email уже зарегистрирован.",
  * )
+ *
+ * @HasLifecycleCallbacks
  */
 class User implements UserInterface
 {
@@ -34,7 +38,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank(message = "Не введено имя", groups={"registration"})
+     * @Assert\NotBlank(message = "Не введено имя", groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=false)
      */
@@ -43,7 +47,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank(message = "Не введена фамилия", groups={"registration"})
+     * @Assert\NotBlank(message = "Не введена фамилия", groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=false)
      */
@@ -52,8 +56,8 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank(message = "Не введена электронная почта", groups={"registration"})
-     * @Assert\Email(message = "Не верный формат", groups={"registration"})
+     * @Assert\NotBlank(message = "Не введена электронная почта", groups={"registration", "edit_profile"})
+     * @Assert\Email(message = "Не верный формат", groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
@@ -82,6 +86,13 @@ class User implements UserInterface
     private $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="forgot_password_key", type="string", length=128, nullable=true)
@@ -96,14 +107,19 @@ class User implements UserInterface
     private $photo;
 
     /**
+     * @Assert\File(maxSize="10000000")
+     */
+    private $filePhoto;
+
+    /**
      * @var float
      *
-     * @Assert\NotBlank(message = "Не введён рост", groups={"registration"})
+     * @Assert\NotBlank(message = "Не введён рост", groups={"registration", "edit_profile"})
      *
      * @Assert\Regex(
      *     pattern="/^([3-9]\d)|([1-2]\d{2}(,\d)?)$/",
      *     message="Рост должен быть положительным целым или десятичным числом с одной цифрой после запятой (пр. 167 или 155,4)",
-     *     groups={"registration"}
+     *     groups={"registration", "edit_profile"}
      * )
      *
      * @ORM\Column(name="height", type="float", length=255, nullable=false)
@@ -113,12 +129,12 @@ class User implements UserInterface
     /**
      * @var float
      *
-     * @Assert\NotBlank(message = "Не введён вес")
+     * @Assert\NotBlank(message = "Не введён вес", groups={"registration", "edit_profile"})
      *
      * @Assert\Regex(
      *     pattern="/^[1-9]\d\d?(,\d)?$/",
      *     message="Вес должен быть положительным целым или десятичным числом с одной цифрой после запятой (пр. 67 или 55,4)",
-     *     groups={"registration"}
+     *     groups={"registration", "edit_profile"}
      * )
      *
      * @ORM\Column(name="weight", type="float", length=255, nullable=false)
@@ -128,7 +144,7 @@ class User implements UserInterface
     /**
      * @var boolean
      *
-     * @Assert\NotBlank(message = "Не выбран пол")
+     * @Assert\NotBlank(message = "Не выбран пол", groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="gender", type="boolean", length=255, nullable=false)
      */
@@ -430,5 +446,68 @@ class User implements UserInterface
     public function setEatings($eatings)
     {
         $this->eatings = $eatings;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFilePhoto()
+    {
+        return $this->filePhoto;
+    }
+
+    /**
+     * @param UploadedFile $filePhoto
+     */
+    public function setFilePhoto($filePhoto)
+    {
+        $this->filePhoto = $filePhoto;
+    }
+
+    protected function getUploadDir() {
+        return $_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'profile-images';
+    }
+
+    public function upload()
+    {
+        if (!is_null($this->getFilePhoto())) {
+            $this->getFilePhoto()->move(
+                $this->getUploadDir(), $this->getFilePhoto()->getClientOriginalName()
+            );
+
+            $this->setPhoto('images' . DIRECTORY_SEPARATOR . 'profile-images' . DIRECTORY_SEPARATOR .
+                $this->getFilePhoto()->getClientOriginalName());
+            $this->setFilePhoto(null);
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function lifecycleFileUpload()
+    {
+        $this->upload();
+    }
+
+    public function refreshUpdated()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 }
