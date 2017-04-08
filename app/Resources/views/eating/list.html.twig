@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% set countEating = user.dietAdditionalInformation.countEating %}
     {% set curHour = 'now' | date('H') %}
     {% set curMin = 'now' | date('i') | number_format %}
     {% set isBreakfastPast = curHour > 10 or curHour == 10 and curMin > 0 %}
@@ -26,36 +27,42 @@
                             'description': 'Приём пищи с 06:00 до 10:00',
                             'was' : isBreakfastPast, 'will' : isBreakfastFuture} %}
                         </li>
-                        <li ng-show="{{ isSecBreakfastPast ? 'isShowPast' : isSecBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-breakfast"}),
-                            'image': 'images/lunch.png', 'name': 'Второй завтрак',
-                            'description': 'Приём пищи с 10:00 до 12:00',
-                            'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
-                        </li>
+                        {% if countEating > 3 %}
+                            <li ng-show="{{ isSecBreakfastPast ? 'isShowPast' : isSecBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-breakfast"}),
+                                'image': 'images/lunch.png', 'name': 'Второй завтрак',
+                                'description': 'Приём пищи с 10:00 до 12:00',
+                                'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
+                            </li>
+                        {% endif %}
                         <li ng-show="{{ isDinnerPast ? 'isShowPast' : isDinnerFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "dinner"}),
                             'image': 'images/dinner.jpg', 'name': 'Обед',
                             'description': 'Приём пищи с 12:00 до 16:00',
                             'was' : isDinnerPast, 'will' : isDinnerFuture} %}
                         </li>
-                        <li ng-show="{{ isAfternoonSnackPast ? 'isShowPast' : isAfternoonSnackFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "afternoon-snack"}),
-                            'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
-                            'description': 'Приём пищи с 16:00 до 18:00',
-                            'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
-                        </li>
+                        {% if countEating > 4 %}
+                            <li ng-show="{{ isAfternoonSnackPast ? 'isShowPast' : isAfternoonSnackFuture ? 'isShowFuture' : 'isShowPresent'}}">
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "afternoon-snack"}),
+                                'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
+                                'description': 'Приём пищи с 16:00 до 18:00',
+                                'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
+                            </li>
+                        {% endif %}
                         <li ng-show="{{ isSupperPast ? 'isShowPast' : isSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
                             {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "supper"}),
                             'image': 'images/supper.jpg', 'name': 'Ужин',
                             'description': 'Приём пищи с 18:00 до 20:00',
                             'was' : isSupperPast, 'will' : isSupperFuture} %}
                         </li>
-                        <li ng-show="{{ isSecSupperPast ? 'isShowPast' : isSecSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-supper"}),
-                            'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
-                            'description': 'Приём пищи с 20:00 до 21:00',
-                            'was' : isSecSupperPast, 'will' : isSecSupperFuture} %}
-                        </li>
+                        {% if countEating > 5 %}
+                            <li ng-show="{{ isSecSupperPast ? 'isShowPast' : isSecSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-supper"}),
+                                'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
+                                'description': 'Приём пищи с 20:00 до 21:00',
+                                'was' : isSecSupperPast, 'will' : isSecSupperFuture} %}
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="col-md-3">
