@@ -53,10 +53,12 @@ class RecipeAdmin extends AbstractAdmin
             ->add('steps', CollectionType::class, [
                 'entry_type'   => RecipeStepType::class,
                 'allow_add'    => true,
+                'attr'   => ["class" => "recipe-steps"]
             ])
             ->add('products', CollectionType::class, [
                 'entry_type'   => RecipeProductType::class,
                 'allow_add'    => true,
+                'attr'   => ["class" => "recipe-products"]
             ]);
     }
 

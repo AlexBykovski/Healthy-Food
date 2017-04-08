@@ -90,6 +90,10 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
 
+sonata_admin:
+    templates:
+        layout:  AppBundle::sonata_admin_base_layout.html.twig
+
 sonata_block:
     default_contexts: [cms]
     blocks:
