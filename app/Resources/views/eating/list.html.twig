@@ -2,8 +2,8 @@
 
 {% block body %}
     {% set countEating = user.dietAdditionalInformation.countEating %}
-    {% set curHour = 'now' | date('H') %}
-    {% set curMin = 'now' | date('i') | number_format %}
+    {% set curHour = activeDate | date('H') %}
+    {% set curMin = activeDate | date('i') | number_format %}
     {% set isBreakfastPast = curHour > 10 or curHour == 10 and curMin > 0 %}
     {% set isBreakfastFuture = curHour < 6%}
     {% set isSecBreakfastPast = curHour > 12 or curHour == 12 and curMin > 0%}
@@ -22,42 +22,42 @@
                 <div class="col-md-9">
                     <ul class="post-list">
                         <li ng-show="{{ isBreakfastPast ? 'isShowPast' : isBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "breakfast"}),
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "breakfast"}),
                             'image': 'images/breakfast.jpg', 'name': 'Завтрак',
                             'description': 'Приём пищи с 06:00 до 10:00',
                             'was' : isBreakfastPast, 'will' : isBreakfastFuture} %}
                         </li>
                         {% if countEating > 3 %}
                             <li ng-show="{{ isSecBreakfastPast ? 'isShowPast' : isSecBreakfastFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-breakfast"}),
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "sec-breakfast"}),
                                 'image': 'images/lunch.png', 'name': 'Второй завтрак',
                                 'description': 'Приём пищи с 10:00 до 12:00',
                                 'was' : isSecBreakfastPast, 'will' : isSecBreakfastFuture} %}
                             </li>
                         {% endif %}
                         <li ng-show="{{ isDinnerPast ? 'isShowPast' : isDinnerFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "dinner"}),
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "dinner"}),
                             'image': 'images/dinner.jpg', 'name': 'Обед',
                             'description': 'Приём пищи с 12:00 до 16:00',
                             'was' : isDinnerPast, 'will' : isDinnerFuture} %}
                         </li>
                         {% if countEating > 4 %}
                             <li ng-show="{{ isAfternoonSnackPast ? 'isShowPast' : isAfternoonSnackFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "afternoon-snack"}),
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "afternoon-snack"}),
                                 'image': 'images/afternoon_snack.jpg', 'name': 'Полдник',
                                 'description': 'Приём пищи с 16:00 до 18:00',
                                 'was' : isAfternoonSnackPast, 'will' : isAfternoonSnackFuture} %}
                             </li>
                         {% endif %}
                         <li ng-show="{{ isSupperPast ? 'isShowPast' : isSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "supper"}),
+                            {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "supper"}),
                             'image': 'images/supper.jpg', 'name': 'Ужин',
                             'description': 'Приём пищи с 18:00 до 20:00',
                             'was' : isSupperPast, 'will' : isSupperFuture} %}
                         </li>
                         {% if countEating > 5 %}
                             <li ng-show="{{ isSecSupperPast ? 'isShowPast' : isSecSupperFuture ? 'isShowFuture' : 'isShowPresent'}}">
-                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: 'now' | date('Y-m-d'), type: "sec-supper"}),
+                                {%  include(':templates:single-eating-layout.html.twig') with {'link': path("list_recipes", {date: activeDate | date('Y-m-d'), type: "sec-supper"}),
                                 'image': 'images/second_supper.jpg', 'name': 'Второй ужин',
                                 'description': 'Приём пищи с 20:00 до 21:00',
                                 'was' : isSecSupperPast, 'will' : isSecSupperFuture} %}
@@ -85,6 +85,17 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div>
+                <ul class="pagination pagination-lg m-t-0 m-b-10">
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("-3 day") | date("d-m-Y")}) }}">«</a></li>
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("-2 day") | date("d-m-Y")}) }}">{{ activeDate | date_modify("-2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("-1 day") | date("d-m-Y")}) }}">{{ activeDate | date_modify("-1 day") | date("d F") }}</a></li>
+                    <li class="active"><a nohref>{{ activeDate | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("+1 day") | date("d-m-Y")}) }}">{{ activeDate | date_modify("+1 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("+2 day") | date("d-m-Y")}) }}">{{ activeDate | date_modify("+2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_list', {'date' : activeDate | date_modify("+3 day") | date("d-m-Y")}) }}">»</a></li>
+                </ul>
             </div>
         </div>
     </div>

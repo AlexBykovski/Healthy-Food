@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+//data in db from http://daily-menu.ru/dailymenu/recipes/foodgroups/11?new=1&DailymenuRecipes_page=6
 /**
  * Recipe
  *
