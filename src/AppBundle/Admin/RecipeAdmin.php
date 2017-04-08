@@ -38,17 +38,17 @@ class RecipeAdmin extends AbstractAdmin
                 'label' => 'Тип приёма пищи',
                 'choices' => array_combine( $eatingTypes, $eatingTypes ),
             ])
-            ->add('fats', 'number', [
-                'label' => 'Жиров, r',
+            ->add('calories', 'number', [
+                'label' => 'Калорий',
             ])
             ->add('proteins', 'number', [
                 'label' => 'Белков, r',
             ])
+            ->add('fats', 'number', [
+                'label' => 'Жиров, r',
+            ])
             ->add('carbohydrates', 'number', [
                 'label' => 'Углеводов, r',
-            ])
-            ->add('calories', 'number', [
-                'label' => 'Количество порций',
             ])
             ->add('steps', CollectionType::class, [
                 'entry_type'   => RecipeStepType::class,
