@@ -67,11 +67,11 @@
                             </li>
                             <li class="dropdown navbar-user m-l-40">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img id="user-navbar-photo" src="{{ app.user.photo | default('/color_parallax/img/user-13.jpg') }}" alt="" />
+                                    <img id="user-navbar-photo" src="{{ app.user.photo | default('/images/no-photo.jpg') }}" alt="" />
                                     <span class="hidden-xs">{{ app.user.firstName }} {{ app.user.lastName }}</span> <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu animated fadeInLeft">
-                                    <li><a {#href="{{ path('edit_profile') }}"#}>Редактировать профиль</a></li>
+                                    <li><a href="{{ path('edit_profile') }}">Редактировать профиль</a></li>
                                     <li><a href="{{ logout_path('main') }}">Выход</a></li>
                                 </ul>
                             </li>

@@ -30,7 +30,7 @@ class DietAdditionalInformation
      *      max = 6,
      *      minMessage = "Количество приёмов пищи не должно быть менее 3",
      *      maxMessage = "Количество приёмов пищи не должно быть более 6",
-     *      groups={"registration"})
+     *      groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="count_eating", type="integer", nullable=false, options={"default": 3})
      */
@@ -44,7 +44,7 @@ class DietAdditionalInformation
      *      max = 21,
      *      minMessage = "Количество тренировок в неделю не должно быть менее 0",
      *      maxMessage = "Количество тренировок в неделю не должно быть более 21",
-     *      groups={"registration"})
+     *      groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="count_training", type="integer", nullable=false, options={"default": 0})
      */
@@ -58,7 +58,7 @@ class DietAdditionalInformation
      *      max = 10,
      *      minMessage = "Сложность тренировок не должна быть менее 1",
      *      maxMessage = "Сложность тренировок не должна быть более 10",
-     *      groups={"registration"})
+     *      groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="training_difficulty", type="integer", nullable=false, options={"default": 1})
      */
@@ -67,7 +67,7 @@ class DietAdditionalInformation
     /**
      * @var string
      *
-     * @Assert\NotBlank(message = "Не выбрана цель", groups={"registration"})
+     * @Assert\NotBlank(message = "Не выбрана цель", groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="purpose", type="string", nullable=false, options={"default": "Сбросить вес"})
      */
