@@ -25,7 +25,7 @@ class EatingController extends Controller
 
         return $this->render(
             'eating/list.html.twig',
-            []
+            ["user" => $this->getUser()]
         );
     }
 
