@@ -45,7 +45,7 @@ class RecipeProduct
      */
     private $measure;
 
-    public static $measureTypes = ["кг", "гр", "шт", "мг", "щепотка", "ст. ложка", "ч. ложка", "л", "мл",];
+    public static $measureTypes = ["гр", "кг", "шт", "мг", "щепотка", "ст. ложка", "ч. ложка", "л", "мл",];
 
     /**
      * Many RecipeProducts have One Recipe.

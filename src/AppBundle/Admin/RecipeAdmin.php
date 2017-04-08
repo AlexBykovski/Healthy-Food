@@ -22,35 +22,44 @@ class RecipeAdmin extends AbstractAdmin
         $eatingTypes = Recipe::$eatingTypes;
 
         $formMapper
-            ->add('name', 'text', array(
-                'label' => 'Название'
-            ))
-            ->add('photo', 'text', array(
-                'label' => 'Фото'
-            ))
-            ->add('time', 'text', array(
-                'label' => 'Время приготовления'
-            ))
-            ->add('portions', 'number', array(
-                'label' => 'Количество порций'
-            ))
-            ->add('eatingType', 'choice', array(
+            ->add('name', 'text', [
+                'label' => 'Название',
+            ])
+            ->add('photo', 'text', [
+                'label' => 'Фото',
+            ])
+            ->add('time', 'text', [
+                'label' => 'Время приготовления',
+            ])
+            ->add('portions', 'number', [
+                'label' => 'Количество порций',
+            ])
+            ->add('eatingType', 'choice', [
                 'label' => 'Тип приёма пищи',
                 'choices' => array_combine( $eatingTypes, $eatingTypes ),
-            ))
-            ->add('steps', CollectionType::class, array(
+            ])
+            ->add('calories', 'number', [
+                'label' => 'Калорий',
+            ])
+            ->add('proteins', 'number', [
+                'label' => 'Белков, r',
+            ])
+            ->add('fats', 'number', [
+                'label' => 'Жиров, r',
+            ])
+            ->add('carbohydrates', 'number', [
+                'label' => 'Углеводов, r',
+            ])
+            ->add('steps', CollectionType::class, [
                 'entry_type'   => RecipeStepType::class,
                 'allow_add'    => true,
-            ))
-            ->add('products', CollectionType::class, array(
+                'attr'   => ["class" => "recipe-steps"]
+            ])
+            ->add('products', CollectionType::class, [
                 'entry_type'   => RecipeProductType::class,
                 'allow_add'    => true,
-            ))
-            ->add('nutrients', CollectionType::class, array(
-                'entry_type'   => RecipeNutrientType::class,
-                'allow_add'    => true,
-            ))
-        ;
+                'attr'   => ["class" => "recipe-products"]
+            ]);
     }
 
     // Fields to be shown on filter forms

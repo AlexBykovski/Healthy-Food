@@ -8,12 +8,6 @@ security:
             algorithm: bcrypt
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    admin:
-                        password: Hardcore66
-                        roles: [ROLE_ADMIN]
         db_provider:
             entity:
                 class: AppBundle\Entity\User

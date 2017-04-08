@@ -16,7 +16,8 @@ class RecipeStepType extends AbstractType
             ->add('photo', TextType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
-                "label" => 'Фото шага'
+                "label" => 'Фото шага',
+                "required" => false,
             ])
             ->add('description', TextAreaType::class, [
                 "label_attr" => ['class' => 'control-label'],

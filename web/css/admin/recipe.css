@@ -1,0 +1,17 @@
+.recipe-products .sonata-ba-field.sonata-ba-field-standard-natural .form-group{
+    width: 20%;
+    float: left;
+    padding-left: 10px;
+}
+
+.recipe-products .sonata-ba-field.sonata-ba-field-standard-natural .form-group:first-child{
+    width: 50%;
+    float: left;
+    padding-left: 10px;
+}
+
+.recipe-steps .sonata-ba-field.sonata-ba-field-standard-natural .form-group{
+    width: 45%;
+    float: left;
+    padding-left: 10px;
+}

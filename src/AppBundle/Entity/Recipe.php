@@ -71,10 +71,32 @@ class Recipe
     private $products;
 
     /**
-     * One Recipe has Many RecipeNutrients.
-     * @ORM\OneToMany(targetEntity="RecipeNutrient", mappedBy="recipe", cascade={"persist"})
+     * @var float
+     *
+     * @ORM\Column(name="fats", type="float", nullable=false)
      */
-    private $nutrients;
+    private $fats;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="proteins", type="float", nullable=false)
+     */
+    private $proteins;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="carbohydrates", type="float", nullable=false)
+     */
+    private $carbohydrates;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="calories", type="float", nullable=false)
+     */
+    private $calories;
 
     /**
      * One Recipe has Many Eatings.
@@ -253,5 +275,69 @@ class Recipe
     public function setEatings($eatings)
     {
         $this->eatings = $eatings;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFats()
+    {
+        return $this->fats;
+    }
+
+    /**
+     * @param float $fats
+     */
+    public function setFats($fats)
+    {
+        $this->fats = $fats;
+    }
+
+    /**
+     * @return float
+     */
+    public function getProteins()
+    {
+        return $this->proteins;
+    }
+
+    /**
+     * @param float $proteins
+     */
+    public function setProteins($proteins)
+    {
+        $this->proteins = $proteins;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCarbohydrates()
+    {
+        return $this->carbohydrates;
+    }
+
+    /**
+     * @param float $carbohydrates
+     */
+    public function setCarbohydrates($carbohydrates)
+    {
+        $this->carbohydrates = $carbohydrates;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCalories()
+    {
+        return $this->calories;
+    }
+
+    /**
+     * @param float $calories
+     */
+    public function setCalories($calories)
+    {
+        $this->calories = $calories;
     }
 }
