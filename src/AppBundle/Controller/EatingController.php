@@ -6,6 +6,7 @@ use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -60,5 +61,15 @@ class EatingController extends Controller
         $em->flush();
 
         return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/remind-meal-intake", name="remind_meal_intake")
+     */
+    public function remindMealIntakeAction(Request $request)
+    {
+        $this->get('app.notifier.remind_eating')->sendEmail("bykovski.work@gmail.com");
+
+        return new JsonResponse(['result' => "ok"], 200);
     }
 }
