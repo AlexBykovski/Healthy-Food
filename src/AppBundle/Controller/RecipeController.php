@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Recipe;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RecipeController extends Controller
 {
@@ -23,6 +25,18 @@ class RecipeController extends Controller
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $allRecipes,
             "chosenEating" => $chosenEating,
+        ]);
+    }
+
+    /**
+     * @Route("/recipe/{id}", name="single_recipe")
+     * @ParamConverter("recipe", class="AppBundle:Recipe", options={"id" = "id"})
+     * @Security("has_role('ROLE_SIMPLE_USER')")
+     */
+    public function showSingleRecipeAction(Request $request, Recipe $recipe)
+    {
+        return $this->render('recipe/recipe-detail.html.twig', [
+            "recipe" => $recipe,
         ]);
     }
 
