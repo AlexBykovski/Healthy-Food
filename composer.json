@@ -81,12 +81,11 @@
                 "database_user": "SYMFONY__DATABASE_USER",
                 "database_host": "SYMFONY__DATABASE_HOST",
                 "database_password": "SYMFONY__DATABASE_PASSWORD",
-                "mailer_host": "SYMFONY__MAILER_HOST",
                 "monolog_action_level": "LOG_LEVEL",
                 "rollbar_server_token": "ROLLBAR_ACCESS_TOKEN",
                 "mailer_user": "SENDGRID_USERNAME",
                 "mailer_password": "SENDGRID_PASSWORD",
-                "transport": "smtp.sendgrid.net"
+                "mailer_host": "smtp.sendgrid.net"
             }
         }
     }
