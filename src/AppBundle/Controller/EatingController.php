@@ -62,14 +62,4 @@ class EatingController extends Controller
 
         return $this->redirect($request->headers->get('referer'));
     }
-
-    /**
-     * @Route("/remind-meal-intake", name="remind_meal_intake")
-     */
-    public function remindMealIntakeAction(Request $request)
-    {
-        $this->get('app.notifier.remind_eating')->sendEmail("bykovski.work@gmail.com");
-
-        return new JsonResponse(['result' => "ok"], 200);
-    }
 }
