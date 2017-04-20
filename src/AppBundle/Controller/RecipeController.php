@@ -28,6 +28,7 @@ class RecipeController extends Controller
         ]);
     }
 
+    //http://www.seantheme.com/color-admin-v2.2/frontend/e-commerce/product_detail.html
     /**
      * @Route("/recipe/{id}", name="single_recipe")
      * @ParamConverter("recipe", class="AppBundle:Recipe", options={"id" = "id"})
