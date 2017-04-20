@@ -2,8 +2,19 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
 #    parameter_name: value
+    app.notifier.contact.sendFrom:  support@healthy-food.com
+    app.notifier.contact.sendName:  'Healthy Food'
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.notifier.emailqueue:
+          class: AppBundle\Notifier\EmailQueue
+          arguments: ['@mailer']
+
+    app.notifier.remind_eating:
+          class:      AppBundle\Notifier\RemindEating
+          arguments:  ['@app.builder.email', '@app.notifier.emailqueue']
+
+    app.builder.email:
+          class: AppBundle\Builder\EmailBuilder
+          scope: prototype
+          arguments: ['@twig', '%app.notifier.contact.sendFrom%', '%app.notifier.contact.sendName%']
