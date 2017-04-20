@@ -42,7 +42,7 @@ class RemindEating
         elseif($time > "17:00" && $time < "18:00"){
             return "ужин";
         }
-        elseif($time > "19:00" && $time < "20:00"){
+        elseif($time > "19:00" && $time < "24:00"){
             return "второй ужин";
         }
 

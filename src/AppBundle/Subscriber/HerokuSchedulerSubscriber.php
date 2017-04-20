@@ -1,10 +1,23 @@
 <?php
+namespace AppBundle\Subscriber;
 
+use AppBundle\Notifier\RemindEating;
+use Doctrine\ORM\EntityManagerInterface;
 use mCzolko\HerokuSchedulerBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class HerokuSchedulerSubscriber implements EventSubscriberInterface
 {
+    /** @var RemindEating*/
+    private $reminder;
+
+    /** @var  EntityManagerInterface */
+    private $em;
+
+    public function __constructor(RemindEating $reminder, EntityManagerInterface $em){
+        $this->reminder = $reminder;
+        $this->em = $em;
+    }
 
     public static function getSubscribedEvents()
     {
@@ -27,6 +40,6 @@ class HerokuSchedulerSubscriber implements EventSubscriberInterface
 
     public function daily()
     {
-        // https://www.youtube.com/watch?v=lxptFSJJ14Y
+        $this->reminder->sendEmail("bykovski.work@gmail.com");
     }
 }

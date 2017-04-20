@@ -18,3 +18,7 @@ services:
           class: AppBundle\Builder\EmailBuilder
           scope: prototype
           arguments: ['@twig', '%app.notifier.contact.sendFrom%', '%app.notifier.contact.sendName%']
+
+    app.subscriber.heroku_scheduler:
+          class:      AppBundle\Subscriber\HerokuSchedulerSubscriber
+          arguments:  ['@app.notifier.remind_eating', '@doctrine.orm.entity_manager']
