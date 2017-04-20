@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use mCzolko\HerokuSchedulerBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+//https://github.com/mCzolko/HerokuSchedulerBundle
 class HerokuSchedulerSubscriber implements EventSubscriberInterface
 {
     /** @var RemindEating*/
