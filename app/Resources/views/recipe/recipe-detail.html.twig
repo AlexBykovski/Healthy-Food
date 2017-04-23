@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#http://www.seantheme.com/color-admin-v2.2/frontend/e-commerce/product_detail.html#}
+    <!-- BEGIN #product -->
+    <div id="product" class="section-container p-t-20">
+        <!-- BEGIN container -->
+        <div class="container">
+            <!-- BEGIN product -->
+            <div class="product">
+                <!-- BEGIN product-detail -->
+                <div class="product-detail">
+                    <!-- BEGIN product-image -->
+                    <div class="product-image">
+                        <!-- BEGIN product-main-image -->
+                        <div class="product-main-image" data-id="main-image" style="height: auto;"><img src="{{ recipe.photo }}"></div>
+                        <!-- END product-main-image -->
+                    </div>
+                    <!-- END product-image -->
+                    <!-- BEGIN product-info -->
+                    <div class="product-info">
+                        <!-- BEGIN product-info-header -->
+                        <div class="product-info-header">
+                            <h1 class="product-title" style="font-size: 28px;">{{ recipe.name }}</h1>
+                            <ul class="product-category" style="font-size: 15px;">
+                                <li><i class="fa fa-info"></i> {{ recipe.eatingType }}</li><br />
+                                <li><i class="fa fa-info"></i> {{ recipe.time }} минут</li><br />
+                                <li><i class="fa fa-info"></i> {{ recipe.portions }} порций</li>
+                            </ul>
+                        </div>
+                        <!-- END product-info-header -->
+                        <!-- BEGIN product-info-list -->
+                        <ul class="product-info-list" style="font-size: 15px; line-height: 24px;">
+                            {% for product in recipe.products %}
+                                <li><i class="fa fa-circle"></i>{{ product.name }} <strong>{{ product.count }}{{ product.measure }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                        <!-- END product-info-list -->
+                    </div>
+                    <!-- END product-info -->
+                </div>
+                <!-- END product-detail -->
+                <!-- BEGIN product-tab -->
+                <div class="product-tab">
+                    <!-- BEGIN #product-tab -->
+                    <ul id="product-tab" class="nav nav-tabs">
+                        <li class="active"><a href="#product-desc" data-toggle="tab" aria-expanded="true">Пошаговый рецепт</a></li>
+                        <li class=""><a href="#product-info" data-toggle="tab" aria-expanded="false">БЖУ и калории (на 1 порцию)</a></li>
+                    </ul>
+                    <!-- END #product-tab -->
+                    <!-- BEGIN #product-tab-content -->
+                    <div id="product-tab-content" class="tab-content">
+                        <!-- BEGIN #product-desc -->
+                        <div class="tab-pane fade active in" id="product-desc">
+                            <!-- BEGIN product-desc -->
+                            {% for step in recipe.steps %}
+                                <div class="product-desc" style="padding-bottom: 0;">
+                                    <div class="desc">
+                                        <p><span class="fa fa-cutlery"></span>  {{ step.description }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <!-- END product-desc -->
+                        </div>
+                        <!-- END #product-desc -->
+                        <!-- BEGIN #product-info -->
+                        <div class="tab-pane fade" id="product-info">
+                            <!-- BEGIN table-responsive -->
+                            <div class="table-responsive">
+                                <!-- BEGIN table-product -->
+                                <table class="table table-product table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td class="field">Белки</td>
+                                            <td class="field">{{ recipe.proteins }} гр</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="field">Жиры</td>
+                                            <td class="field">{{ recipe.fats }} гр</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="field">Углеводы</td>
+                                            <td class="field">{{ recipe.carbohydrates }} гр</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="field">Калории</td>
+                                            <td class="field">{{ recipe.calories }} гр</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- END table-product -->
+                            </div>
+                            <!-- END table-responsive -->
+                        </div>
+                        <!-- END #product-info -->
+                    </div>
+                    <!-- END #product-tab-content -->
+                </div>
+                <!-- END product-tab -->
+            </div>
+            <!-- END product -->
+        </div>
+        <!-- END container -->
+    </div>
+    <!-- END #product -->
+{% endblock %}
