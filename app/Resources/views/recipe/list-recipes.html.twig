@@ -37,7 +37,7 @@
                                         <img src="{{ recipe.photo }}" alt="">
                                     </div>
                                     <div class="desc">
-                                        <h4>{{ recipe.name }}</h4>
+                                        <h4><a href="{{ path("single_recipe", {"id" : recipe.id}) }}">{{ recipe.name }}</a></h4>
                                         <p>
                                             {% for product in recipe.products %}
                                                 {{ product.name }}{{ not loop.last ? ','}}
