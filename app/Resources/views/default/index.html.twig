@@ -18,11 +18,46 @@
             <div class="col-md-5 ui-sortable">
                 <div class="panel panel-inverse" data-sortable-id="flot-chart-8">
                     <div class="panel-heading">
-                        <h4 class="panel-title" style="text-align: center;">Количество потребляемых сегодня <strong>БЕЛКОВ</strong></h4>
+                        <h4 class="panel-title" style="text-align: center;">Количество потребляемых сегодня <strong>БЕЛКОВ</strong> (гр)</h4>
                     </div>
                     <div class="panel-body">
                         <div class="values-nutrient" style="text-align: center; font-size: 20px;"></div>
                         <canvas id="chart-proteins" proteins-chart width="400" height="400" eating-data="{{ userEatingData["proteins"] | json_encode }}"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 ui-sortable col-md-offset-1">
+                <div class="panel panel-inverse" data-sortable-id="flot-chart-8">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="text-align: center;">Количество потребляемых сегодня <strong>УГЛЕВОДОВ</strong> (гр)</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="values-nutrient" style="text-align: center; font-size: 20px;"></div>
+                        <canvas id="chart-proteins" proteins-chart width="400" height="400" eating-data="{{ userEatingData["carbohydrates"] | json_encode }}"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 100px; padding-left: 50px;">
+            <div class="col-md-5 ui-sortable">
+                <div class="panel panel-inverse" data-sortable-id="flot-chart-8">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="text-align: center;">Количество потребляемых сегодня <strong>ЖИРОВ</strong> (гр)</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="values-nutrient" style="text-align: center; font-size: 20px;"></div>
+                        <canvas id="chart-proteins" proteins-chart width="400" height="400" eating-data="{{ userEatingData["fats"] | json_encode }}"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 ui-sortable col-md-offset-1">
+                <div class="panel panel-inverse" data-sortable-id="flot-chart-8">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="text-align: center;">Количество потребляемых сегодня <strong>КАЛОРИЙ</strong></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="values-nutrient" style="text-align: center; font-size: 20px;"></div>
+                        <canvas id="chart-proteins" proteins-chart width="400" height="400" eating-data="{{ userEatingData["calories"] | json_encode }}"></canvas>
                     </div>
                 </div>
             </div>

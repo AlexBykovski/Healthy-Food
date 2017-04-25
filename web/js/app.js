@@ -1,4 +1,4 @@
-var app = angular.module('healthyFood', ['ngSanitize']);
+var app = angular.module('healthyFood', []);
 
 app.config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');

@@ -1,4 +1,4 @@
-app.directive("proteinsChart",['$sce', function($sce){
+app.directive("proteinsChart",[ function(){
     return{
         restrict: 'A',
         link: function(scope, element, attrs, ngModel)
@@ -69,10 +69,6 @@ app.directive("proteinsChart",['$sce', function($sce){
                 data = data.slice(0, data.length - 3) + ' = <span style="color: #d40000">' + sum.toFixed(2) + "</span>";
 
                 elemValues.html(data);
-            }
-
-            function to_trusted(html_code) {
-                return $sce.trustAsHtml(html_code);
             }
         }
     };
