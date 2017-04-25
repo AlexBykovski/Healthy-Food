@@ -104,7 +104,15 @@ class Recipe
      */
     private $eatings;
 
-    public static $eatingTypes = ["завтрак", "второй завтрак", "обед", "полдник", "ужин", "второй ужин"];
+    public static $eatingTypes = [self::BREAKFAST, self::LUNCH, self::DINNER, self::AFTERNOON_SNACK, self::SUPPER,
+        self::SEC_SUPPER];
+
+    const BREAKFAST = "завтрак";
+    const LUNCH = "второй завтрак";
+    const DINNER = "обед";
+    const AFTERNOON_SNACK = "полдник";
+    const SUPPER = "ужин";
+    const SEC_SUPPER = "второй ужин";
 
     /**
      * Recipe constructor.

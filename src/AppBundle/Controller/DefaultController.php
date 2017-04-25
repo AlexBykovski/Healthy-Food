@@ -27,7 +27,7 @@ class DefaultController extends Controller
 
         if($user instanceof User){
             $eatings = $this->getDoctrine()->getRepository(Eating::class)->findDailyEatingForUser($user, new \DateTime());
-
+            uasort($eatings, [$this, "sortEatingByType"]);
             /** @var Eating $eating */
             foreach($eatings as $eating){
                 /** @var Recipe $recipe */
@@ -44,5 +44,20 @@ class DefaultController extends Controller
             'addr' => $request->server->get('REMOTE_ADDR'),
             'userEatingData' => $userEatingData,
         ]);
+    }
+
+    protected function sortEatingByType(Eating $a, Eating $b){
+        $aType = $a->getRecipe()->getEatingType();
+        $bType = $b->getRecipe()->getEatingType();
+
+        if($aType === Recipe::BREAKFAST ||
+            ($aType === Recipe::LUNCH && ($bType === Recipe::DINNER || $bType === Recipe::AFTERNOON_SNACK || $bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::DINNER && ($bType === Recipe::AFTERNOON_SNACK || $bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::AFTERNOON_SNACK && ($bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::SUPPER && $bType === Recipe::SEC_SUPPER)){
+            return -1;
+        }
+
+        return 1;
     }
 }
