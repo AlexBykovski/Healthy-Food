@@ -14,22 +14,18 @@
     <!-- begin #page-container -->
     <div id="page-container" class="fade in">
         {% if app.user %}
+        <div class="row" style="padding-top: 100px; padding-left: 50px;">
             <div class="col-md-4 ui-sortable">
                 <div class="panel panel-inverse" data-sortable-id="flot-chart-8">
                     <div class="panel-heading">
-                        <div class="panel-heading-btn">
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-                        </div>
-                        <h4 class="panel-title">Flot Donut Chart</h4>
+                        <h4 class="panel-title">202 + 233 + 331 = 2331</h4>
                     </div>
                     <div class="panel-body">
-                        <div id="donut-chart" class="height-sm" style="padding: 0px; position: relative;"><canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 288px; height: 300px;" width="576" height="600"></canvas><canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 288px; height: 300px;" width="576" height="600"></canvas><span class="pieLabel" id="pieLabel0" style="position: absolute; top: 102px; left: 246px;"><div style="font-size:x-small;text-align:center;padding:2px;color:#2d353c;">Unique Visitor<br>43%</div></span><span class="pieLabel" id="pieLabel1" style="position: absolute; top: 239px; left: 48.5px;"><div style="font-size:x-small;text-align:center;padding:2px;color:#00acac;">Bounce Rate<br>30%</div></span><span class="pieLabel" id="pieLabel2" style="position: absolute; top: 50px; left: 13px;"><div style="font-size:x-small;text-align:center;padding:2px;color:#727cb6;">Total Page Views<br>26%</div></span></div>
+                        <canvas id="chart-proteins" proteins-chart width="400" height="400" eating-data="{{ userEatingData["proteins"] | json_encode }}"></canvas>
                     </div>
                 </div>
             </div>
+        </div>
         {% else %}
         <!-- begin register -->
         <div class="register register-with-news-feed">
@@ -43,6 +39,5 @@
         {% endif %}
         <!-- end register -->
     </div>
-    {{ addr }}
     <!-- end page container -->
 {% endblock %}

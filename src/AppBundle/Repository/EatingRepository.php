@@ -23,4 +23,17 @@ class EatingRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findDailyEatingForUser(User $user, DateTime $date)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->join('e.recipe', 'r')
+            ->andWhere('e.user = :user')
+            ->andWhere('DAY(e.date) = DAY(:date)')
+            ->setParameter('user', $user)
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+    }
 }

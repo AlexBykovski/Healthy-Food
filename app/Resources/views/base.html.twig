@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="healthyFood">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -112,11 +112,12 @@
                 %}
                 <script src="{{ asset_url }}"></script>
                 {% endjavascripts %}
-                {#{% javascripts output='bundles/app/js/main.js'
-                'js/app.js'
+                {% javascripts output='bundles/app/js/main.js'
+                    'js/app.js'
+                    'js/homepage/directives.js'
                 %}
                 <script src="{{ asset_url }}"></script>
-                {% endjavascripts %}#}
+                {% endjavascripts %}
             {% endblock %}
         <!--[if lt IE 9]>
         <script src="color_parallax/crossbrowserjs/html5shiv.js"></script>
