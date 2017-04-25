@@ -1,3 +1,4 @@
+//http://www.chartjs.org/docs/#doughnut-pie-chart-introduction
 app.directive("proteinsChart",[ function(){
     return{
         restrict: 'A',
