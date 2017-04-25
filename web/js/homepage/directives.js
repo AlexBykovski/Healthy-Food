@@ -15,16 +15,16 @@ app.directive("proteinsChart",[ function(){
                     datasets: [
                         {
                             data: [300, 50, 100],
-                            backgroundColor: [
+                            /*backgroundColor: [
                                 "#FF6384",
                                 "#36A2EB",
                                 "#FFCE56"
-                            ],
-                            hoverBackgroundColor: [
+                            ],*/
+                            /*hoverBackgroundColor: [
                                 "#FF6384",
                                 "#36A2EB",
                                 "#FFCE56"
-                            ]
+                            ]*/
                         }]
                 },
                 options: {
