@@ -22,7 +22,7 @@ class ImportDataByUrl
         $recipe = $this->requestStack->getCurrentRequest()->cookies->get("recipeRemote");
         $this->requestStack->getCurrentRequest()->cookies->remove("recipeRemote");
 
-        if($this->isJson($recipe)){
+        if($this->isJson($recipe) && strpos($this->requestStack->getCurrentRequest()->getUri(), "/create")){
             $recipeObj = json_decode($recipe);
 
             if(count($this->em->getRepository(Recipe::class)->findBy([
