@@ -50,7 +50,7 @@ app.directive("importDataToFile",[ function(){
                         }
                     });
 
-                    $.cookie("recipeRemote", angular.toJson(recipeData));
+                    $.cookie("recipeRemote", angular.toJson(recipeData), { expires: 1 });
                     console.log("done");
                 });
             };

@@ -2,16 +2,20 @@
 
 namespace AppBundle\Helper;
 
+use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
 use AppBundle\Entity\RecipeStep;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ImportDataByUrl
 {
     private $requestStack;
+    private $em;
 
-    public function __construct(RequestStack $requestStack) {
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em) {
         $this->requestStack = $requestStack;
+        $this->em = $em;
     }
 
     public function getRecipeDataByUrl(){
@@ -20,6 +24,18 @@ class ImportDataByUrl
 
         if($this->isJson($recipe)){
             $recipeObj = json_decode($recipe);
+
+            if(count($this->em->getRepository(Recipe::class)->findBy([
+                "name" => $recipeObj->name,
+                "portions" => $recipeObj->countPortions,
+                "fats" => $recipeObj->fats,
+                "proteins" => $recipeObj->proteins,
+                "carbohydrates" => $recipeObj->carboh,
+                "calories" => $recipeObj->calories,
+            ]))){
+                return null;
+            }
+
             $steps = [];
             $products = [];
 

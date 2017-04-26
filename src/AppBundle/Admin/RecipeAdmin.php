@@ -25,7 +25,6 @@ class RecipeAdmin extends AbstractAdmin
         $eatingTypes = Recipe::$eatingTypes;
         $requester = $this->getConfigurationPool()->getContainer()->get("app.helper.import_data_by_url");
         $recipe = $requester->getRecipeDataByUrl();
-//        var_dump($recipe);die;
 
         if($recipe){
             $formMapper

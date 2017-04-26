@@ -16,7 +16,7 @@ services:
 
     app.helper.import_data_by_url:
           class:      AppBundle\Helper\ImportDataByUrl
-          arguments:  ['@request_stack']
+          arguments:  ['@request_stack', '@doctrine.orm.entity_manager']
 
     app.builder.email:
           class: AppBundle\Builder\EmailBuilder
