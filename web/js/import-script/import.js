@@ -37,7 +37,8 @@ app.directive("importDataToFile",[ function(){
                     $.each(productBlocks, function(index, item){
                         recipeData["products"].push({
                            "name" : $(item).find("td:first").html().trim(),
-                           "value" : parseFloat($(item).find("td.variable:first").html().trim())
+                           "count" : parseFloat($(item).find("td.variable:first").html().trim()),
+                           "measure" : "гр"
                         });
                     });
 

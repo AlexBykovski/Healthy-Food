@@ -23,61 +23,102 @@ class RecipeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $eatingTypes = Recipe::$eatingTypes;
-        $requester = new ImportDataByUrl();
-        $requester->getRecipeDataByUrl();
+        $requester = $this->getConfigurationPool()->getContainer()->get("app.helper.import_data_by_url");
+        $recipe = $requester->getRecipeDataByUrl();
+//        var_dump($recipe);die;
 
-        /*$c = [];
-        $step1 = new RecipeStep();
-        $step1->setDescription("Hellooklsjdfsd fshd fhsdk jds sdfsd");
-        $step2 = new RecipeStep();
-        $step2->setDescription("LJlhkjsdgfkl gsdkjhg faksdhasd ");
-        $step3 = new RecipeStep();
-        $step3->setDescription("242364963 9627 3872 368 263 8762 3");
-        $c[] = $step1;
-        $c[] = $step2;
-        $c[] = $step3;*/
-
-
-        $formMapper
-            ->add('name', 'text', [
-                'label' => 'Название',
-            ])
-            ->add('photo', 'text', [
-                'label' => 'Фото',
-            ])
-            ->add('time', 'text', [
-                'label' => 'Время приготовления',
-            ])
-            ->add('portions', 'number', [
-                'label' => 'Количество порций',
-            ])
-            ->add('eatingType', 'choice', [
-                'label' => 'Тип приёма пищи',
-                'choices' => array_combine( $eatingTypes, $eatingTypes ),
-            ])
-            ->add('calories', 'number', [
-                'label' => 'Калорий',
-            ])
-            ->add('proteins', 'number', [
-                'label' => 'Белков, r',
-            ])
-            ->add('fats', 'number', [
-                'label' => 'Жиров, r',
-            ])
-            ->add('carbohydrates', 'number', [
-                'label' => 'Углеводов, r',
-            ])
-            ->add('steps', CollectionType::class, [
-                'entry_type'   => RecipeStepType::class,
-                'allow_add'    => true,
-                'attr'   => ["class" => "recipe-steps"],
-                'data' => $c
-            ])
-            ->add('products', CollectionType::class, [
-                'entry_type'   => RecipeProductType::class,
-                'allow_add'    => true,
-                'attr'   => ["class" => "recipe-products"]
-            ]);
+        if($recipe){
+            $formMapper
+                ->add('name', 'text', [
+                    'label' => 'Название',
+                    'data' => $recipe->name,
+                ])
+                ->add('photo', 'text', [
+                    'label' => 'Фото',
+                    'data' => $recipe->photo,
+                ])
+                ->add('time', 'text', [
+                    'label' => 'Время приготовления',
+                ])
+                ->add('portions', 'number', [
+                    'label' => 'Количество порций',
+                    'data' => $recipe->countPortions,
+                ])
+                ->add('eatingType', 'choice', [
+                    'label' => 'Тип приёма пищи',
+                    'choices' => array_combine( $eatingTypes, $eatingTypes ),
+                    'data' => $eatingTypes[0],
+                ])
+                ->add('calories', 'number', [
+                    'label' => 'Калорий',
+                    'data' => $recipe->calories,
+                ])
+                ->add('proteins', 'number', [
+                    'label' => 'Белков, r',
+                    'data' => $recipe->proteins,
+                ])
+                ->add('fats', 'number', [
+                    'label' => 'Жиров, r',
+                    'data' => $recipe->fats,
+                ])
+                ->add('carbohydrates', 'number', [
+                    'label' => 'Углеводов, r',
+                    'data' => $recipe->carboh,
+                ])
+                ->add('steps', CollectionType::class, [
+                    'entry_type'   => RecipeStepType::class,
+                    'allow_add'    => true,
+                    'attr'   => ["class" => "recipe-steps"],
+                    'data' => $recipe->steps,
+                ])
+                ->add('products', CollectionType::class, [
+                    'entry_type'   => RecipeProductType::class,
+                    'allow_add'    => true,
+                    'attr'   => ["class" => "recipe-products"],
+                    'data' => $recipe->products,
+                ]);
+        }
+        else {
+            $formMapper
+                ->add('name', 'text', [
+                    'label' => 'Название',
+                ])
+                ->add('photo', 'text', [
+                    'label' => 'Фото',
+                ])
+                ->add('time', 'text', [
+                    'label' => 'Время приготовления',
+                ])
+                ->add('portions', 'number', [
+                    'label' => 'Количество порций',
+                ])
+                ->add('eatingType', 'choice', [
+                    'label' => 'Тип приёма пищи',
+                    'choices' => array_combine($eatingTypes, $eatingTypes),
+                ])
+                ->add('calories', 'number', [
+                    'label' => 'Калорий',
+                ])
+                ->add('proteins', 'number', [
+                    'label' => 'Белков, r',
+                ])
+                ->add('fats', 'number', [
+                    'label' => 'Жиров, r',
+                ])
+                ->add('carbohydrates', 'number', [
+                    'label' => 'Углеводов, r',
+                ])
+                ->add('steps', CollectionType::class, [
+                    'entry_type' => RecipeStepType::class,
+                    'allow_add' => true,
+                    'attr' => ["class" => "recipe-steps"],
+                ])
+                ->add('products', CollectionType::class, [
+                    'entry_type' => RecipeProductType::class,
+                    'allow_add' => true,
+                    'attr' => ["class" => "recipe-products"]
+                ]);
+        }
     }
 
     // Fields to be shown on filter forms

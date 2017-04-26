@@ -14,6 +14,10 @@ services:
           class:      AppBundle\Notifier\RemindEating
           arguments:  ['@app.builder.email', '@app.notifier.emailqueue']
 
+    app.helper.import_data_by_url:
+          class:      AppBundle\Helper\ImportDataByUrl
+          arguments:  ['@request_stack']
+
     app.builder.email:
           class: AppBundle\Builder\EmailBuilder
           scope: prototype
