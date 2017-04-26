@@ -3,9 +3,12 @@
 namespace AppBundle\Admin;
 
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\RecipeStep;
 use AppBundle\Form\Type\RecipeNutrientType;
 use AppBundle\Form\Type\RecipeProductType;
 use AppBundle\Form\Type\RecipeStepType;
+use AppBundle\Helper\ImportDataByUrl;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\Filter\ChoiceType;
@@ -20,6 +23,20 @@ class RecipeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $eatingTypes = Recipe::$eatingTypes;
+        $requester = new ImportDataByUrl();
+        $requester->getRecipeDataByUrl();
+
+        /*$c = [];
+        $step1 = new RecipeStep();
+        $step1->setDescription("Hellooklsjdfsd fshd fhsdk jds sdfsd");
+        $step2 = new RecipeStep();
+        $step2->setDescription("LJlhkjsdgfkl gsdkjhg faksdhasd ");
+        $step3 = new RecipeStep();
+        $step3->setDescription("242364963 9627 3872 368 263 8762 3");
+        $c[] = $step1;
+        $c[] = $step2;
+        $c[] = $step3;*/
+
 
         $formMapper
             ->add('name', 'text', [
@@ -53,7 +70,8 @@ class RecipeAdmin extends AbstractAdmin
             ->add('steps', CollectionType::class, [
                 'entry_type'   => RecipeStepType::class,
                 'allow_add'    => true,
-                'attr'   => ["class" => "recipe-steps"]
+                'attr'   => ["class" => "recipe-steps"],
+                'data' => $c
             ])
             ->add('products', CollectionType::class, [
                 'entry_type'   => RecipeProductType::class,

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="page-container" class="fade in" style="padding-top: 200px; padding-left: 250px;">
+        <div class="row" import-data-to-file>
+            <input type="text" id="remote-rul" style="width: 400px;" autofocus><br />
+            <button ng-click="clickFunc()" class="btn btn-primary">CLICK HERE</button>
+        </div>
+    </div>
+
+    <div id="new-data" style="display: none;">
+    </div>
+{% endblock %}
