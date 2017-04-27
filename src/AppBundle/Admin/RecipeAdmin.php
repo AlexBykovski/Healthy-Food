@@ -46,7 +46,7 @@ class RecipeAdmin extends AbstractAdmin
                 ->add('eatingType', 'choice', [
                     'label' => 'Тип приёма пищи',
                     'choices' => array_combine( $eatingTypes, $eatingTypes ),
-                    'data' => $eatingTypes[0],
+                    'data' => $eatingTypes[1],
                 ])
                 ->add('calories', 'number', [
                     'label' => 'Калорий',

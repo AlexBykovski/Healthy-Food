@@ -6,6 +6,7 @@ use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
 use AppBundle\Entity\RecipeStep;
 use Doctrine\ORM\EntityManagerInterface;
+use stdClass;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ImportDataByUrl
@@ -23,6 +24,7 @@ class ImportDataByUrl
         $this->requestStack->getCurrentRequest()->cookies->remove("recipeRemote");
 
         if($this->isJson($recipe) && strpos($this->requestStack->getCurrentRequest()->getUri(), "/create")){
+            /** @var stdClass $recipeObj */
             $recipeObj = json_decode($recipe);
 
             if(count($this->em->getRepository(Recipe::class)->findBy([
@@ -50,9 +52,9 @@ class ImportDataByUrl
 
             foreach($recipeObj->products as $product){
                 $tempProduct = new RecipeProduct();
-                $tempProduct->setName($product->name);
-                $tempProduct->setCount($product->count);
-                $tempProduct->setMeasure($product->measure);
+                $tempProduct->setName(array_keys(get_object_vars($product))[0]);
+                $tempProduct->setCount(array_values(get_object_vars($product))[0]);
+                $tempProduct->setMeasure(isset($product->measure) ? $product->measure : 'гр');
 
                 $products[] = $tempProduct;
             }
@@ -67,6 +69,7 @@ class ImportDataByUrl
 
     protected function isJson($string) {
         json_decode($string);
+        var_dump(json_last_error_msg());
         return (json_last_error() == JSON_ERROR_NONE);
     }
 }

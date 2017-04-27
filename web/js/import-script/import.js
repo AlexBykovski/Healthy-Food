@@ -3,7 +3,7 @@ app.directive("importDataToFile",['$cookies', function($cookies){
         restrict: 'A',
         link: function(scope, element, attrs, ngModel)
         {
-            scope.clickFunc = function(){
+            scope.clickFunc = function(type){
                 console.log("processing");
                 var url = $("#remote-rul").val();
                 $.ajax({
@@ -35,20 +35,42 @@ app.directive("importDataToFile",['$cookies', function($cookies){
                     recipeData["products"] = [];
 
                     $.each(productBlocks, function(index, item){
-                        recipeData["products"].push({
-                           "name" : $(item).find("td:first").html().trim(),
-                           "count" : parseFloat($(item).find("td.variable:first").html().trim()),
-                           "measure" : "гр"
-                        });
+                        var newObj = {};
+
+                        newObj[$(item).find("td:first").html().trim()] = parseFloat($(item).find("td.variable:first").html().trim());
+                        recipeData["products"].push(newObj);
                     });
 
                     recipeData["steps"] = [];
 
-                    $.each(stepsBlock, function(index, item){
-                        if($(item).html().trim().length && $.isNumeric($(item).html().trim()[0])){
-                            recipeData["steps"].push($(item).html().trim());
-                        }
-                    });
+                    if(type === "numbers"){
+                        $.each(stepsBlock, function(index, item){
+                            if($(item).html().trim().length && $.isNumeric($(item).html().trim()[0])){
+                                recipeData["steps"].push($(item).html().trim());
+                            }
+                        });
+                    }
+                    else if(type === "word"){
+                        var start = false;
+
+                        $.each(stepsBlock, function(index, item){
+                            if(start && $(item).html().trim().length){
+                                recipeData["steps"].push($(item).html().trim());
+                            }
+
+                            if($(item).html().trim().indexOf("Приготовление") > -1){
+                                start = true;
+                            }
+                        });
+                    }
+
+                    else if(type === "list"){
+                        $.each( newDiv.find("#recipe_content_block li"), function(index, item){
+                            if($(item).html().trim().length){
+                                recipeData["steps"].push($(item).html().trim());
+                            }
+                        });
+                    }
 
                     //document.cookie = "recipeRemote=" + JSON.stringify(recipeData);
                     $cookies.putObject('recipeRemote', recipeData);
