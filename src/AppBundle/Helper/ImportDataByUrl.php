@@ -25,6 +25,10 @@ class ImportDataByUrl
         if($this->isJson($recipe) && strpos($this->requestStack->getCurrentRequest()->getUri(), "/create")){
             $recipeObj = json_decode($recipe);
 
+            var_dump($recipeObj->name);
+            var_dump(count($this->em->getRepository(Recipe::class)->findBy([
+                "name" => $recipeObj->name
+            ])));die;
             if(count($this->em->getRepository(Recipe::class)->findBy([
                 "name" => $recipeObj->name,
                 "portions" => $recipeObj->countPortions,

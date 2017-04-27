@@ -23,14 +23,14 @@ app.directive("importDataToFile",[ function(){
                     var productBlocks = newDiv.find("section.recipe_calculation_container:first .recipe_calculation tbody tr");
                     var stepsBlock = newDiv.find("#recipe_content_block > p");
 
-                    recipeData["name"] = newDiv.find("div.breadcrumb > span").html();
-                    recipeData["photo"] = "http://daily-menu.ru" + newDiv.find("img.recipe_image_main").parent().attr("href");
+                    recipeData["name"] = newDiv.find("div.breadcrumb > span").html().trim();
+                    recipeData["photo"] = "http://daily-menu.ru" + newDiv.find("img.recipe_image_main").parent().attr("href").trim();
                     recipeData["countPortions"] = parseInt(newDiv.find("#servingCount").html().trim());
 
-                    recipeData["calories"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(3) > strong").html());
-                    recipeData["proteins"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(4) > strong").html());
-                    recipeData["fats"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(5) > strong").html());
-                    recipeData["carboh"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(6) > strong").html());
+                    recipeData["calories"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(3) > strong").html().trim());
+                    recipeData["proteins"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(4) > strong").html().trim());
+                    recipeData["fats"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(5) > strong").html().trim());
+                    recipeData["carboh"] = parseFloat(cpfcBlock.find("tr:first > td.variable:nth-child(6) > strong").html().trim());
 
                     recipeData["products"] = [];
 
@@ -50,7 +50,8 @@ app.directive("importDataToFile",[ function(){
                         }
                     });
 
-                    $.cookie("recipeRemote", angular.toJson(recipeData), { expires: 1 });
+                    document.cookie = "recipeRemote=" + angular.toJson(recipeData);
+
                     console.log("done");
                 });
             };
