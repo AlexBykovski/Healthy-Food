@@ -1,4 +1,4 @@
-var app = angular.module('healthyFood', []);
+var app = angular.module('healthyFood', ['ngCookies']);
 
 app.config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');

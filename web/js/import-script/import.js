@@ -1,4 +1,4 @@
-app.directive("importDataToFile",[ function(){
+app.directive("importDataToFile",['$cookies', function($cookies){
     return{
         restrict: 'A',
         link: function(scope, element, attrs, ngModel)
@@ -50,7 +50,8 @@ app.directive("importDataToFile",[ function(){
                         }
                     });
 
-                    document.cookie = "recipeRemote=" + angular.toJson(recipeData);
+                    //document.cookie = "recipeRemote=" + JSON.stringify(recipeData);
+                    $cookies.putObject('recipeRemote', recipeData);
 
                     console.log("done");
                 });
