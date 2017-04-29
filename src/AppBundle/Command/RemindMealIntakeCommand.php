@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
+use AppBundle\Helper\NotificationHelper;
 use AppBundle\Helper\RemindMeal;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,12 +26,15 @@ class RemindMealIntakeCommand extends ContainerAwareCommand
         $container = $this->getContainer();
         /** @var RemindMeal $remindHelper */
         $remindHelper = $container->get('app.helper.remind_meal');
+        /** @var NotificationHelper $notificator */
+        $notificator = $container->get('app.helper.notification_helper');
 
         $eatingType = mb_convert_case($remindHelper->getEatingTypeByTime(), MB_CASE_TITLE, "UTF-8");
         $emails = $remindHelper->getUsersEmailsForNotify();
 
         foreach($emails as $email){
             $container->get('app.notifier.remind_eating')->sendEmail($email, $eatingType);
+            $notificator->addEatingRemindNotification($email, $remindHelper->getEatingTypeByTime());
         }
 
         $output->writeln("<info>Emails have been sent!</info>");

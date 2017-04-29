@@ -172,6 +172,12 @@ class User implements UserInterface
     private $eatings;
 
     /**
+     * One User has Many Notifications.
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user")
+     */
+    private $notifications;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -180,6 +186,7 @@ class User implements UserInterface
         $this->salt = md5(uniqid(null, true));
         $this->userRoles = new ArrayCollection();
         $this->eatings = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -509,5 +516,29 @@ class User implements UserInterface
     public function refreshUpdated()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+    /**
+     * @param mixed $notifications
+     */
+    public function setNotifications($notifications)
+    {
+        $this->notifications = $notifications;
+    }
+
+    /**
+     * @param Notification $notification
+     */
+    public function addNotifications(Notification $notification)
+    {
+        return $this->notifications->add($notification);
     }
 }
