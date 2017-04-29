@@ -6,10 +6,20 @@
     <div id="product" class="section-container p-t-20">
         <!-- BEGIN container -->
         <div class="container">
+            <div class="row">
+                <!-- begin col-12 -->
+                <div class="col-md-12">
+                    <div class="result-container">
+                        <div class="m-b-20" ng-init="recipeSearch = ''">
+                            <input type="text" class="form-control" style="width: 100%;" ng-model="recipeSearch" placeholder="Поиск рецепта по названию">
+                        </div>
+                    </div>
+                </div>
+                <!-- end col-12 -->
+            </div>
             <!-- BEGIN product -->
             <div class="product">
                 <!-- BEGIN product-tab -->
-                <div>{{ recipes | length }}</div>
                 <div class="product-tab">
                     <!-- BEGIN #product-tab-content -->
                     <div id="product-tab-content" class="tab-content">
@@ -30,31 +40,31 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            {% for recipe in recipes if (chosenEating and recipe.id != chosenEating.recipe.id) or not chosenEating%}
                             <!-- BEGIN product-desc -->
-                            <div class="product-desc">
-                                <div class="image">
-                                    <img src="{{ recipe.photo }}" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h4><a href="{{ path("single_recipe", {"id" : recipe.id}) }}">{{ recipe.name }}</a></h4>
-                                    <p>
-                                        {% for product in recipe.products %}
-                                            {{ product.name }}{{ not loop.last ? ','}}
-                                        {% endfor %}
-                                    </p>
-                                    {% if chosenEating and canChoose %}
-                                        <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Изменить выбор</a>
-                                    {% elseif not chosenEating and canChoose %}
-                                        <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Выбрать</a>
-                                    {% endif %}
+                            <div show-more-recipes all-recipes="{{ recipes | json_encode }}" ng-init="showCount = 10">
+                                <div class="product-desc" ng-repeat="recipe in allRecipes" ng-show="$index <= showCount && (recipeSearch === '' || recipe.name.toLowerCase().indexOf(recipeSearch.toLowerCase()) >= 0)">
+                                    <div class="image">
+                                        <img ng-src="{[{recipe.photo}]}" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h4><a ng-href="/recipe/{[{recipe.id}]}" ng-bind="recipe.name"></a></h4>
+                                        <p>
+                                            <span ng-repeat="product in recipe.products" ng-bind="product + ($last ? '' : ', ')">
+                                            </span>
+                                        </p>
+                                        {% if chosenEating and canChoose %}
+                                            <a class="btn btn-primary" ng-href="/choose-eating-recipe/{{ date }}/{[{recipe.id}]}/{{ type }}">Изменить выбор</a>
+                                        {% elseif not chosenEating and canChoose %}
+                                            <a class="btn btn-primary" ng-href="/choose-eating-recipe/{{ date }}/{[{recipe.id}]}/{{ type }}">Выбрать</a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
-                            {% endfor %}
                             <!-- END product-desc -->
                         </div>
                         <!-- END #product-desc -->
                     </div>
+                    <button class="btn btn-primary" style="left: 45%; position: relative; margin-bottom: 28px;" ng-show="showCount < 50" ng-click="showCount = showCount + 10;">Показать ещё</button>
                     <!-- END #product-tab-content -->
                 </div>
                 <!-- END product-tab -->
