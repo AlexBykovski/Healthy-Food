@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\RecipeProduct;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,33 @@ class RecipeController extends Controller
         $chosenEating = $this->getDoctrine()->getRepository("AppBundle:Eating")
             ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
 
+        $parseRecipes = [];
+
+        /** @var Recipe $recipe */
+        foreach($allRecipes as $recipe){
+            if($chosenEating instanceof Eating && $chosenEating->getRecipe()->getId() === $recipe->getId()){
+                continue;
+            }
+
+            $parseRecipes[] = [
+                'id' => $recipe->getId(),
+                'photo' => $recipe->getPhoto(),
+                'name' => $recipe->getName(),
+                'products' => [],
+            ];
+
+            /** @var RecipeProduct $product */
+            foreach($recipe->getProducts() as $product){
+                $parseRecipes[count($parseRecipes) - 1]['products'][] = $product->getName();
+            }
+        }
+
         return $this->render('recipe/list-recipes.html.twig', [
-            "recipes" => $allRecipes,
+            "recipes" => $parseRecipes,
             "chosenEating" => $chosenEating,
             "canChoose" => (new DateTime())->format("Y-m-d") <= $date,
+            "date" => $date,
+            "type" => $type,
         ]);
     }
 
