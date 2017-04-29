@@ -6,6 +6,17 @@
     <div id="product" class="section-container p-t-20">
         <!-- BEGIN container -->
         <div class="container">
+            <div class="row">
+                <!-- begin col-12 -->
+                <div class="col-md-12">
+                    <div class="result-container">
+                        <div class="m-b-20" ng-init="recipeSearch = ''">
+                            <input type="text" class="form-control" style="width: 100%;" ng-model="recipeSearch" placeholder="Поиск рецепта по названию">
+                        </div>
+                    </div>
+                </div>
+                <!-- end col-12 -->
+            </div>
             <!-- BEGIN product -->
             <div class="product">
                 <!-- BEGIN product-tab -->
@@ -31,7 +42,7 @@
                             {% endif %}
                             <!-- BEGIN product-desc -->
                             <div show-more-recipes all-recipes="{{ recipes | json_encode }}" ng-init="showCount = 10">
-                                <div class="product-desc" ng-repeat="recipe in allRecipes" ng-show="$index <= showCount">
+                                <div class="product-desc" ng-repeat="recipe in allRecipes" ng-show="$index <= showCount && (recipeSearch === '' || recipe.name.toLowerCase().indexOf(recipeSearch.toLowerCase()) >= 0)">
                                     <div class="image">
                                         <img ng-src="{[{recipe.photo}]}" alt="">
                                     </div>
