@@ -21,21 +21,15 @@
                 'color_parallax/css/style-responsive.min.css'
                 'color_parallax/css/theme/default.css'
                 'css/eating-list-default.min.css'
-                'css/eating-custom.css'
+                'css/recipes-list-default.min.css'
+                'css/recipe-list-default-responsive.css'
+                'css/recipes-list-theme-default.css'
             %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
         {% endblock %}
         <!-- ================== BEGIN BASE CSS STYLE ================== -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <!-- only for Heroku deploy -->
-        {#<link href="bundles/app/css/main.css" rel="stylesheet" id="theme">#}
-        {#<link href="css/main.css" rel="stylesheet" id="theme">#}
-        {% if app.request.attributes.get('_route') == 'list_recipes' or app.request.attributes.get('_route') == 'single_recipe' %}
-            <link href="css/recipes-list-default.min.css" rel="stylesheet">
-            <link href="css/recipe-list-default-responsive.css" rel="stylesheet">
-            <link href="css/recipes-list-theme-default.css" rel="stylesheet">
-        {% endif %}
         <!-- ================== END BASE CSS STYLE ================== -->
 
         <!-- ================== BEGIN BASE JS ================== -->
@@ -89,8 +83,8 @@
                                 </ul>
                             </li>#}
                             <li class="unregistered">
-                                <a href="{{ path('registration') }}" class="btn btn-success m-l-30 m-r-15 m-t-10">Зарегистрироваться</a>
-                                <a href="{{ path('login') }}" class="btn btn-white m-l-40 m-t-10 btn-login">Войти</a>
+                                <a href="{{ path('registration') }}" class="btn btn-success m-l-30 m-r-15 m-t-10" style="padding: 8px 16px;">Зарегистрироваться</a>
+                                <a href="{{ path('login') }}" class="btn btn-white m-l-40 m-t-10 btn-login" style="padding: 8px 16px;">Войти</a>
                             </li>
                         </ul>
                     {% endif %}

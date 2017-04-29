@@ -15,7 +15,7 @@ class ProfileController extends Controller
      * @Route("/edit-profile", name="edit_profile")
      * @Security("has_role('ROLE_SIMPLE_USER')")
      */
-    public function registrationAction(Request $request)
+    public function editProfileAction(Request $request)
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -26,6 +26,7 @@ class ProfileController extends Controller
             $user->refreshUpdated();
             $user->upload();
             $this->getDoctrine()->getManager()->flush();
+            $this->get("app.helper.notification_helper")->addProfileActionNotification($user);
         }
 
         return $this->render('profile/profile.html.twig', [

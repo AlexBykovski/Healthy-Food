@@ -7,11 +7,13 @@
             {#<div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
                 <strong>Новая подсказка от ИИ!</strong>
-            </div>
-            <div class="alert alert-warning">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
-                <strong>Профиль был обновлён!</strong>
             </div>#}
+            {% if firstProfile %}
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                    <strong>{{ firstProfile.message }}</strong>
+                </div>
+            {% endif %}
             {% if firstEatingRemind %}
                 <div class="alert alert-info">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
@@ -28,16 +30,16 @@
                             <td>Новая подсказка от ИИ!</td>
                             <td>27.04.2017</td>
                         </tr>#}
+                        {% set eatingType = constant('AppBundle\\Entity\\Notification::EATING_REMIND')  %}
+                        {% set profileType = constant('AppBundle\\Entity\\Notification::PROFILE_ACTION')  %}
+                        {% set aiType = constant('AppBundle\\Entity\\Notification::AI')  %}
                         {% for notification in notifications %}
-                            <tr class="info">
+                            {% set class = notification.type == eatingType ? 'info' : notification.type == profileType ? 'warning' : 'success' %}
+                            <tr class="{{ class }}">
                                 <td>{{ notification.message }}</td>
                                 <td>{{ notification.createdAt | date("d/m/Y H:i") }}</td>
                             </tr>
                         {% endfor %}
-                        {#<tr class="warning">
-                            <td>Профиль был обновлён!</td>
-                            <td>22.05.2017</td>
-                        </tr>#}
                     </tbody>
                 </table>
             </div>

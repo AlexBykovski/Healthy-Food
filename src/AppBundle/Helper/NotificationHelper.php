@@ -36,6 +36,18 @@ class NotificationHelper
         }
     }
 
+    public function addProfileActionNotification(User $user, $message = "Данные Вашего профиля были обновлены"){
+            $notification = new Notification();
+            $notification->setMessage($message);
+            $notification->setType(Notification::PROFILE_ACTION);
+            $notification->setCreatedAt(new \DateTime());
+            $notification->setIsRead(false);
+            $notification->setUser($user);
+
+            $this->em->persist($notification);
+            $this->em->flush();
+    }
+
     public function getCountUnreadAllNotificationsForUser(User $user){
         return count($this->em->getRepository(Notification::class)->getUnreadNotificationsByUser($user, 'all'));
     }

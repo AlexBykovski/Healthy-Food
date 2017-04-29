@@ -21,6 +21,8 @@ class NotificationController extends Controller
             ->findBy(["user" => $this->getUser()], ["createdAt" => "DESC"], 20);
         $firstEatingRemind = $this->getDoctrine()->getRepository(Notification::class)
             ->getFirstUnreadNotificationByUserAndType($this->getUser(), Notification::EATING_REMIND);
+        $firstProfile = $this->getDoctrine()->getRepository(Notification::class)
+            ->getFirstUnreadNotificationByUserAndType($this->getUser(), Notification::PROFILE_ACTION);
 
         /** @var Notification $eatingRemindNotif */
         foreach($notifications as $eatingRemindNotif){
@@ -32,6 +34,7 @@ class NotificationController extends Controller
         return $this->render('notification/list.html.twig', [
             "notifications" => $notifications,
             "firstEatingRemind" => count($firstEatingRemind) ? $firstEatingRemind[0] : null,
+            "firstProfile" => count($firstProfile) ? $firstProfile[0] : null,
         ]);
     }
 }
