@@ -6,7 +6,6 @@
     <div id="product" class="section-container p-t-20">
         <!-- BEGIN container -->
         <div class="container">
-
             <!-- BEGIN product -->
             <div class="product">
                 <!-- BEGIN product-tab -->
@@ -17,12 +16,12 @@
                         <!-- BEGIN #product-desc -->
                         <div class="tab-pane fade active in">
                             {% if chosenEating %}
-                                <div class="product-desc">
+                                <div class="product-desc" style="border: 15px ridge lawngreen;">
                                     <div class="image">
                                         <img src="{{ chosenEating.recipe.photo }}" alt="">
                                     </div>
                                     <div class="desc">
-                                        <h4>{{ chosenEating.recipe.name }}</h4>
+                                        <h4><a href="{{ path("single_recipe", {"id" : chosenEating.recipe.id}) }}">{{ chosenEating.recipe.name }}</a></h4>
                                         <p>
                                             {% for product in chosenEating.recipe.products %}
                                                 {{ product.name }}{{ not loop.last ? ','}}
@@ -30,25 +29,28 @@
                                         </p>
                                     </div>
                                 </div>
-                            {% else %}
-                                {% for recipe in recipes %}
-                                <!-- BEGIN product-desc -->
-                                <div class="product-desc">
-                                    <div class="image">
-                                        <img src="{{ recipe.photo }}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <h4><a href="{{ path("single_recipe", {"id" : recipe.id}) }}">{{ recipe.name }}</a></h4>
-                                        <p>
-                                            {% for product in recipe.products %}
-                                                {{ product.name }}{{ not loop.last ? ','}}
-                                            {% endfor %}
-                                        </p>
-                                        <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id}) }}">Выбрать</a>
-                                    </div>
-                                </div>
-                                {% endfor %}
                             {% endif %}
+                            {% for recipe in recipes if (chosenEating and recipe.id != chosenEating.recipe.id) or not chosenEating%}
+                            <!-- BEGIN product-desc -->
+                            <div class="product-desc">
+                                <div class="image">
+                                    <img src="{{ recipe.photo }}" alt="">
+                                </div>
+                                <div class="desc">
+                                    <h4><a href="{{ path("single_recipe", {"id" : recipe.id}) }}">{{ recipe.name }}</a></h4>
+                                    <p>
+                                        {% for product in recipe.products %}
+                                            {{ product.name }}{{ not loop.last ? ','}}
+                                        {% endfor %}
+                                    </p>
+                                    {% if chosenEating %}
+                                        <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Изменить выбор</a>
+                                    {% else %}
+                                        <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Выбрать</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
                             <!-- END product-desc -->
                         </div>
                         <!-- END #product-desc -->

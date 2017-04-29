@@ -44,11 +44,11 @@ class EatingController extends Controller
 
     //@@todo add requirements for date and recipeId
     /**
-     * @Route("/choose-eating-recipe/{date}/{recipeId}", name="choose_eating_recipe")
+     * @Route("/choose-eating-recipe/{date}/{recipeId}/{type}", name="choose_eating_recipe")
      * @ParamConverter("recipe", class="AppBundle:Recipe", options={"id" = "recipeId"})
      * @Security("has_role('ROLE_SIMPLE_USER')")
      */
-    public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date)
+    public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
     {
         $em = $this->getDoctrine()->getManager();
         $eating = new Eating();
@@ -57,9 +57,34 @@ class EatingController extends Controller
         $eating->setUser($this->getUser());
         $eating->setDate(DateTime::createFromFormat('Y-m-d', $date));
 
+        $chosenEating = $this->getDoctrine()->getRepository(Eating::class)
+            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
+
         $em->persist($eating);
+
+        if($chosenEating instanceof Eating) {
+            $em->remove($chosenEating);
+        }
+
         $em->flush();
 
         return $this->redirect($request->headers->get('referer'));
+    }
+
+    private function getEatingNameByType($type){
+        switch($type){
+            case "breakfast":
+                return "завтрак";
+            case "sec-breakfast":
+                return "второй завтрак";
+            case "dinner":
+                return "обед";
+            case "afternoon-snack":
+                return "полдник";
+            case "supper":
+                return "ужин";
+            case "sec-supper":
+                return "второй ужин";
+        }
     }
 }
