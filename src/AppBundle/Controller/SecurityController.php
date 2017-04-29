@@ -46,7 +46,7 @@ class SecurityController extends Controller
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
 
-            return $this->redirectToRoute("eating_list");
+            return $this->redirectToRoute("eating_list", ["date" => (new DateTime())->format("d-m-Y")]);
         }
 
         return $this->render('security/registration.html.twig', [
