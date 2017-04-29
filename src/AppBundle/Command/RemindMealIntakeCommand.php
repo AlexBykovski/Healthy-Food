@@ -25,13 +25,13 @@ class RemindMealIntakeCommand extends ContainerAwareCommand
         $container = $this->getContainer();
         /** @var RemindMeal $remindHelper */
         $remindHelper = $container->get('app.helper.remind_meal');
+
         $eatingType = ucfirst($remindHelper->getEatingTypeByTime());
-        $output->writeln("<info>$eatingType</info>");
-        $emails = $remindHelper->getUsersForNotify();
+        $emails = $remindHelper->getUsersEmailsForNotify();
+
         foreach($emails as $email){
-            $output->writeln("<info>" . $email["email"] . "</info>");
+            $container->get('app.notifier.remind_eating')->sendEmail($email, $eatingType);
         }
-        //$container->get('app.notifier.remind_eating')->sendEmail("bykovski.work@gmail.com");
 
         $output->writeln("<info>Emails have been sent!</info>");
     }

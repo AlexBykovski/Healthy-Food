@@ -13,33 +13,39 @@ class RemindMeal
         $this->em = $em;
     }
 
-    public function getUsersForNotify(){
+    public function getUsersEmailsForNotify(){
         $minCountEating = $this->getCountMinEatingByCurrentType();
-        var_dump($minCountEating);
+        $emails = [];
 
-        return $this->em->getRepository(User::class)->findUserToRemindEating($minCountEating);
+        $users = $this->em->getRepository(User::class)->findUserToRemindEating($minCountEating);
+
+        foreach($users as $user){
+            $emails[] = $user["eamil"];
+        }
+
+        return $emails;
     }
 
     public function getEatingTypeByTime(){
         $time = (new \DateTime())->format("H:i");
 
-        if($time > "5:00" && $time < "6:00"){
-            return "завтрак";
+        if($time > "05:00" && $time < "06:00"){
+            return "завтрак"; //7
         }
-        elseif($time > "9:00" && $time < "10:00" ){
-            return "второй завтрак";
+        elseif($time > "09:00" && $time < "10:00" ){
+            return "второй завтрак"; //6
         }
         elseif($time > "11:00" && $time < "12:00"){
-            return "обед";
+            return "обед"; //7
         }
         elseif($time > "15:00" && $time < "16:00"){
-            return "полдник";
+            return "полдник"; //3
         }
         elseif($time > "17:00" && $time < "18:00"){
-            return "ужин";
+            return "ужин"; //7
         }
         elseif($time > "19:00" && $time < "24:00"){
-            return "второй ужин";
+            return "второй ужин"; //2
         }
 
         return "";
