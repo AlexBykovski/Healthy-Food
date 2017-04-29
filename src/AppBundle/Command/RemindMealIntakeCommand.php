@@ -26,7 +26,7 @@ class RemindMealIntakeCommand extends ContainerAwareCommand
         /** @var RemindMeal $remindHelper */
         $remindHelper = $container->get('app.helper.remind_meal');
 
-        $eatingType = ucfirst($remindHelper->getEatingTypeByTime());
+        $eatingType = mb_convert_case($remindHelper->getEatingTypeByTime(), MB_CASE_TITLE, "UTF-8");
         $emails = $remindHelper->getUsersEmailsForNotify();
 
         foreach($emails as $email){
