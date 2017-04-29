@@ -36,4 +36,20 @@ class EatingRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findMorePopularRecipeForUser(User $user, $type)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('r.id, COUNT(r.id) as occurs')
+            ->join('e.recipe', 'r')
+            ->where('e.user = :user')
+            ->andWhere('r.eatingType = :type')
+            ->setParameter('user', $user)
+            ->setParameter('type', $type)
+            ->groupBy('r.id')
+            ->orderBy('occurs', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
 }

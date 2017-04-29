@@ -20,9 +20,18 @@ class RecipeController extends Controller
      */
     public function listDoctorsSpecificDirectionAction(Request $request, $date, $type)
     {
-        $allRecipes = $this->getDoctrine()->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $this->getEatingNameByType($type)]);
+        $parseType = $this->getEatingNameByType($type);
+
+        $allRecipes = $this->getDoctrine()->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $parseType]);
         $chosenEating = $this->getDoctrine()->getRepository("AppBundle:Eating")
-            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
+            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $parseType);
+
+        $popularRecipeObject = $this->getDoctrine()->getRepository("AppBundle:Eating")->findMorePopularRecipeForUser($this->getUser(), $parseType);
+        $mostPopularRecipeId = null;
+
+        if(count($popularRecipeObject)){
+            $mostPopularRecipeId = $popularRecipeObject[0]["id"];
+        }
 
         $parseRecipes = [];
 
@@ -43,12 +52,20 @@ class RecipeController extends Controller
             foreach($recipe->getProducts() as $product){
                 $parseRecipes[count($parseRecipes) - 1]['products'][] = $product->getName();
             }
+
+            if($mostPopularRecipeId == $recipe->getId() && count($parseRecipes) > 1){ //set most popular on the first
+                $temp = $parseRecipes[0];
+                $parseRecipes[0] = $parseRecipes[count($parseRecipes) - 1];
+                $parseRecipes[count($parseRecipes) - 1] = $temp;
+            }
         }
 
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $parseRecipes,
             "chosenEating" => $chosenEating,
-            "canChoose" => (new DateTime())->format("Y-m-d") <= $date,
+            //"canChoose" => (new DateTime())->format("Y-m-d") <= $date,
+            "canChoose" => true,
+            "mostPopularRecipeId" => $mostPopularRecipeId,
             "date" => $date,
             "type" => $type,
         ]);
@@ -75,9 +92,9 @@ class RecipeController extends Controller
      */
     public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
     {
-        if((new DateTime())->format("Y-m-d") > $date){
+        /*if((new DateTime())->format("Y-m-d") > $date){
             return $this->redirect($request->headers->get('referer'));
-        }
+        }*/
 
         $em = $this->getDoctrine()->getManager();
         $eating = new Eating();
