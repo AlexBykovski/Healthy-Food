@@ -51,7 +51,7 @@ class RecipeController extends Controller
      */
     public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
     {
-        if((new DateTime())->format("Y-m-d") <= $date){
+        if((new DateTime())->format("Y-m-d") > $date){
             return $this->redirect($request->headers->get('referer'));
         }
 
