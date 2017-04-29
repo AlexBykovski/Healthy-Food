@@ -63,8 +63,7 @@ class RecipeController extends Controller
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $parseRecipes,
             "chosenEating" => $chosenEating,
-            //"canChoose" => (new DateTime())->format("Y-m-d") <= $date,
-            "canChoose" => true,
+            "canChoose" => (new DateTime())->format("Y-m-d") <= $date,
             "mostPopularRecipeId" => $mostPopularRecipeId,
             "date" => $date,
             "type" => $type,
@@ -92,9 +91,9 @@ class RecipeController extends Controller
      */
     public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
     {
-        /*if((new DateTime())->format("Y-m-d") > $date){
+        if((new DateTime())->format("Y-m-d") > $date){
             return $this->redirect($request->headers->get('referer'));
-        }*/
+        }
 
         $em = $this->getDoctrine()->getManager();
         $eating = new Eating();
