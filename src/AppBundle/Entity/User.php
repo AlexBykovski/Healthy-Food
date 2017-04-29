@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
  * User
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="user_email", columns={"email"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  *
  * @UniqueEntity(
  *     "email",
