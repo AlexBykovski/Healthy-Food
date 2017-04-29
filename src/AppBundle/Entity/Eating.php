@@ -47,6 +47,20 @@ class Eating
      */
     private $date;
 
+    const BREAKFAST_START = 6;
+    const BREAKFAST_END = 10;
+    const LUNCH_START = 10;
+    const LUNCH_END = 12;
+    const DINNER_START = 12;
+    const DINNER_END = 16;
+    const AFTERNOON_SNACK_START = 16;
+    const AFTERNOON_SNACK_END = 18;
+    const SUPPER_START = 18;
+    const SUPPER_END = 20;
+    const SEC_SUPPER_START = 20;
+    const SEC_SUPPER_END = 22;
+
+
     /**
      * Eating constructor.
      */

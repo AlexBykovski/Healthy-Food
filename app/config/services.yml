@@ -18,6 +18,10 @@ services:
           class:      AppBundle\Helper\ImportDataByUrl
           arguments:  ['@request_stack', '@doctrine.orm.entity_manager']
 
+    app.helper.remind_meal:
+          class:      AppBundle\Helper\RemindMeal
+          arguments:  ['@doctrine.orm.entity_manager']
+
     app.builder.email:
           class: AppBundle\Builder\EmailBuilder
           scope: prototype
