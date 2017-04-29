@@ -63,9 +63,6 @@ class DefaultController extends Controller
     {
         $ch = curl_init($request->getContent());
 
-        //curl_setopt($ch, CURLOPT_FILE, $fp);
-        //curl_setopt($ch, CURLOPT_HEADER, 0);
-
         $result = curl_exec($ch);
 
         return new JsonResponse(["data" => $result], 200);

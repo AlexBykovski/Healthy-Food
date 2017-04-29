@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content" class="content">
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-6 -->
+            <div class="col-md-12 ui-sortable">
+                <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-1">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="font-size: 15px;">Предположения, сделанные искусственным интеллектом</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead style="font-size: 15px;">
+                                <tr>
+                                    <th>Предположения</th>
+                                    <th>Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style="font-size: 17px; color: blue;">Вы вероятно не предпочитаете блюда, содержащие <strong>Лук</strong></td>
+                                <td>
+                                    <a href="" class="btn btn-md btn-success" style="margin-right: 29px;">Верно</a>
+                                    <a href="" class="btn btn-md btn-danger" style="margin-right: -82px;">Не верно</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col-6 -->
+        </div>
+        <!-- end row -->
+    </div>
+{% endblock %}
