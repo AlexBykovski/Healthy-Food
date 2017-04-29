@@ -43,9 +43,9 @@
                                             {{ product.name }}{{ not loop.last ? ','}}
                                         {% endfor %}
                                     </p>
-                                    {% if chosenEating %}
+                                    {% if chosenEating and canChoose %}
                                         <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Изменить выбор</a>
-                                    {% else %}
+                                    {% elseif not chosenEating and canChoose %}
                                         <a class="btn btn-primary" href="{{ path("choose_eating_recipe", {"date": app.request.attributes.get('_route_params')["date"], "recipeId" : recipe.id, "type" : app.request.attributes.get('_route_params')["type"]}) }}">Выбрать</a>
                                     {% endif %}
                                 </div>

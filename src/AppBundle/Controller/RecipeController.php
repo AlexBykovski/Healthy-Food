@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,6 +26,7 @@ class RecipeController extends Controller
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $allRecipes,
             "chosenEating" => $chosenEating,
+            "canChoose" => (new DateTime())->format("Y-m-d") <= $date,
         ]);
     }
 
@@ -39,6 +41,39 @@ class RecipeController extends Controller
         return $this->render('recipe/recipe-detail.html.twig', [
             "recipe" => $recipe,
         ]);
+    }
+
+    //@@todo add requirements for date and recipeId
+    /**
+     * @Route("/choose-eating-recipe/{date}/{recipeId}/{type}", name="choose_eating_recipe")
+     * @ParamConverter("recipe", class="AppBundle:Recipe", options={"id" = "recipeId"})
+     * @Security("has_role('ROLE_SIMPLE_USER')")
+     */
+    public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
+    {
+        if((new DateTime())->format("Y-m-d") <= $date){
+            return $this->redirect($request->headers->get('referer'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $eating = new Eating();
+
+        $eating->setRecipe($recipe);
+        $eating->setUser($this->getUser());
+        $eating->setDate(DateTime::createFromFormat('Y-m-d', $date));
+
+        $chosenEating = $this->getDoctrine()->getRepository(Eating::class)
+            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
+
+        $em->persist($eating);
+
+        if($chosenEating instanceof Eating) {
+            $em->remove($chosenEating);
+        }
+
+        $em->flush();
+
+        return $this->redirect($request->headers->get('referer'));
     }
 
     private function getEatingNameByType($type){
