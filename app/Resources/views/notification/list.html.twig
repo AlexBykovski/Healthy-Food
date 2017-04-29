@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content" class="content">
+        <!-- begin row -->
+        <div class="row">
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                <strong>Новая подсказка от ИИ!</strong>
+            </div>
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                <strong>Профиль был обновлён!</strong>
+            </div>
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                <strong>Напоминание о приёме пищи!</strong>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <tr class="success">
+                        <td>Новая подсказка от ИИ!</td>
+                        <td>27.04.2017</td>
+                    </tr>
+                    <tr class="info">
+                        <td>Напоминание о приёме пищи!</td>
+                        <td>22.04.2017</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>Профиль был обновлён!</td>
+                        <td>22.05.2017</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+{% endblock %}
