@@ -28,7 +28,6 @@ class RemindMeal
 
     public function getEatingTypeByTime(){
         $time = (new \DateTime())->format("H:i");
-        $time = "15:30";
 
         if($time > "05:00" && $time < "06:00"){
             return "завтрак"; //7
