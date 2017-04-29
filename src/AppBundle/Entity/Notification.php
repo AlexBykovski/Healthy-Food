@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Notification
  *
  * @ORM\Table(name="notification")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationRepository")
  */
 class Notification
 {
@@ -52,9 +52,9 @@ class Notification
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_checked", type="boolean", length=255, nullable=false, options={"default": false})
+     * @ORM\Column(name="is_read", type="boolean", length=255, nullable=false, options={"default": false})
      */
-    private $isChecked = false;
+    private $isRead = false;
 
     const EATING_REMIND = 'eating_remind';
     const PROFILE_ACTION = 'profile_action';
@@ -151,16 +151,16 @@ class Notification
     /**
      * @return boolean
      */
-    public function isIsChecked()
+    public function isIsRead()
     {
-        return $this->isChecked;
+        return $this->isRead;
     }
 
     /**
-     * @param boolean $isChecked
+     * @param boolean $isRead
      */
-    public function setIsChecked($isChecked)
+    public function setIsRead($isRead)
     {
-        $this->isChecked = $isChecked;
+        $this->isRead = $isRead;
     }
 }

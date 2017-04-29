@@ -28,12 +28,28 @@ class NotificationHelper
                 ":00 ) у Вас запланирован приём пищи: " . mb_convert_case($type, MB_CASE_TITLE, "UTF-8"));
             $notification->setType(Notification::EATING_REMIND);
             $notification->setCreatedAt(new \DateTime());
-            $notification->setIsChecked(false);
+            $notification->setIsRead(false);
             $notification->setUser($user);
 
             $this->em->persist($notification);
             $this->em->flush();
         }
+    }
+
+    public function addProfileActionNotification(User $user, $message = "Данные Вашего профиля были обновлены"){
+            $notification = new Notification();
+            $notification->setMessage($message);
+            $notification->setType(Notification::PROFILE_ACTION);
+            $notification->setCreatedAt(new \DateTime());
+            $notification->setIsRead(false);
+            $notification->setUser($user);
+
+            $this->em->persist($notification);
+            $this->em->flush();
+    }
+
+    public function getCountUnreadAllNotificationsForUser(User $user){
+        return count($this->em->getRepository(Notification::class)->getUnreadNotificationsByUser($user, 'all'));
     }
 
     protected function getStartTimeByEatingType($type){
