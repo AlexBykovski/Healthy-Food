@@ -173,7 +173,7 @@ class User implements UserInterface
 
     /**
      * One User has Many Notifications.
-     * @OneToMany(targetEntity="Notification", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user")
      */
     private $notifications;
 

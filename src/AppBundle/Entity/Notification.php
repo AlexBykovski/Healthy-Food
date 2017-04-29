@@ -43,6 +43,32 @@ class Notification
     private $user;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_checked", type="boolean", length=255, nullable=false, options={"default": false})
+     */
+    private $isChecked = false;
+
+    const EATING_REMIND = 'eating_remind';
+    const PROFILE_ACTION = 'profile_action';
+    const AI = 'ai';
+
+    /**
+     * Notification constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -104,5 +130,37 @@ class Notification
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsChecked()
+    {
+        return $this->isChecked;
+    }
+
+    /**
+     * @param boolean $isChecked
+     */
+    public function setIsChecked($isChecked)
+    {
+        $this->isChecked = $isChecked;
     }
 }
