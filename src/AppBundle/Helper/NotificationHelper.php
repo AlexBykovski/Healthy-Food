@@ -37,7 +37,7 @@ class NotificationHelper
     }
 
     public function getCountUnreadAllNotificationsForUser(User $user){
-        return count($this->em->getRepository(Notification::class)->getCountUnreadNotificationByUser($user, 'all'));
+        return count($this->em->getRepository(Notification::class)->getUnreadNotificationsByUser($user, 'all'));
     }
 
     protected function getStartTimeByEatingType($type){

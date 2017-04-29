@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Notification;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +17,21 @@ class NotificationController extends Controller
      */
     public function showListNotificationsAction(Request $request)
     {
+        $notifications = $this->getDoctrine()->getRepository(Notification::class)
+            ->findBy(["user" => $this->getUser()], ["createdAt" => "DESC"], 20);
+        $firstEatingRemind = $this->getDoctrine()->getRepository(Notification::class)
+            ->getFirstUnreadNotificationByUserAndType($this->getUser(), Notification::EATING_REMIND);
+
+        /** @var Notification $eatingRemindNotif */
+        foreach($notifications as $eatingRemindNotif){
+            $eatingRemindNotif->setIsRead(true);
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->render('notification/list.html.twig', [
+            "notifications" => $notifications,
+            "firstEatingRemind" => count($firstEatingRemind) ? $firstEatingRemind[0] : null,
         ]);
     }
 }
