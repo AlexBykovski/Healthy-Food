@@ -102,6 +102,7 @@
                     'color_parallax/plugins/jquery-ui/ui/minified/jquery-ui.min.js'
                     'color_parallax/plugins/jquery-hashchange/jquery.hashchange.min.js'
                     'bower_components/angular/angular.min.js'
+                    'bower_components/angular-cookies/angular-cookies.min.js'
                     'bower_components/bootstrap/dist/js/bootstrap.min.js'
                     'bower_components/bootstrap-toggle/js/bootstrap2-toggle.min.js'
                     'color_parallax/plugins/slimscroll/jquery.slimscroll.min.js'
@@ -115,6 +116,7 @@
                 {% javascripts output='bundles/app/js/main.js'
                     'js/app.js'
                     'js/homepage/directives.js'
+                    'js/import-script/import.js'
                 %}
                 <script src="{{ asset_url }}"></script>
                 {% endjavascripts %}

@@ -3,9 +3,12 @@
 namespace AppBundle\Admin;
 
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\RecipeStep;
 use AppBundle\Form\Type\RecipeNutrientType;
 use AppBundle\Form\Type\RecipeProductType;
 use AppBundle\Form\Type\RecipeStepType;
+use AppBundle\Helper\ImportDataByUrl;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\Filter\ChoiceType;
@@ -20,46 +23,101 @@ class RecipeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $eatingTypes = Recipe::$eatingTypes;
+        $requester = $this->getConfigurationPool()->getContainer()->get("app.helper.import_data_by_url");
+        $recipe = $requester->getRecipeDataByUrl();
 
-        $formMapper
-            ->add('name', 'text', [
-                'label' => 'Название',
-            ])
-            ->add('photo', 'text', [
-                'label' => 'Фото',
-            ])
-            ->add('time', 'text', [
-                'label' => 'Время приготовления',
-            ])
-            ->add('portions', 'number', [
-                'label' => 'Количество порций',
-            ])
-            ->add('eatingType', 'choice', [
-                'label' => 'Тип приёма пищи',
-                'choices' => array_combine( $eatingTypes, $eatingTypes ),
-            ])
-            ->add('calories', 'number', [
-                'label' => 'Калорий',
-            ])
-            ->add('proteins', 'number', [
-                'label' => 'Белков, r',
-            ])
-            ->add('fats', 'number', [
-                'label' => 'Жиров, r',
-            ])
-            ->add('carbohydrates', 'number', [
-                'label' => 'Углеводов, r',
-            ])
-            ->add('steps', CollectionType::class, [
-                'entry_type'   => RecipeStepType::class,
-                'allow_add'    => true,
-                'attr'   => ["class" => "recipe-steps"]
-            ])
-            ->add('products', CollectionType::class, [
-                'entry_type'   => RecipeProductType::class,
-                'allow_add'    => true,
-                'attr'   => ["class" => "recipe-products"]
-            ]);
+        if($recipe){
+            $formMapper
+                ->add('name', 'text', [
+                    'label' => 'Название',
+                    'data' => $recipe->name,
+                ])
+                ->add('photo', 'text', [
+                    'label' => 'Фото',
+                    'data' => $recipe->photo,
+                ])
+                ->add('time', 'text', [
+                    'label' => 'Время приготовления',
+                ])
+                ->add('portions', 'number', [
+                    'label' => 'Количество порций',
+                    'data' => $recipe->countPortions,
+                ])
+                ->add('eatingType', 'choice', [
+                    'label' => 'Тип приёма пищи',
+                    'choices' => array_combine( $eatingTypes, $eatingTypes ),
+                    'data' => $eatingTypes[0],
+                ])
+                ->add('calories', 'number', [
+                    'label' => 'Калорий',
+                    'data' => $recipe->calories,
+                ])
+                ->add('proteins', 'number', [
+                    'label' => 'Белков, r',
+                    'data' => $recipe->proteins,
+                ])
+                ->add('fats', 'number', [
+                    'label' => 'Жиров, r',
+                    'data' => $recipe->fats,
+                ])
+                ->add('carbohydrates', 'number', [
+                    'label' => 'Углеводов, r',
+                    'data' => $recipe->carboh,
+                ])
+                ->add('steps', CollectionType::class, [
+                    'entry_type'   => RecipeStepType::class,
+                    'allow_add'    => true,
+                    'attr'   => ["class" => "recipe-steps"],
+                    'data' => $recipe->steps,
+                ])
+                ->add('products', CollectionType::class, [
+                    'entry_type'   => RecipeProductType::class,
+                    'allow_add'    => true,
+                    'attr'   => ["class" => "recipe-products"],
+                    'data' => $recipe->products,
+                ]);
+        }
+        else {
+            $formMapper
+                ->add('name', 'text', [
+                    'label' => 'Название',
+                ])
+                ->add('photo', 'text', [
+                    'label' => 'Фото',
+                ])
+                ->add('time', 'text', [
+                    'label' => 'Время приготовления',
+                ])
+                ->add('portions', 'number', [
+                    'label' => 'Количество порций',
+                ])
+                ->add('eatingType', 'choice', [
+                    'label' => 'Тип приёма пищи',
+                    'choices' => array_combine($eatingTypes, $eatingTypes),
+                ])
+                ->add('calories', 'number', [
+                    'label' => 'Калорий',
+                ])
+                ->add('proteins', 'number', [
+                    'label' => 'Белков, r',
+                ])
+                ->add('fats', 'number', [
+                    'label' => 'Жиров, r',
+                ])
+                ->add('carbohydrates', 'number', [
+                    'label' => 'Углеводов, r',
+                ])
+                ->add('steps', CollectionType::class, [
+                    'entry_type' => RecipeStepType::class,
+                    'allow_add' => true,
+                    'attr' => ["class" => "recipe-steps"],
+                ])
+                ->add('products', CollectionType::class, [
+                    'entry_type' => RecipeProductType::class,
+                    'allow_add' => true,
+                    'attr' => ["class" => "recipe-products"]
+                ]);
+        }
     }
 
     // Fields to be shown on filter forms

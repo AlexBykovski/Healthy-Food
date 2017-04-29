@@ -7,6 +7,7 @@ use AppBundle\Entity\Recipe;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -44,6 +45,30 @@ class DefaultController extends Controller
             'addr' => $request->server->get('REMOTE_ADDR'),
             'userEatingData' => $userEatingData,
         ]);
+    }
+
+    /**
+     * @Route("/import-by-url", name="import_by_url")
+     */
+    public function importByUrlAction(Request $request)
+    {
+        return $this->render('default/import.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/get-url-data", name="get_url_data")
+     */
+    public function getUrlDataAction(Request $request)
+    {
+        $ch = curl_init($request->getContent());
+
+        //curl_setopt($ch, CURLOPT_FILE, $fp);
+        //curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        $result = curl_exec($ch);
+
+        return new JsonResponse(["data" => $result], 200);
     }
 
     protected function sortEatingByType(Eating $a, Eating $b){
