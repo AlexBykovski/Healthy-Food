@@ -28,12 +28,16 @@ class NotificationHelper
                 ":00 ) у Вас запланирован приём пищи: " . mb_convert_case($type, MB_CASE_TITLE, "UTF-8"));
             $notification->setType(Notification::EATING_REMIND);
             $notification->setCreatedAt(new \DateTime());
-            $notification->setIsChecked(false);
+            $notification->setIsRead(false);
             $notification->setUser($user);
 
             $this->em->persist($notification);
             $this->em->flush();
         }
+    }
+
+    public function getCountUnreadAllNotificationsForUser(User $user){
+        return count($this->em->getRepository(Notification::class)->getCountUnreadNotificationByUser($user, 'all'));
     }
 
     protected function getStartTimeByEatingType($type){
