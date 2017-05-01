@@ -47,6 +47,13 @@ class Eating
      */
     private $date;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="portions", type="integer", nullable=false)
+     */
+    private $portions;
+
     const BREAKFAST_START = 6;
     const BREAKFAST_END = 10;
     const LUNCH_START = 10;
@@ -131,5 +138,21 @@ class Eating
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPortions()
+    {
+        return $this->portions;
+    }
+
+    /**
+     * @param int $portions
+     */
+    public function setPortions($portions)
+    {
+        $this->portions = $portions;
     }
 }
