@@ -26,6 +26,10 @@ services:
           class:      AppBundle\Helper\NotificationHelper
           arguments:  ['@doctrine.orm.entity_manager']
 
+    app.helper.recipe_helper:
+          class:      AppBundle\Helper\RecipeHelper
+          arguments:  ['@doctrine.orm.entity_manager']
+
     app.builder.email:
           class: AppBundle\Builder\EmailBuilder
           scope: prototype

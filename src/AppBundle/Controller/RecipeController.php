@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
+use AppBundle\Helper\RecipeHelper;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,9 +22,10 @@ class RecipeController extends Controller
      */
     public function listDoctorsSpecificDirectionAction(Request $request, $date, $type)
     {
+        /** @var RecipeHelper $recipeHelper */
+        $recipeHelper = $this->get("app.helper.recipe_helper");
         $parseType = $this->getEatingNameByType($type);
 
-        $allRecipes = $this->getDoctrine()->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $parseType]);
         $chosenEating = $this->getDoctrine()->getRepository("AppBundle:Eating")
             ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $parseType);
 
@@ -34,34 +36,7 @@ class RecipeController extends Controller
             $mostPopularRecipeId = $popularRecipeObject[0]["id"];
         }
 
-        $parseRecipes = [];
-
-        /** @var Recipe $recipe */
-        foreach($allRecipes as $recipe){
-            if($chosenEating instanceof Eating && $chosenEating->getRecipe()->getId() === $recipe->getId()){
-                continue;
-            }
-
-            $parseRecipes[] = [
-                'id' => $recipe->getId(),
-                'photo' => $recipe->getPhoto(),
-                'name' => $recipe->getName(),
-                'products' => [],
-                'portions' => $recipe->getPortions(),
-                'portionWeight' => $this->getPortionWeight($recipe->getProducts()) / $recipe->getPortions(),
-            ];
-
-            /** @var RecipeProduct $product */
-            foreach($recipe->getProducts() as $product){
-                $parseRecipes[count($parseRecipes) - 1]['products'][] = $product->getName();
-            }
-
-            if($mostPopularRecipeId == $recipe->getId() && count($parseRecipes) > 1){ //set most popular on the first
-                $temp = $parseRecipes[0];
-                $parseRecipes[0] = $parseRecipes[count($parseRecipes) - 1];
-                $parseRecipes[count($parseRecipes) - 1] = $temp;
-            }
-        }
+        $parseRecipes = $recipeHelper->getParseEatings($chosenEating, $parseType, $mostPopularRecipeId);
 
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $parseRecipes,
@@ -94,8 +69,14 @@ class RecipeController extends Controller
      */
     public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type, $portions)
     {
+        /** @var RecipeHelper $recipeHelper */
+        $recipeHelper = $this->get("app.helper.recipe_helper");
         if((new DateTime())->format("Y-m-d") > $date){ // prevent choose for past
             return $this->redirect($request->headers->get('referer'));
+        }
+
+        if(!$recipeHelper->isAvailableRecipe($recipe->getCalories(), $portions, $type)){
+            return new JsonResponse(["status" => 'unavailable'], 200);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -135,16 +116,5 @@ class RecipeController extends Controller
             case "sec-supper":
                 return "второй ужин";
         }
-    }
-
-    private function getPortionWeight($products){
-        $weight = 0;
-
-        /** @var RecipeProduct $product */
-        foreach($products as $product){
-            $weight += $product->getCount();
-        }
-
-        return $weight;
     }
 }
