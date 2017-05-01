@@ -55,9 +55,9 @@
                                             </span>
                                         </p>
                                         {% if chosenEating and canChoose %}
-                                            <a class="btn btn-primary" ng-href="/choose-eating-recipe/{{ date }}/{[{recipe.id}]}/{{ type }}">Изменить выбор</a>
+                                            <a class="btn btn-primary" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight);">Изменить выбор</a>
                                         {% elseif not chosenEating and canChoose %}
-                                            <a class="btn btn-primary" ng-href="/choose-eating-recipe/{{ date }}/{[{recipe.id}]}/{{ type }}">Выбрать</a>
+                                            <a class="btn btn-primary" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight);">Выбрать</a>
                                         {% endif %}
                                     </div>
                                 </div>

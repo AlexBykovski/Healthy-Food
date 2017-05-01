@@ -7,6 +7,7 @@ use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -46,6 +47,8 @@ class RecipeController extends Controller
                 'photo' => $recipe->getPhoto(),
                 'name' => $recipe->getName(),
                 'products' => [],
+                'portions' => $recipe->getPortions(),
+                'portionWeight' => $this->getPortionWeight($recipe->getProducts()) / $recipe->getPortions(),
             ];
 
             /** @var RecipeProduct $product */
@@ -63,7 +66,7 @@ class RecipeController extends Controller
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $parseRecipes,
             "chosenEating" => $chosenEating,
-            "canChoose" => (new DateTime())->format("Y-m-d") <= $date,
+            "canChoose" => (new DateTime())->format("Y-m-d") <= $date, // prevent choose for past
             "mostPopularRecipeId" => $mostPopularRecipeId,
             "date" => $date,
             "type" => $type,
@@ -85,13 +88,13 @@ class RecipeController extends Controller
 
     //@@todo add requirements for date and recipeId
     /**
-     * @Route("/choose-eating-recipe/{date}/{recipeId}/{type}", name="choose_eating_recipe")
+     * @Route("/choose-eating-recipe/{date}/{recipeId}/{type}/{portions}", name="choose_eating_recipe")
      * @ParamConverter("recipe", class="AppBundle:Recipe", options={"id" = "recipeId"})
      * @Security("has_role('ROLE_SIMPLE_USER')")
      */
-    public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type)
+    public function chooseEatingRecipeAction(Request $request, Recipe $recipe, $date, $type, $portions)
     {
-        if((new DateTime())->format("Y-m-d") > $date){
+        if((new DateTime())->format("Y-m-d") > $date){ // prevent choose for past
             return $this->redirect($request->headers->get('referer'));
         }
 
@@ -101,6 +104,7 @@ class RecipeController extends Controller
         $eating->setRecipe($recipe);
         $eating->setUser($this->getUser());
         $eating->setDate(DateTime::createFromFormat('Y-m-d', $date));
+        $eating->setPortions(intval($portions));
 
         $chosenEating = $this->getDoctrine()->getRepository(Eating::class)
             ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
@@ -113,7 +117,7 @@ class RecipeController extends Controller
 
         $em->flush();
 
-        return $this->redirect($request->headers->get('referer'));
+        return new JsonResponse(["status" => 'ok'], 200);
     }
 
     private function getEatingNameByType($type){
@@ -131,5 +135,16 @@ class RecipeController extends Controller
             case "sec-supper":
                 return "второй ужин";
         }
+    }
+
+    private function getPortionWeight($products){
+        $weight = 0;
+
+        /** @var RecipeProduct $product */
+        foreach($products as $product){
+            $weight += $product->getCount();
+        }
+
+        return $weight;
     }
 }
