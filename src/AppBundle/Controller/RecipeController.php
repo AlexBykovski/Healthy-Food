@@ -48,6 +48,7 @@ class RecipeController extends Controller
                 'name' => $recipe->getName(),
                 'products' => [],
                 'portions' => $recipe->getPortions(),
+                'portionWeight' => $this->getPortionWeight($recipe->getProducts()) / $recipe->getPortions(),
             ];
 
             /** @var RecipeProduct $product */
@@ -134,5 +135,16 @@ class RecipeController extends Controller
             case "sec-supper":
                 return "второй ужин";
         }
+    }
+
+    private function getPortionWeight($products){
+        $weight = 0;
+
+        /** @var RecipeProduct $product */
+        foreach($products as $product){
+            $weight += $product->getCount();
+        }
+
+        return $weight;
     }
 }

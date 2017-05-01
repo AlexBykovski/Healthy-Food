@@ -5,8 +5,8 @@ app.directive("showMoreRecipes",['$window', function($window){
         {
             scope.allRecipes = angular.fromJson(attrs.allRecipes);
 
-            function chooseRecipe(date, id, type, portions){
-                bootbox.prompt("Сколько порций данного блюда вы планируете употребить? (максимально количество порций: " + portions + ")",
+            function chooseRecipe(date, id, type, portions, portionWeight){
+                bootbox.prompt("Сколько порций данного блюда вы планируете употребить? (вес одной порции: " + portionWeight + "гр.) (максимально количество порций: " + portions + ")",
                     function(result){
                         if(result == null){
                             return true;
