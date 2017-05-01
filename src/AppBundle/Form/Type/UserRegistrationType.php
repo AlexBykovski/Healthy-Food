@@ -28,6 +28,11 @@ class UserRegistrationType extends AbstractType
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Фамилия'
             ])
+            ->add('age', TextType::class, [
+                "label_attr" => ['class' => 'control-label'],
+                "attr"       => ['class' => 'form-control input-inline'],
+                "label" => 'Возраст'
+            ])
             ->add('email', EmailType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],

@@ -5,6 +5,7 @@ namespace AppBundle\Helper;
 use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class RecipeHelper
@@ -61,7 +62,13 @@ class RecipeHelper
         return $parseRecipes;
     }
 
-    public function isAvailableRecipe($calories, $portions, $type){
+    public function isAvailableRecipe($calories, $portions, $type, User $user){
         return true;
+    }
+
+    public function getCountAvailableCalories(User $user){ // formula of Mifflin St. Jeor
+        //10 x weight (kg) + 6.25 x height (cm) – 5 x age (years) + 5 // men
+        //10 * weight (kg) + 6.25 x height (cm) – 5 x age (years) – 161) //women
+        $bmr = 10 * $user->getWeight() + 6.25 * $user->getHeight() - 5 * $user->getAge();
     }
 }

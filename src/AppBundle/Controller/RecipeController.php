@@ -75,7 +75,7 @@ class RecipeController extends Controller
             return $this->redirect($request->headers->get('referer'));
         }
 
-        if(!$recipeHelper->isAvailableRecipe($recipe->getCalories(), $portions, $type)){
+        if(!$recipeHelper->isAvailableRecipe($recipe->getCalories(), $portions, $type, $this->getUser())){
             return new JsonResponse(["status" => 'unavailable'], 200);
         }
 

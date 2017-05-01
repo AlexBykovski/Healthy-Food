@@ -51,6 +51,11 @@ class ProfileType extends AbstractType
                 "scale" => 1,
                 "invalid_message" => "Некорректный вес",
             ])
+            ->add('age', TextType::class, [
+                "label_attr" => ['class' => 'control-label'],
+                "attr"       => ['class' => 'form-control input-inline'],
+                "label" => 'Возраст'
+            ])
             ->add('gender', CheckboxType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
