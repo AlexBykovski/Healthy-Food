@@ -13,21 +13,23 @@ class DietAdditionalInformationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('countEating', IntegerType::class, [
+            ->add('countEating', ChoiceType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
-                "label" => 'Количество приёмов пищи в день'
+                "label" => 'Количество приёмов пищи в день',
+                "choices" => array_combine(range(3, 6), range(3, 6)),
             ])
-            ->add('countTraining', IntegerType::class, [
+            ->add('countTraining', ChoiceType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
-                "label" => 'Количество тренировок в неделю'
+                "label" => 'Количество тренировок в неделю',
+                "choices" => array_combine(range(0, 21), range(0, 21)),
             ])
             ->add('trainingDifficulty', ChoiceType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
-                "label" => 'Сложность тренировок (по шкале от 1 до 10)',
-                "choices" => array_combine(range(1, 10), range(1, 10)),
+                "label" => 'Сложность тренировок (по шкале от 1 до 3)',
+                "choices" => array_combine(range(1, 3), range(1, 3)),
 
             ])
             ->add('purpose', ChoiceType::class, [
