@@ -24,7 +24,7 @@ class RecipeController extends Controller
     {
         /** @var RecipeHelper $recipeHelper */
         $recipeHelper = $this->get("app.helper.recipe_helper");
-        $parseType = $this->getEatingNameByType($type);
+        $parseType = $recipeHelper->getEatingNameByType($type);
 
         $chosenEating = $this->getDoctrine()->getRepository("AppBundle:Eating")
             ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $parseType);
@@ -38,6 +38,9 @@ class RecipeController extends Controller
 
         $parseRecipes = $recipeHelper->getParseEatings($chosenEating, $parseType, $mostPopularRecipeId);
 
+        $dateTime = DateTime::createFromFormat("Y-m-d", $date);
+        $availableCalories = $recipeHelper->getAvailableCaloriesForEating($type, $this->getUser(), $dateTime);
+
         return $this->render('recipe/list-recipes.html.twig', [
             "recipes" => $parseRecipes,
             "chosenEating" => $chosenEating,
@@ -45,6 +48,7 @@ class RecipeController extends Controller
             "mostPopularRecipeId" => $mostPopularRecipeId,
             "date" => $date,
             "type" => $type,
+            "availableCalories" => $availableCalories,
         ]);
     }
 
@@ -71,12 +75,16 @@ class RecipeController extends Controller
     {
         /** @var RecipeHelper $recipeHelper */
         $recipeHelper = $this->get("app.helper.recipe_helper");
+        $dateTime = DateTime::createFromFormat("Y-m-d", $date);
+
         if((new DateTime())->format("Y-m-d") > $date){ // prevent choose for past
             return $this->redirect($request->headers->get('referer'));
         }
 
-        if(!$recipeHelper->isAvailableRecipe($recipe->getCalories(), $portions, $type, $this->getUser())){
-            return new JsonResponse(["status" => 'unavailable'], 200);
+        $availableCalories = $recipeHelper->getAvailableCaloriesForEating($type, $this->getUser(), $dateTime);
+
+        if($availableCalories < ($recipe->getCalories() * $portions)){
+            return new JsonResponse(["status" => 'calories', "available" => $availableCalories], 200);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -88,7 +96,7 @@ class RecipeController extends Controller
         $eating->setPortions(intval($portions));
 
         $chosenEating = $this->getDoctrine()->getRepository(Eating::class)
-            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $this->getEatingNameByType($type));
+            ->findEatingForUserByDateAndType($this->getUser(), DateTime::createFromFormat('Y-m-d', $date), $recipeHelper->getEatingNameByType($type));
 
         $em->persist($eating);
 
@@ -99,22 +107,5 @@ class RecipeController extends Controller
         $em->flush();
 
         return new JsonResponse(["status" => 'ok'], 200);
-    }
-
-    private function getEatingNameByType($type){
-        switch($type){
-            case "breakfast":
-                return "завтрак";
-            case "sec-breakfast":
-                return "второй завтрак";
-            case "dinner":
-                return "обед";
-            case "afternoon-snack":
-                return "полдник";
-            case "supper":
-                return "ужин";
-            case "sec-supper":
-                return "второй ужин";
-        }
     }
 }

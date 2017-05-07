@@ -56,7 +56,7 @@ class ProfileType extends AbstractType
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Возраст'
             ])
-            ->add('gender', CheckboxType::class, [
+            ->add('genderMan', CheckboxType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Пол',

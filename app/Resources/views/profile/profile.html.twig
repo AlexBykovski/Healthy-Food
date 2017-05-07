@@ -44,7 +44,7 @@
                             <div class="row row-space-10">
                                 {{ form_label(form.height, null, {label_attr: {class: "col-md-3"}}) }}
                                 {{ form_label(form.weight, null, {label_attr: {class: "col-md-3"}}) }}
-                                {{ form_label(form.gender, null, {label_attr: {class: "col-md-3"}}) }}
+                                {{ form_label(form.genderMan, null, {label_attr: {class: "col-md-3"}}) }}
                                 {{ form_label(form.age, null, {label_attr: {class: "col-md-3"}}) }}
                             </div>
                             <div class="row row-space-10">
@@ -56,11 +56,11 @@
                                     {{ form_widget(form.weight) }}
                                     {{ form_errors(form.weight) }}
                                 </div>
-                                <div class="col-md-3 m-b-15 {{ form_errors(form.gender)| length ? 'has-error' }}">
-                                    {{ form_widget(form.gender, {attr: {"data-toggle" : "toggle", "data-style" : "ios",
+                                <div class="col-md-3 m-b-15 {{ form_errors(form.genderMan)| length ? 'has-error' }}">
+                                    {{ form_widget(form.genderMan, {attr: {"data-toggle" : "toggle", "data-style" : "ios",
                                         "data-height" : "34px", "data-width" : "50px", "data-on" : "Муж",
                                         "data-off" : "Жен", "data-offstyle" : "info", "data-onstyle" : "primary"}}) }}
-                                    {{ form_errors(form.gender) }}
+                                    {{ form_errors(form.genderMan) }}
                                 </div>
                                 <div class="col-md-3 m-b-15 {{ form_errors(form.age)| length ? 'has-error' }}">
                                     {{ form_widget(form.age, {attr: {"age-input-only-integer" : ""}}) }}

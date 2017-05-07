@@ -146,7 +146,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="gender", type="boolean", length=255, nullable=false, options={"default" : false})
      */
-    private $gender = false;
+    private $genderMan = false;
 
     /**
      * @Assert\Valid
@@ -365,17 +365,17 @@ class User implements UserInterface
     /**
      * @return boolean
      */
-    public function isGender()
+    public function isGenderMan()
     {
-        return $this->gender;
+        return $this->genderMan;
     }
 
     /**
-     * @param boolean $gender
+     * @param boolean $genderMan
      */
-    public function setGender($gender)
+    public function setGenderMan($genderMan)
     {
-        $this->gender = $gender;
+        $this->genderMan = $genderMan;
     }
 
     /**

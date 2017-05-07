@@ -44,7 +44,7 @@
                             <div show-more-recipes all-recipes="{{ recipes | json_encode }}" most-popular="mostPopularRecipeId" ng-init="showCount = 10">
                                 <div class="product-desc" ng-repeat="recipe in allRecipes"
                                      ng-show="$index <= showCount && (recipeSearch === '' || recipe.name.toLowerCase().indexOf(recipeSearch.toLowerCase()) >= 0)"
-                                     ng-style="{border: {true:'7px dotted lightsalmon',false:''}[$first && recipe.id === '{{ mostPopularRecipeId }}']}">
+                                     ng-style="{border: {true:'7px dotted lightsalmon',false:''}[$first && recipe.id === '{{ mostPopularRecipeId }}'], opacity: {true:'0.6',false:''}[recipe.calories > {{ availableCalories }}]}">
                                     <div class="image">
                                         <img ng-src="{[{recipe.photo}]}" alt="">
                                     </div>
@@ -54,11 +54,12 @@
                                             <span ng-repeat="product in recipe.products" ng-bind="product + ($last ? '' : ', ')">
                                             </span>
                                         </p>
-                                        {% if chosenEating and canChoose %}
-                                            <a class="btn btn-primary" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight);">Изменить выбор</a>
+                                        {% if chosenEating and canChoose  %}
+                                            <a class="btn btn-primary" ng-show="recipe.calories <= {{ availableCalories }}" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight, recipe.calories);">Изменить выбор</a>
                                         {% elseif not chosenEating and canChoose %}
-                                            <a class="btn btn-primary" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight);">Выбрать</a>
+                                            <a class="btn btn-primary" ng-show="recipe.calories <= {{ availableCalories }}" ng-click="chooseRecipe('{{ date }}', recipe.id, '{{ type }}', recipe.portions, recipe.portionWeight, recipe.calories);">Выбрать</a>
                                         {% endif %}
+                                        <span ng-hide="recipe.calories <= {{ availableCalories }}" style="color: red; font-size: 14px;">Вы не можете выбрать это блюдо, так как 1 порция этого блюда содержить непозволительное для Вас на сегодня объём калорий. Если вы всё таки хотите выбрать это блюдо - измените выбор для других приёмов пиши.</span>
                                     </div>
                                 </div>
                             </div>
