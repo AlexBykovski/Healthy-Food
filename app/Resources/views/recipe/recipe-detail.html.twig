@@ -5,7 +5,7 @@
     <!-- BEGIN #product -->
     <div id="product" class="section-container p-t-20">
         <!-- BEGIN container -->
-        <div class="container">
+        <div class="container" ng-init="recipePortions = {{ recipe.portions }}">
             <!-- BEGIN product -->
             <div class="product">
                 <!-- BEGIN product-detail -->
@@ -25,14 +25,14 @@
                             <ul class="product-category" style="font-size: 15px;">
                                 <li><i class="fa fa-info"></i> {{ recipe.eatingType }}</li><br />
                                 <li><i class="fa fa-info"></i> {{ recipe.time }} минут</li><br />
-                                <li><i class="fa fa-info"></i> {{ recipe.portions }} порций</li>
+                                <li><i class="fa fa-info"></i> <input type="number" ng-model="recipePortions" style="width: 47px;"/> порций</li>
                             </ul>
                         </div>
                         <!-- END product-info-header -->
                         <!-- BEGIN product-info-list -->
                         <ul class="product-info-list" style="font-size: 15px; line-height: 24px;">
-                            {% for product in recipe.products %}
-                                <li><i class="fa fa-circle"></i>{{ product.name }} <strong>{{ product.count }}{{ product.measure }}</strong></li>
+                            {% for key, product in recipe.products %}
+                                <li ng-init="productPerPotion_{{ key }} = {{ product.count/recipe.portions }}"><i class="fa fa-circle"></i>{{ product.name }} <strong>{[{(productPerPotion_{{ key }} * recipePortions).toFixed(0)}]}{{ product.measure }}</strong></li>
                             {% endfor %}
                         </ul>
                         <!-- END product-info-list -->
