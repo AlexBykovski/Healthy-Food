@@ -55,9 +55,9 @@ class DietAdditionalInformation
      *
      * @Assert\Range(
      *      min = 1,
-     *      max = 10,
-     *      minMessage = "Сложность тренировок не должна быть менее 1",
-     *      maxMessage = "Сложность тренировок не должна быть более 10",
+     *      max = 3,
+     *      minMessage = "Сложность тренировок не должна быть больше, либо равна 1",
+     *      maxMessage = "Сложность тренировок не должна быть меньше, либо равна 3",
      *      groups={"registration", "edit_profile"})
      *
      * @ORM\Column(name="training_difficulty", type="integer", nullable=false, options={"default": 1})

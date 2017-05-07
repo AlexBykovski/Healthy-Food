@@ -81,6 +81,13 @@
                                 {{ form_errors(form.gender) }}
                             </div>
                         </div>
+                        {{ form_label(form.age) }}
+                        <div class="row m-b-15">
+                            <div class="col-md-2 {{ form_errors(form.age)| length ? 'has-error' }}">
+                                {{ form_widget(form.age, {attr: {"age-input-only-integer" : ""}}) }}
+                                {{ form_errors(form.age) }}
+                            </div>
+                        </div>
 
                         {{ form_label(form.password.first) }}
                         <div class="row m-b-15">

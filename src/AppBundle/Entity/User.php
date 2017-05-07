@@ -144,11 +144,9 @@ class User implements UserInterface
     /**
      * @var boolean
      *
-     * @Assert\NotBlank(message = "Не выбран пол", groups={"registration", "edit_profile"})
-     *
-     * @ORM\Column(name="gender", type="boolean", length=255, nullable=false)
+     * @ORM\Column(name="gender", type="boolean", length=255, nullable=false, options={"default" : false})
      */
-    private $gender;
+    private $genderMan = false;
 
     /**
      * @Assert\Valid
@@ -176,6 +174,21 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="user")
      */
     private $notifications;
+
+    /**
+     * @var integer
+     *
+     * @Assert\NotBlank(message = "Не введён возраст", groups={"registration", "edit_profile"})
+     *
+     * @Assert\Regex(
+     *     pattern="/^[1-9]\d$/",
+     *     message="Возраст должен быть положительным целым (пр. 20)",
+     *     groups={"registration", "edit_profile"}
+     * )
+     *
+     * @ORM\Column(name="age", type="integer", length=255, nullable=false)
+     */
+    private $age;
 
     /**
      * User constructor.
@@ -352,17 +365,17 @@ class User implements UserInterface
     /**
      * @return boolean
      */
-    public function isGender()
+    public function isGenderMan()
     {
-        return $this->gender;
+        return $this->genderMan;
     }
 
     /**
-     * @param boolean $gender
+     * @param boolean $genderMan
      */
-    public function setGender($gender)
+    public function setGenderMan($genderMan)
     {
-        $this->gender = $gender;
+        $this->genderMan = $genderMan;
     }
 
     /**
@@ -540,5 +553,21 @@ class User implements UserInterface
     public function addNotifications(Notification $notification)
     {
         return $this->notifications->add($notification);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param int $age
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
     }
 }
