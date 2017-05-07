@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="page-container" class="fade in">
+    <!-- BEGIN #product -->
+    <div id="product" class="section-container p-t-20">
+        <!-- BEGIN container -->
+        <div class="container">
+            <!-- BEGIN product -->
+            <div class="product">
+                <!-- BEGIN product-tab -->
+                <div class="product-tab">
+                    <!-- BEGIN #product-tab-content -->
+                    <div id="product-tab-content" class="tab-content">
+                        <!-- BEGIN #product-desc -->
+                        <div class="tab-pane fade active in">
+                            <!-- BEGIN product-desc -->
+                            <div>
+                                {% for eating in eatings %}
+                                    <div class="product-desc">
+                                        <h2 style="text-transform: capitalize;">{{ eating.recipe.eatingType }}</h2>
+                                        <div class="image">
+                                            <img src="{{ eating.recipe.photo }}" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h4><a href="{{ path("single_recipe", {id: eating.recipe.id}) }}">{{ eating.recipe.name }}</a></h4>
+                                            <p>
+                                                {% for product in eating.recipe.products %}
+                                                    <span>{{ product.name }}{{ loop.last ? '' : ', ' }}</span>
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- END product-desc -->
+                        </div>
+                        <!-- END #product-desc -->
+                    </div>
+                    <!-- END #product-tab-content -->
+                </div>
+                <!-- END product-tab -->
+            </div>
+            <!-- END product -->
+        </div>
+    </div>
+</div>
+{% endblock %}

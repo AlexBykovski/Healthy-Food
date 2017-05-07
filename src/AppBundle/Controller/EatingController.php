@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Eating;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,25 @@ class EatingController extends Controller
             'eating/list.html.twig',
             [
                 "user" => $this->getUser(),
+                "activeDate" => $date,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/eating-day/{date}", name="eating_day")
+     * @Security("has_role('ROLE_SIMPLE_USER')")
+     */
+    public function eatingListOnDayAction(Request $request, $date)
+    {
+        $date = DateTime::createFromFormat("Y-m-d", $date);
+
+        $chosenEatings = $this->getDoctrine()->getRepository(Eating::class)->findDailyEatingForUser($this->getUser(), $date);
+
+        return $this->render(
+            'eating/day-eating.html.twig',
+            [
+                "eatings" => $chosenEatings,
                 "activeDate" => $date,
             ]
         );
