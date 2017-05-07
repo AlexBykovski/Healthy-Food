@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="page-container" class="fade in">
+    <!-- BEGIN #product -->
+    <div id="product" class="section-container p-t-20">
+        <!-- BEGIN container -->
+        <div class="container">
+            <!-- BEGIN product -->
+            <div class="product" style="border: 0px solid #c5ced4;">
+                <!-- BEGIN product-tab -->
+                <div class="product-tab">
+                    <!-- BEGIN #product-tab-content -->
+                    <div id="product-tab-content" class="tab-content">
+                        <!-- BEGIN #product-desc -->
+                        <div class="tab-pane fade active in">
+                            <!-- BEGIN product-desc -->
+                            <div>
+                                {% for eating in eatings %}
+                                    <div class="product-desc">
+                                        <h2 style="text-transform: capitalize;">{{ eating.recipe.eatingType }}</h2>
+                                        <div class="image">
+                                            <img src="{{ eating.recipe.photo }}" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h4><a href="{{ path("single_recipe", {id: eating.recipe.id}) }}">{{ eating.recipe.name }}</a></h4>
+                                            <p>
+                                                {% for product in eating.recipe.products %}
+                                                    <span>{{ product.name }}{{ loop.last ? '' : ', ' }}</span>
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- END product-desc -->
+                        </div>
+                        <!-- END #product-desc -->
+                    </div>
+                    <!-- END #product-tab-content -->
+                </div>
+                <!-- END product-tab -->
+            </div>
+            <!-- END product -->
+            <div style="padding-left: 60px;">
+                <ul class="pagination pagination-lg m-t-0 m-b-10">
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-3 day") | date("Y-m-d")}) }}">«</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-2 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("-2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-1 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("-1 day") | date("d F") }}</a></li>
+                    <li class="active"><a nohref>{{ activeDate | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+1 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("+1 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+2 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("+2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+3 day") | date("Y-m-d")}) }}">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

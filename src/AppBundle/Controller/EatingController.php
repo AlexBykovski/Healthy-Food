@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Eating;
+use AppBundle\Entity\Recipe;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,5 +39,40 @@ class EatingController extends Controller
                 "activeDate" => $date,
             ]
         );
+    }
+
+    /**
+     * @Route("/eating-day/{date}", name="eating_day")
+     * @Security("has_role('ROLE_SIMPLE_USER')")
+     */
+    public function eatingListOnDayAction(Request $request, $date)
+    {
+        $date = DateTime::createFromFormat("Y-m-d", $date);
+
+        $chosenEatings = $this->getDoctrine()->getRepository(Eating::class)->findDailyEatingForUser($this->getUser(), $date);
+        uasort($chosenEatings, [$this, "sortEatingByType"]);
+
+        return $this->render(
+            'eating/day-eating.html.twig',
+            [
+                "eatings" => $chosenEatings,
+                "activeDate" => $date,
+            ]
+        );
+    }
+
+    protected function sortEatingByType(Eating $a, Eating $b){
+        $aType = $a->getRecipe()->getEatingType();
+        $bType = $b->getRecipe()->getEatingType();
+
+        if($aType === Recipe::BREAKFAST ||
+            ($aType === Recipe::LUNCH && ($bType === Recipe::DINNER || $bType === Recipe::AFTERNOON_SNACK || $bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::DINNER && ($bType === Recipe::AFTERNOON_SNACK || $bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::AFTERNOON_SNACK && ($bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||
+            ($aType === Recipe::SUPPER && $bType === Recipe::SEC_SUPPER)){
+            return -1;
+        }
+
+        return 1;
     }
 }
