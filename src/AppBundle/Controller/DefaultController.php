@@ -33,10 +33,10 @@ class DefaultController extends Controller
             foreach($eatings as $eating){
                 /** @var Recipe $recipe */
                 $recipe = $eating->getRecipe();
-                $userEatingData["proteins"][$recipe->getEatingType()] = $recipe->getProteins();
-                $userEatingData["carbohydrates"][$recipe->getEatingType()] = $recipe->getCarbohydrates();
-                $userEatingData["fats"][$recipe->getEatingType()] = $recipe->getFats();
-                $userEatingData["calories"][$recipe->getEatingType()] = $recipe->getCalories();
+                $userEatingData["proteins"][$recipe->getEatingType()] = $recipe->getProteins() * $eating->getPortions();
+                $userEatingData["carbohydrates"][$recipe->getEatingType()] = $recipe->getCarbohydrates() * $eating->getPortions();
+                $userEatingData["fats"][$recipe->getEatingType()] = $recipe->getFats() * $eating->getPortions();
+                $userEatingData["calories"][$recipe->getEatingType()] = $recipe->getCalories() * $eating->getPortions();
             }
         }
 
