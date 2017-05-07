@@ -7,7 +7,7 @@
         <!-- BEGIN container -->
         <div class="container">
             <!-- BEGIN product -->
-            <div class="product">
+            <div class="product" style="border: 0px solid #c5ced4;">
                 <!-- BEGIN product-tab -->
                 <div class="product-tab">
                     <!-- BEGIN #product-tab-content -->
@@ -42,6 +42,17 @@
                 <!-- END product-tab -->
             </div>
             <!-- END product -->
+            <div style="padding-left: 60px;">
+                <ul class="pagination pagination-lg m-t-0 m-b-10">
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-3 day") | date("Y-m-d")}) }}">«</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-2 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("-2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("-1 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("-1 day") | date("d F") }}</a></li>
+                    <li class="active"><a nohref>{{ activeDate | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+1 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("+1 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+2 day") | date("Y-m-d")}) }}">{{ activeDate | date_modify("+2 day") | date("d F") }}</a></li>
+                    <li><a href="{{ path('eating_day', {'date' : activeDate | date_modify("+3 day") | date("Y-m-d")}) }}">»</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
