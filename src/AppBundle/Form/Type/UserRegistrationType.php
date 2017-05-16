@@ -52,7 +52,7 @@ class UserRegistrationType extends AbstractType
                 "scale" => 1,
                 "invalid_message" => "Некорректный вес",
             ])
-            ->add('gender', CheckboxType::class, [
+            ->add('genderMan', CheckboxType::class, [
                 "label_attr" => ['class' => 'control-label'],
                 "attr"       => ['class' => 'form-control input-inline'],
                 "label" => 'Пол',
