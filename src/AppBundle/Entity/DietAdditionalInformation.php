@@ -74,6 +74,13 @@ class DietAdditionalInformation
     private $purpose;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="information", type="text", nullable=true)
+     */
+    private $weightsANN;
+
+    /**
      * @return int
      */
     public function getId()
@@ -151,5 +158,21 @@ class DietAdditionalInformation
     public function setPurpose($purpose)
     {
         $this->purpose = $purpose;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWeightsANN()
+    {
+        return $this->weightsANN;
+    }
+
+    /**
+     * @param string $weightsANN
+     */
+    public function setWeightsANN($weightsANN)
+    {
+        $this->weightsANN = $weightsANN;
     }
 }
