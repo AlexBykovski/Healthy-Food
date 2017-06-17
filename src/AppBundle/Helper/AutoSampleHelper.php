@@ -55,6 +55,16 @@ class AutoSampleHelper
         return $ids;
     }
 
+    public function getAssociationIdAndPortions($sample){
+        $association = [];
+
+        foreach($sample as $item){
+            $association[$item["id"]] = $item["portions"];
+        }
+
+        return $association;
+    }
+
     protected function getShuffledEatings($countEating){
         $shuffledEatings = [];
 

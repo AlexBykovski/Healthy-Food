@@ -16,7 +16,6 @@
                         <div class="tab-pane fade active in">
                             <!-- BEGIN product-desc -->
                             <form action="{{ path("auto_sample_per_date", {date : date}) }}" method="POST" class="margin-bottom-0">
-                                {{ form_widget(form._token) }}
                                 <div>
                                     {% for recipe in recipes %}
                                         <div class="product-desc">
@@ -25,7 +24,7 @@
                                                 <img src="{{ recipe.photo }}" alt="">
                                             </div>
                                             <div class="desc">
-                                                <h4><a href="{{ path("single_recipe", {id: recipe.id}) }}">{{ recipe.name }}</a></h4>
+                                                <h4><a href="{{ path("single_recipe", {id: recipe.id}) }}">{{ recipe.name }}</a> x {{ recipePortions[recipe.id] }}</h4>
                                                 <p>
                                                     {% for product in recipe.products %}
                                                         <span>{{ product.name }}{{ loop.last ? '' : ', ' }}</span>
@@ -34,12 +33,9 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-                                    {% for recipe in form.recipes %}
-                                        {{ form_widget(recipe)}}
-                                    {% endfor %}
                                 </div>
                                 <a href="{{ path("auto_sample_per_date", {date: date}) }}" class="btn btn-primary m-t-10">Другой вариант</a>
-                                {{ form_widget(form.submit, {attr: {class: "btn btn-success m-t-10"}}) }}
+                                <a href="{{ path("auto_sample_approve", {date: date}) }}" class="btn btn-success m-t-10">Мне нравится</a>
                             </form>
                             <!-- END product-desc -->
                         </div>
