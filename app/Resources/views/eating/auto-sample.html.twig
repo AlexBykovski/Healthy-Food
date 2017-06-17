@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="page-container" class="fade in">
+    <!-- BEGIN #product -->
+    <div id="product" class="section-container p-t-20">
+        <!-- BEGIN container -->
+        <div class="container">
+            <!-- BEGIN product -->
+            <div class="product" style="border: 0px solid #c5ced4;">
+                <!-- BEGIN product-tab -->
+                <div class="product-tab">
+                    <!-- BEGIN #product-tab-content -->
+                    <div id="product-tab-content" class="tab-content">
+                        <!-- BEGIN #product-desc -->
+                        <div class="tab-pane fade active in">
+                            <!-- BEGIN product-desc -->
+                            <form action="{{ path("auto_sample_per_date", {date : date}) }}" method="POST" class="margin-bottom-0">
+                                {{ form_widget(form._token) }}
+                                <div>
+                                    {% for recipe in recipes %}
+                                        <div class="product-desc">
+                                            <h2 style="text-transform: capitalize;">{{ recipe.eatingType }}</h2>
+                                            <div class="image">
+                                                <img src="{{ recipe.photo }}" alt="">
+                                            </div>
+                                            <div class="desc">
+                                                <h4><a href="{{ path("single_recipe", {id: recipe.id}) }}">{{ recipe.name }}</a></h4>
+                                                <p>
+                                                    {% for product in recipe.products %}
+                                                        <span>{{ product.name }}{{ loop.last ? '' : ', ' }}</span>
+                                                    {% endfor %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    {% for recipe in form.recipes %}
+                                        {{ form_widget(recipe)}}
+                                    {% endfor %}
+                                </div>
+                                {{ form_widget(form.submit) }}
+                            </form>
+                            <!-- END product-desc -->
+                        </div>
+                        <!-- END #product-desc -->
+                    </div>
+                    <!-- END #product-tab-content -->
+                </div>
+                <!-- END product-tab -->
+            </div>
+            <!-- END product -->
+        </div>
+    </div>
+</div>
+{% endblock %}

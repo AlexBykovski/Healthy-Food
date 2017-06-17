@@ -80,6 +80,8 @@ class DietAdditionalInformation
      */
     private $weightsANN;
 
+    const PURPOSE_LOSE_WEIGHT = "Сбросить вес";
+    const PURPOSE_SAVE_WEIGHT = "Сохранить вес";
     /**
      * @return int
      */

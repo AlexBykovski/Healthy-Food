@@ -30,6 +30,10 @@ services:
           class:      AppBundle\Helper\RecipeHelper
           arguments:  ['@doctrine.orm.entity_manager']
 
+    app.helper.auto_sample_helper:
+          class:      AppBundle\Helper\AutoSampleHelper
+          arguments:  ['@doctrine.orm.entity_manager']
+
     app.builder.email:
           class: AppBundle\Builder\EmailBuilder
           scope: prototype

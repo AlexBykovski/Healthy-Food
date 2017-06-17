@@ -86,6 +86,7 @@
                             <li><a ng-click="isShowPast = false; isShowPresent = true; isShowFuture = false;">Текущий</a></li>
                             <li><a ng-click="isShowPast = false; isShowPresent = false; isShowFuture = true;">В режиме ожидания</a></li>
                             <li><a ng-click="isShowPast = true; isShowPresent = true; isShowFuture = true;">Все</a></li>
+                            <li><a class="btn btn-success" href="{{ path("auto_sample_per_date", {date : activeDate | date("d-m-Y")}) }}">Автоматическая подборка блюд</a></li>
                         </ul>
                     </div>
                     <div class="section-container">

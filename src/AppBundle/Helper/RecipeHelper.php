@@ -99,7 +99,13 @@ class RecipeHelper
         /** @var DietAdditionalInformation $dietInformation */
         $dietInformation = $user->getDietAdditionalInformation();
 
-        return $this->getCaloriesByBMR($bmr, $dietInformation->getCountTraining(), $dietInformation->getTrainingDifficulty());
+        $needCaloriesSaveWeight = $this->getCaloriesByBMR($bmr, $dietInformation->getCountTraining(), $dietInformation->getTrainingDifficulty());
+
+        if($user->getDietAdditionalInformation()->getPurpose() === DietAdditionalInformation::PURPOSE_LOSE_WEIGHT){
+            return ($needCaloriesSaveWeight * 0.75);
+        }
+
+        return $needCaloriesSaveWeight;
     }
 
     public function getCaloriesByBMR($bmr, $countTrainings, $difficulty){

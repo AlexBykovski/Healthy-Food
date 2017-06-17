@@ -4,6 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\User;
+use AppBundle\Form\Type\AutoSampleType;
+use AppBundle\Helper\AutoSampleHelper;
+use AppBundle\Helper\RecipeHelper;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +61,41 @@ class EatingController extends Controller
             [
                 "eatings" => $chosenEatings,
                 "activeDate" => $date,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/create-auto-sample/{date}", name="auto_sample_per_date")
+     * @Security("has_role('ROLE_SIMPLE_USER')")
+     */
+    public function createAutoSampleDishes(Request $request, $date){
+        /** @var User $user */
+        $user = $this->getUser();
+        /** @var RecipeHelper $recipeHelper */
+        $recipeHelper = $this->get("app.helper.recipe_helper");
+        /** @var AutoSampleHelper $autoSampleHelper */
+        $autoSampleHelper = $this->get("app.helper.auto_sample_helper");
+
+        $availableCalories = $recipeHelper->getCountAvailableCalories($user);
+
+        $recipesWithPortions = $autoSampleHelper->getAutoSampleDishes($availableCalories, $user->getDietAdditionalInformation()->getCountEating());
+
+        $recipes = $this->getDoctrine()->getRepository(Recipe::class)->getRecipesByIds($autoSampleHelper->getSampleRecipesIds($recipesWithPortions));
+
+        $form = $this->createForm(AutoSampleType::class, ["recipes" => $recipesWithPortions]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            var_dump("here1");die;
+        }
+
+        return $this->render(
+            'eating/auto-sample.html.twig',
+            [
+                "form" => $form->createView(),
+                "date" => $date,
+                "recipes" => $recipes
             ]
         );
     }
