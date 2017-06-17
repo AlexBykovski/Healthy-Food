@@ -61,7 +61,6 @@ class AutoSampleHelper
         $breakfasts = $this->em->getRepository(Recipe::class)->getEatingForUserByDateAndType(Recipe::BREAKFAST);
         shuffle($breakfasts);
         $shuffledEatings[] = $breakfasts;
-        //$eatings[] = $this->getParsedDishes($breakfasts);
 
         if($countEating > 3){
             $lunch = $this->em->getRepository(Recipe::class)->getEatingForUserByDateAndType(Recipe::LUNCH);

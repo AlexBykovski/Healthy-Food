@@ -82,6 +82,7 @@ class EatingController extends Controller
         $recipesWithPortions = $autoSampleHelper->getAutoSampleDishes($availableCalories, $user->getDietAdditionalInformation()->getCountEating());
 
         $recipes = $this->getDoctrine()->getRepository(Recipe::class)->getRecipesByIds($autoSampleHelper->getSampleRecipesIds($recipesWithPortions));
+        uasort($recipes, [$this, "sortEatingByType"]);
 
         $form = $this->createForm(AutoSampleType::class, ["recipes" => $recipesWithPortions]);
         $form->handleRequest($request);
@@ -100,9 +101,13 @@ class EatingController extends Controller
         );
     }
 
-    protected function sortEatingByType(Eating $a, Eating $b){
-        $aType = $a->getRecipe()->getEatingType();
-        $bType = $b->getRecipe()->getEatingType();
+    protected function sortEatingByType($a, $b){
+        $aType = $a instanceof Eating ? $a->getRecipe()->getEatingType() : $a instanceof Recipe ? $a->getEatingType() : null;
+        $bType = $b instanceof Eating ? $b->getRecipe()->getEatingType() : $b instanceof Recipe ? $b->getEatingType() : null;
+
+        if(!$aType || !$bType){
+            return -1;
+        }
 
         if($aType === Recipe::BREAKFAST ||
             ($aType === Recipe::LUNCH && ($bType === Recipe::DINNER || $bType === Recipe::AFTERNOON_SNACK || $bType === Recipe::SUPPER || $bType === Recipe::SEC_SUPPER)) ||

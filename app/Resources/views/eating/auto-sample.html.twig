@@ -38,7 +38,8 @@
                                         {{ form_widget(recipe)}}
                                     {% endfor %}
                                 </div>
-                                {{ form_widget(form.submit) }}
+                                <a href="{{ path("auto_sample_per_date", {date: date}) }}" class="btn btn-primary m-t-10">Другой вариант</a>
+                                {{ form_widget(form.submit, {attr: {class: "btn btn-success m-t-10"}}) }}
                             </form>
                             <!-- END product-desc -->
                         </div>
