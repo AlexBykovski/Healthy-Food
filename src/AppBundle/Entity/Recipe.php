@@ -10,7 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Recipe
  *
  * @ORM\Table(name="recipe")
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RecipeRepository")
  */
 class Recipe
 {

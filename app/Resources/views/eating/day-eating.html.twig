@@ -23,7 +23,7 @@
                                             <img src="{{ eating.recipe.photo }}" alt="">
                                         </div>
                                         <div class="desc">
-                                            <h4><a href="{{ path("single_recipe", {id: eating.recipe.id}) }}">{{ eating.recipe.name }}</a></h4>
+                                            <h4><a href="{{ path("single_recipe", {id: eating.recipe.id}) }}">{{ eating.recipe.name }}</a> x {{ eating.portions }}</h4>
                                             <p>
                                                 {% for product in eating.recipe.products %}
                                                     <span>{{ product.name }}{{ loop.last ? '' : ', ' }}</span>
