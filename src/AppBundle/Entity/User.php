@@ -191,6 +191,13 @@ class User implements UserInterface
     private $age;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="ann_weights", type="text", nullable=false)
+     */
+    private $annWeights;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -569,5 +576,21 @@ class User implements UserInterface
     public function setAge($age)
     {
         $this->age = $age;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnnWeights()
+    {
+        return $this->annWeights;
+    }
+
+    /**
+     * @param string $annWeights
+     */
+    public function setAnnWeights($annWeights)
+    {
+        $this->annWeights = $annWeights;
     }
 }

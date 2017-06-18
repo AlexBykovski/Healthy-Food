@@ -28,10 +28,8 @@ class RecipeHelper
         return $weight;
     }
 
-    public function getParseEatings($chosenEating, $parseType, $mostPopularRecipeId){
+    public function getParseEatings($chosenEating, $parseType, $mostPopularRecipeId, $allRecipes){
         $parseRecipes = [];
-
-        $allRecipes = $this->em->getRepository("AppBundle:Recipe")->findBy(["eatingType" => $parseType]);
 
         /** @var Recipe $recipe */
         foreach($allRecipes as $recipe){
