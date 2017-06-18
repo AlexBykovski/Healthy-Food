@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\RecipeProduct;
+use AppBundle\Helper\ANNHelper;
 use AppBundle\Helper\RecipeHelper;
 use \DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,6 +76,8 @@ class RecipeController extends Controller
     {
         /** @var RecipeHelper $recipeHelper */
         $recipeHelper = $this->get("app.helper.recipe_helper");
+        /** @var ANNHelper $ann */
+        $ann = $this->get("app.helper.ann_helper");
         $dateTime = DateTime::createFromFormat("Y-m-d", $date);
 
         if((new DateTime())->format("Y-m-d") > $date){ // prevent choose for past
@@ -105,6 +108,8 @@ class RecipeController extends Controller
         }
 
         $em->flush();
+
+        $ann->learnNetwork($recipe, $this->getUser());
 
         return new JsonResponse(["status" => 'ok'], 200);
     }
