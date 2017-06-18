@@ -6,6 +6,7 @@ use AppBundle\Entity\Eating;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\AutoSampleType;
+use AppBundle\Helper\ANNHelper;
 use AppBundle\Helper\AutoSampleHelper;
 use AppBundle\Helper\RecipeHelper;
 use DateTime;
@@ -129,6 +130,11 @@ class EatingController extends Controller
             }
 
             $em->persist($eating);
+
+            /** @var ANNHelper $ann */
+            $ann = $this->get("app.helper.ann_helper");
+
+            $ann->learnNetwork($recipe, $this->getUser());
         }
 
         $em->flush();
